@@ -5,14 +5,18 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Tue Mar 28 20:05:04 CEST 2023     */
+/*       //\   /         Last Updated: Wed Mar 29 18:40:11 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
 #ifndef __EVERYBODY_EDITS_2__
 # define __EVERYBODY_EDITS_2__
 
-# define SUCCESS 0
-# define FAILURE 1
+# include "core/generic.hpp"
+# include "core/more_types.hpp"
+
+# include "class/Framework.hpp"
+
+void	print_error(const err_code &err_code, const std::string &context, const bool &quit = false);
 
 #endif /* __EVERYBODY_EDITS_2__ */

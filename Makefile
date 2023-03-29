@@ -5,7 +5,7 @@
 #    '-._.(;;;)._.-'                                                    #
 #    .-'  ,`"`,  '-.                                                    #
 #   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        #
-#       //\   /         Last Updated: Tue Mar 28 19:56:20 CEST 2023     #
+#       //\   /         Last Updated: Wed Mar 29 17:21:52 CEST 2023     #
 #      ||  '-'                                                          #
 # ********************************************************************* #
 
@@ -23,7 +23,7 @@ EXE_ARGS	=
 SUB_MAKE	= $(MAKE) -C $(OUT_DIR)
 
 a: all
-all: build compile
+all: compile
 
 b: build
 build:
@@ -51,4 +51,4 @@ run: compile
 # -- MAKEFILE CONFIGS -- #
 
 .DEFAULT_GOAL = all
-.PHONY: build compile fullclean remake run
+.PHONY: all build compile fullclean remake run

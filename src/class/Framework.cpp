@@ -1,17 +1,23 @@
 /* ********************************************************************* */
 /*          .-.                                                          */
 /*    __   /   \   __                                                    */
-/*   (  `'.\   /.'`  )   Everybody Edits 2 - main.cpp                    */
+/*   (  `'.\   /.'`  )   Everybody Edits 2 - Framework.cpp               */
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Tue Mar 28 20:15:00 CEST 2023     */
+/*       //\   /         Last Updated: Wed Mar 29 15:32:45 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
-#include "EverybodyEdits2.hpp"
+#include "class/Framework.hpp"
+#include <stdexcept>
 
-int main(int, char *[], char *[])
+Framework::Framework():
+	_window(nullptr)
 {
-	return SUCCESS;
+	_window = new sf::RenderWindow(
+		sf::VideoMode(
+			sf::VideoMode::getDesktopMode().width >> 2,
+			sf::VideoMode::getDesktopMode().height >> 2),
+		"Everybody Edits 2");
 }

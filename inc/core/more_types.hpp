@@ -1,17 +1,24 @@
 /* ********************************************************************* */
 /*          .-.                                                          */
 /*    __   /   \   __                                                    */
-/*   (  `'.\   /.'`  )   Everybody Edits 2 - main.cpp                    */
+/*   (  `'.\   /.'`  )   Everybody Edits 2 - more_types.hpp              */
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Tue Mar 28 20:15:00 CEST 2023     */
+/*       //\   /         Last Updated: Wed Mar 29 18:38:24 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
-#include "EverybodyEdits2.hpp"
+#ifndef MORE_TYPES_HPP
+# define MORE_TYPES_HPP
 
-int main(int, char *[], char *[])
+enum err_code
 {
-	return SUCCESS;
-}
+	ALLOC_FAILURE = 1,
+	UNKNOWN,
+};
+
+# define SUCCESS 0
+# define FAILURE 1
+
+#endif /* MORE_TYPES_HPP */

@@ -1,17 +1,19 @@
 /* ********************************************************************* */
 /*          .-.                                                          */
 /*    __   /   \   __                                                    */
-/*   (  `'.\   /.'`  )   Everybody Edits 2 - main.cpp                    */
+/*   (  `'.\   /.'`  )   Everybody Edits 2 - Logging.hpp                 */
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Tue Mar 28 20:15:00 CEST 2023     */
+/*       //\   /         Last Updated: Wed Mar 29 18:44:48 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
-#include "EverybodyEdits2.hpp"
+#ifndef LOGGING_HPP
+# define LOGGING_HPP
 
-int main(int, char *[], char *[])
-{
-	return SUCCESS;
-}
+# include <iosfwd>
+
+
+
+#endif /* LOGGING_HPP */

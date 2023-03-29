@@ -1,17 +1,13 @@
 /* ********************************************************************* */
 /*          .-.                                                          */
 /*    __   /   \   __                                                    */
-/*   (  `'.\   /.'`  )   Everybody Edits 2 - main.cpp                    */
+/*   (  `'.\   /.'`  )   Everybody Edits 2 - Logging.cpp                 */
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Tue Mar 28 20:15:00 CEST 2023     */
+/*       //\   /         Last Updated: Wed Mar 29 18:44:36 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
-#include "EverybodyEdits2.hpp"
+#include "class/Logging.hpp"
 
-int main(int, char *[], char *[])
-{
-	return SUCCESS;
-}

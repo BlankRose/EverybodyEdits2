@@ -1,17 +1,29 @@
 /* ********************************************************************* */
 /*          .-.                                                          */
 /*    __   /   \   __                                                    */
-/*   (  `'.\   /.'`  )   Everybody Edits 2 - main.cpp                    */
+/*   (  `'.\   /.'`  )   Everybody Edits 2 - Framework.hpp               */
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Tue Mar 28 20:15:00 CEST 2023     */
+/*       //\   /         Last Updated: Wed Mar 29 15:21:13 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
-#include "EverybodyEdits2.hpp"
+#ifndef FRAMEWORK_HPP
+# define FRAMEWORK_HPP
 
-int main(int, char *[], char *[])
+# include <SFML/Graphics.hpp>
+
+class Framework
 {
-	return SUCCESS;
-}
+	public:
+
+		Framework();
+		~Framework();
+
+	private:
+
+		sf::RenderWindow	*_window;
+};
+
+#endif /* FRAMEWORK_HPP */
