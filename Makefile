@@ -5,7 +5,7 @@
 #    '-._.(;;;)._.-'                                                    #
 #    .-'  ,`"`,  '-.                                                    #
 #   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        #
-#       //\   /         Last Updated: Wed Mar 29 17:21:52 CEST 2023     #
+#       //\   /         Last Updated: Thu Mar 30 19:21:35 CEST 2023     #
 #      ||  '-'                                                          #
 # ********************************************************************* #
 
@@ -13,6 +13,7 @@
 
 IN_DIR		= .
 OUT_DIR		= build
+LOG_DIR		= logs
 
 EXE_NAME	= EverybodyEdits2
 EXE_ARGS	= 
@@ -27,6 +28,7 @@ all: compile
 
 b: build
 build:
+	@mkdir -p $(LOG_DIR)
 	@cmake -S $(IN_DIR) -B $(OUT_DIR)
 
 c: compile

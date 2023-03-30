@@ -4,6 +4,7 @@
 .header
 *.dSYM/
 /build/
+/logs/
 tmp/
 
 # Prerequisites
