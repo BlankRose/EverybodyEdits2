@@ -56,7 +56,7 @@ set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/inc)
 set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 set(CLASS_FILES Logging Framework)
-set(CORE_FILES io_stream)
+set(CORE_FILES )
 set(CXX_FILES main)
 
 macro(append_targets base)
