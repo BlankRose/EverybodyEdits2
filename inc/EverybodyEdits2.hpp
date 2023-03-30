@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Wed Mar 29 18:40:11 CEST 2023     */
+/*       //\   /         Last Updated: Wed Mar 29 18:40:17 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -16,6 +16,7 @@
 # include "core/more_types.hpp"
 
 # include "class/Framework.hpp"
+# include "class/Logging.hpp"
 
 void	print_error(const err_code &err_code, const std::string &context, const bool &quit = false);
 

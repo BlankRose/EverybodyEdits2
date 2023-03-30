@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Tue Mar 28 20:15:00 CEST 2023     */
+/*       //\   /         Last Updated: Thu Mar 30 14:23:44 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -13,5 +13,6 @@
 
 int main(int, char *[], char *[])
 {
+	Logging::init(Logging::STDOUT, "%TIME%");
 	return SUCCESS;
 }
