@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Thu Mar 30 17:35:40 CEST 2023     */
+/*       //\   /         Last Updated: Fri Mar 31 18:58:32 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -215,10 +215,23 @@ void	Logging::add_level(const level_type &level, const std::string &title)
 		_level_map.insert(level_pair(level, title));
 }
 
+void	Logging::set_level(const level_type &level, const std::string &title)
+{
+	first_init();
+
+	if (_level_map.find(level) == _level_map.end())
+		std::cerr << "Warning: Trying to modify level " << level << " but it does not exists!" << std::endl;
+	else if (title.empty() || title.find_first_not_of("\t\n\v\f\r ") == title.npos)
+		std::cerr << "Warning: Trying to modify level " << level << " but the new title is empty!" << std::endl;
+	else
+		_level_map.at(level) = title;
+}
+
 void	Logging::del_level(const level_type &level)
 {
-	if (level <= 60 && !(level % 10))
-		std::cerr << "Warning: Cannot remove level " << level << " for logging since it is a system implementation level!" << std::endl;
+	if (level == DEBUG || level == INFO || level == WARN
+		|| level == ERROR || level == CRITICAL || level == FATAL)
+		std::cerr << "Warning: Cannot remove level " << level << " for logging since it is a system implementated level!" << std::endl;
 	else if (_level_map.find(level) == _level_map.end())
 		std::cerr << "Warning: Trying to remove level " << level << " but it does not exists (yet)!" << std::endl;
 	else
@@ -231,10 +244,10 @@ void	Logging::del_level(const level_type &level)
 
 void	Logging::log(const level_type &level, message_type &msg)
 {
+	if (msg.empty() || level < _level_min)
+		return;
 	first_init();
 
-	if (msg.empty())
-		return;
 	for (std::string::size_type i = 0, j = 0;; i = ++j)
 	{
 		j = _format.find('%', i);

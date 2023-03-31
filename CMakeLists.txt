@@ -1,11 +1,11 @@
 # ********************************************************************* #
 #          .-.                                                          #
 #    __   /   \   __                                                    #
-#   (  `'.\   /.'`  )   Everybody Edits 2 - Framework.hpp               #
+#   (  `'.\   /.'`  )   Everybody Edits 2 - setup.cpp                   #
 #    '-._.(;;;)._.-'                                                    #
 #    .-'  ,`"`,  '-.                                                    #
 #   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        #
-#       //\   /         Last Updated: Wed Mar 29 18:44:10 CEST 2023     #
+#       //\   /         Last Updated: Fri Mar 31 20:43:43 CEST 2023     #
 #      ||  '-'                                                          #
 # ********************************************************************* #
 
@@ -31,6 +31,8 @@ add_compile_options(
 	-Werror
 	-g3
 )
+
+add_definitions(-D LOG_DEBUG)
 
 if(APPLE)
 	add_link_options(-fsanitize=address)
@@ -64,9 +66,8 @@ endif()
 set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/inc)
 set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
-set(CLASS_FILES Logging Framework)
-set(CORE_FILES )
-set(CXX_FILES main)
+set(CLASS_FILES Logging Framework Assets TileMap MapChunk)
+set(CORE_FILES setup drawing events logic main)
 
 macro(append_targets base)
 	foreach (arg IN ITEMS ${ARGN})

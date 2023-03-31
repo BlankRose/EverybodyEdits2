@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Thu Mar 30 17:29:07 CEST 2023     */
+/*       //\   /         Last Updated: Fri Mar 31 18:58:34 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -50,6 +50,7 @@ namespace Logging
 		void		set_time_format(const std::string &time_format);
 
 		void		add_level(const level_type &level, const std::string &title);
+		void		set_level(const level_type &level, const std::string &title);
 		void		del_level(const level_type &level);
 
 			/** ---------------------- **/
