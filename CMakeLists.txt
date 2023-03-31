@@ -15,7 +15,7 @@
 # *                                      * #
 #==--------------------------------------==#
 
-cmake_minimum_required(VERSION 3.25.2)
+cmake_minimum_required(VERSION 3.24.0)
 
 project(EverybodyEdits2 VERSION 1.0)
 message(STATUS "${PROJECT_NAME} (Alpha ${CMAKE_PROJECT_VERSION})")
@@ -27,15 +27,14 @@ add_compile_options(
 	-Wall
 	-Wextra
 	-Wpedantic
-	-Wunreachable-code-aggressive
+	-Wunreachable-code
 	-Werror
 	-g3
 )
 
 if(APPLE)
-	add_link_options(
-		-fsanitize=address
-	)
+	add_link_options(-fsanitize=address)
+	add_compile_options(-Wunreachable-code-aggressive)
 	set(BREW_DIR $ENV{HOME}/.brew)
 	set(EXTERN_INCLUDE_DIR
 		${BREW_DIR}/include
@@ -44,6 +43,16 @@ if(APPLE)
 		${BREW_DIR}/opt/glfw/lib/
 		${BREW_DIR}/lib/ )
 	set(LIBRARY_NAMES glfw sfml-system sfml-window sfml-graphics sfml-audio)
+endif()
+
+if(WIN32)
+	set(LIBRARY_PATH C:/Librairies)
+	set(EXTERN_INCLUDE_DIR
+		${LIBRARY_PATH}/SFML-2.5.1/include
+		${LIBRARY_PATH}/JSON-3.11.2
+	)
+	set(LIBRARY_DIR ${LIBRARY_PATH}/SFML-2.5.1/lib)
+	set(LIBRARY_NAMES glfw3 opengl32 gdi32 sfml-system sfml-window sfml-graphics sfml-audio)
 endif()
 
 #==--------------------------------------==#

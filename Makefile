@@ -21,15 +21,21 @@ EXE_ARGS	=
 
 # -- COMPILATION -- #
 
-SUB_MAKE	= $(MAKE) -C $(OUT_DIR)
+SUB_MAKE	= $(MAKE) -sC $(OUT_DIR)
+ifeq ($(OS), Windows_NT)
+WIN_GEN		= -G "MinGW Makefiles"
+WIN_IDC		= > NUL 2>&1 || exit 0
+else
+UNIX_RECURS	= -p
+endif
 
 a: all
 all: compile
 
 b: build
 build:
-	@mkdir -p $(LOG_DIR)
-	@cmake -S $(IN_DIR) -B $(OUT_DIR)
+	@mkdir $(UNIX_RECURS) $(LOG_DIR) $(WIN_IDC)
+	@cmake -S $(IN_DIR) -B $(OUT_DIR) $(WIN_GEN)
 
 c: compile
 compile: build
@@ -40,7 +46,11 @@ clean:
 
 fc: fullclean
 fullclean:
-	@rm -Rf build/**
+ifeq ($(OS), Windows_NT)
+	@del /f /q /s $(OUT_DIR) $(WIN_IDC)
+else
+	@rm -Rf $(OUT_DIR)/**
+endif
 
 re: remake
 remake: fullclean all

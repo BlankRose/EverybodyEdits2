@@ -63,6 +63,6 @@ namespace Logging
 		void		error(message_type &msg);
 		void		critical(message_type &msg);
 		void		fatal(message_type &msg);
-};
+}
 
 #endif /* LOGGING_HPP */
