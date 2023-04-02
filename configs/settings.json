@@ -1,0 +1,20 @@
+{
+    "audio": {
+        "music": 100.0,
+        "sound": 100.0
+    },
+    "graphics": {
+        "textures": "configs/tileset.png"
+    },
+    "keybinds": {
+        "exit": 36,
+        "move_down": 74,
+        "move_left": 71,
+        "move_right": 72,
+        "move_up": 73
+    },
+    "miscellaneous": {
+        "log_file": "configs/latest.log",
+        "log_level": 10
+    }
+}

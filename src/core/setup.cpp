@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Fri Mar 31 21:09:52 CEST 2023     */
+/*       //\   /         Last Updated: Sun Apr  2 21:06:05 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -30,6 +30,36 @@ void		unload(Framework *&fw, TileMap *&map)
 }
 
 /**
+ * Configures the software accordingly to the
+ * given configuration files
+ * 
+ * @param	path: Path to the configuration file
+ * */
+bool		configure(const std::string &path)
+{
+	/** ---------------------- **/
+	/*  SETTING CONFIGURATIONS  */
+	/** ---------------------- **/
+
+	if (!Configs::load_configs(path)
+		&& !Configs::load_default())
+	{
+		std::cout << "Failed to configure!" << std::endl;
+		return false;
+	}
+
+	/** ---------------------- **/
+	/*      PREPARING LOGS      */
+	/** ---------------------- **/
+
+	Logging::init(Configs::misc::log_file, Configs::misc::log_level);
+	Logging::debug("Logging module init!");
+	Logging::info("Software started!");
+
+	return true;
+}
+
+/**
  * Allocate and prepare the memory and store it within
  * the given pointers passed into arguments and prepares
  * the logging module aswell
@@ -41,19 +71,6 @@ void		unload(Framework *&fw, TileMap *&map)
  * */
 bool		get_ready(Framework *&fw, TileMap *&map)
 {
-
-	/** ---------------------- **/
-	/*      PREPARING LOGS      */
-	/** ---------------------- **/
-
-#ifdef LOG_DEBUG
-	Logging::init("logs/current.log", Logging::DEBUG);
-	Logging::debug("Logging module init!");
-#else
-	Logging::init("logs/current.log", Logging::INFO);
-#endif
-	Logging::info("Software started!");
-
 	/** ---------------------- **/
 	/*     ALLOCATING MEMORY    */
 	/** ---------------------- **/
@@ -76,7 +93,7 @@ bool		get_ready(Framework *&fw, TileMap *&map)
 	/** ---------------------- **/
 
 	Logging::debug("Loading the assets...");
-	if (!Assets::load_tilemap("tileset.png"))
+	if (!Assets::load_tilemap("configs/tileset.png"))
 	{
 		unload(fw, map);
 		Logging::fatal("Couldn't load the needed assets!");

@@ -2,6 +2,7 @@
 .DS_Store
 .vscode/
 .header
+.log
 *.dSYM/
 /build/
 /logs/

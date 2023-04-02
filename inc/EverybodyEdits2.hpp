@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Fri Mar 31 20:49:42 CEST 2023     */
+/*       //\   /         Last Updated: Sun Apr  2 20:35:58 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -19,6 +19,7 @@
 # include "core/generic.hpp"
 # include "core/more_types.hpp"
 
+# include "class/Configs.hpp"
 # include "class/Framework.hpp"
 # include "class/Logging.hpp"
 
@@ -30,6 +31,7 @@
 	/*         SETUP.CPP        */
 	/** ---------------------- **/
 
+bool		configure(const std::string &path);
 bool		get_ready(Framework *&fw, TileMap *&map);
 void		unload(Framework *&fw, TileMap *&map);
 
