@@ -1,11 +1,11 @@
 # ********************************************************************* #
 #          .-.                                                          #
 #    __   /   \   __                                                    #
-#   (  `'.\   /.'`  )   Everybody Edits 2 - setup.cpp                   #
+#   (  `'.\   /.'`  )   Everybody Edits 2 - CMakeLists.txt              #
 #    '-._.(;;;)._.-'                                                    #
 #    .-'  ,`"`,  '-.                                                    #
 #   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        #
-#       //\   /         Last Updated: Fri Mar 31 20:43:43 CEST 2023     #
+#       //\   /         Last Updated: Mon Apr  3 14:46:58 CEST 2023     #
 #      ||  '-'                                                          #
 # ********************************************************************* #
 
@@ -66,7 +66,7 @@ endif()
 set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/inc)
 set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
-set(CLASS_FILES Configs Logging Framework Assets TileMap MapChunk)
+set(CLASS_FILES Configs Logging Framework Assets MapChunk World)
 set(CORE_FILES setup drawing events logic main)
 
 macro(append_targets base)

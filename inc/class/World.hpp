@@ -1,24 +1,24 @@
 /* ********************************************************************* */
 /*          .-.                                                          */
 /*    __   /   \   __                                                    */
-/*   (  `'.\   /.'`  )   Everybody Edits 2 - TileMap.hpp                 */
+/*   (  `'.\   /.'`  )   Everybody Edits 2 - World.hpp                   */
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Fri Mar 31 18:22:05 CEST 2023     */
+/*       //\   /         Last Updated: Mon Apr  3 16:20:28 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
-#ifndef TILEMAP_HPP
-# define TILEMAP_HPP
+#ifndef WORLD_HPP
+# define WORLD_HPP
 
 # include "MapChunk.hpp"
+# include <vector>
 
-class TileMap:
-	public sf::Drawable,
-	public sf::Transformable
+class Framework;
+class World
 {
-	TileMap();
+	World();
 
 	public:
 
@@ -26,33 +26,45 @@ class TileMap:
 			/*     TYPE DEFINITIONS     */
 			/** ---------------------- **/
 
-		typedef uint32_t			size_type;
-		typedef sf::VertexArray		vertex_type;
-		typedef sf::Texture			texture_type;
+		typedef uint32_t				size_type;
+		typedef std::vector<MapChunk>	chunks_type;
 
 			/** ---------------------- **/
 			/*       CONSTRUCTORS       */
 			/** ---------------------- **/
 
-		TileMap(const size_type &tile_size, const size_type &width, const size_type &height);
-		~TileMap();
+		World(const size_type &width, const size_type &height);
+		~World();
 
 			/** ---------------------- **/
 			/*          METHODS         */
 			/** ---------------------- **/
 
-	private:
+		size_type	get_width() const;
+		size_type	get_height() const;
+		size_type	get_chunk_width() const;
+		size_type	get_chunk_height() const;
 
-		virtual void	draw(sf::RenderTarget &target, sf::RenderStates states) const;
+		bool		has_chunk(const sf::Vector2u &pos) const;
+		bool		has_chunk(const size_type &x, const size_type &y) const;
+
+		MapChunk	&get_chunk_at(const sf::Vector2u &pos);
+		MapChunk	&get_chunk_at(const size_type &x, const size_type &y);
+
+		void		render(Framework *&fw);
+
+	private:
 
 			/** ---------------------- **/
 			/*        ATTRIBUTES        */
 			/** ---------------------- **/
 
-		size_type		_tile_size;
-		size_type		_width;
-		size_type		_height;
-		vertex_type		_vertices;
+			size_type				_width;
+			size_type				_height;
+
+			size_type				_chunks_width;
+			size_type				_chunks_height;
+			chunks_type				_chunks;
 };
 
-#endif /* TILEMAP_HPP */
+#endif /* WORLD_HPP */

@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Sun Apr  2 20:35:58 CEST 2023     */
+/*       //\   /         Last Updated: Mon Apr  3 14:55:53 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -25,20 +25,20 @@
 
 # include "class/Assets.hpp"
 # include "class/MapChunk.hpp"
-# include "class/TileMap.hpp"
+# include "class/World.hpp"
 
 	/** ---------------------- **/
 	/*         SETUP.CPP        */
 	/** ---------------------- **/
 
 bool		configure(const std::string &path);
-bool		get_ready(Framework *&fw, TileMap *&map);
-void		unload(Framework *&fw, TileMap *&map);
+bool		get_ready(Framework *&fw, World *&map);
+void		unload(Framework *&fw, World *&map);
 
 	/** ---------------------- **/
 	/*        DRAWING.CPP       */
 	/** ---------------------- **/
 
-void		draw_loop(Framework *&fw, TileMap *&map);
+void		draw_loop(Framework *&fw, World *&map);
 
 #endif /* __EVERYBODY_EDITS_2__ */

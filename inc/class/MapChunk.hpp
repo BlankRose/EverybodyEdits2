@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Fri Mar 31 18:19:02 CEST 2023     */
+/*       //\   /         Last Updated: Mon Apr  3 17:33:42 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -27,6 +27,7 @@ class MapChunk:
 		typedef uint8_t				size_type;
 		typedef sf::VertexArray		vertex_type;
 		typedef sf::Texture			texture_type;
+		typedef sf::Vector2u		position_type;
 
 		static const size_type		WIDTH;
 		static const size_type		HEIGHT;
@@ -36,6 +37,7 @@ class MapChunk:
 			/** ---------------------- **/
 
 		MapChunk();
+		MapChunk(const size_type &x, const size_type &y);
 		~MapChunk();
 
 			/** ---------------------- **/
@@ -48,6 +50,10 @@ class MapChunk:
 		sf::Vertex			&get_tilevertex(const size_type &x, const size_type &y);
 		const sf::Vertex	&get_tilevertex(const size_type &x, const size_type &y) const;
 
+		position_type		&get_position();
+		const position_type	&get_position() const;
+		void				set_position(const position_type &pos);
+
 	private:
 
 		virtual void		draw(sf::RenderTarget &target, sf::RenderStates states) const;
@@ -56,6 +62,7 @@ class MapChunk:
 			/*        ATTRIBUTES        */
 			/** ---------------------- **/
 
+		position_type		_position;
 		static size_type	_tile_size;
 		vertex_type			_vertices;
 };

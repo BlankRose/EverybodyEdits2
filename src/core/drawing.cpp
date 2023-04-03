@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Sun Apr  2 13:05:49 CEST 2023     */
+/*       //\   /         Last Updated: Mon Apr  3 15:55:38 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -74,7 +74,7 @@ void	input_handle(sf::RenderWindow &win, sf::Event event)
  * @param	fw: Base framework
  * @param	map: Map to display
  * */
-void	draw_loop(Framework *&fw, TileMap *&map)
+void	draw_loop(Framework *&fw, World *&map)
 {
 	sf::RenderWindow	&win = fw->get_window();
 	sf::View			view = win.getView();
@@ -96,7 +96,7 @@ void	draw_loop(Framework *&fw, TileMap *&map)
 		}
 
 		win.clear();
-		win.draw(*map);
+		map->render(fw);
 		win.display();
 	}
 }

@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Sun Apr  2 20:47:33 CEST 2023     */
+/*       //\   /         Last Updated: Sun Apr  2 21:06:10 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -26,7 +26,7 @@
 int main(int, char *[], char *[])
 {
 	Framework	*fw;
-	TileMap		*map;
+	World		*map;
 
 	if (!configure("configs/settings.json")
 		|| !get_ready(fw, map))

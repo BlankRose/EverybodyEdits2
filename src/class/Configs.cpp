@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Sun Apr  2 21:05:04 CEST 2023     */
+/*       //\   /         Last Updated: Mon Apr  3 12:44:32 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -25,6 +25,19 @@
 using json_type = Configs::json_type;
 using key_type = Configs::key_type;
 
+// Default Values
+
+std::string		Configs::graphics::textures		= "configs/tileset.png";
+float			Configs::audio::music			= 100.f;
+float			Configs::audio::sound			= 100.f;
+key_type		Configs::keybinds::move_left	= sf::Keyboard::Left;
+key_type		Configs::keybinds::move_right	= sf::Keyboard::Right;
+key_type		Configs::keybinds::move_up		= sf::Keyboard::Up;
+key_type		Configs::keybinds::move_down	= sf::Keyboard::Down;
+key_type		Configs::keybinds::exit			= sf::Keyboard::Escape;
+std::string		Configs::misc::log_file			= "configs/latest.log";
+uint32_t		Configs::misc::log_level		= Logging::DEBUG;
+
 const std::string	DEFAULT_TARGET = "DEFAULT";
 const json_type		_default =
 
@@ -32,36 +45,38 @@ const json_type		_default =
 		{
 			"graphics",
 			{
-				{ "textures", "configs/tileset.png" }
+				{ "textures", Configs::graphics::textures }
 			}
 		},
 		{
 			"audio",
 			{
-				{ "music", 100.f },
-				{ "sound", 100.f }
+				{ "music", Configs::audio::music },
+				{ "sound", Configs::audio::sound }
 			}
 		},
 		{
 			"keybinds",
 			{
-				{ "move_left", sf::Keyboard::Left },
-				{ "move_right", sf::Keyboard::Right },
-				{ "move_up", sf::Keyboard::Up },
-				{ "move_down", sf::Keyboard::Down },
-				{ "exit", sf::Keyboard::Escape }
+				{ "move_left", Configs::keybinds::move_left },
+				{ "move_right", Configs::keybinds::move_right },
+				{ "move_up", Configs::keybinds::move_up },
+				{ "move_down", Configs::keybinds::move_down },
+				{ "exit", Configs::keybinds::exit }
 			}
 		},
 		{
 			"miscellaneous",
 			{
-				{ "log_file", "configs/latest.log" },
-				{ "log_level", Logging::DEBUG }
+				{ "log_file", Configs::misc::log_file },
+				{ "log_level", Configs::misc::log_level }
 			}
 		}
 	};
 
-bool			_ready = false;
+// Static Storage
+
+bool			_ready = true;
 std::string		_from = DEFAULT_TARGET;
 json_type		_loaded = _default;
 
@@ -105,6 +120,9 @@ bool			Configs::load_configs(const json_type &json)
 {
 	try
 	{
+		// STORE TARGET
+		_loaded = json;
+
 		// GRAPHICS
 		Configs::graphics::textures = json.at("graphics").at("textures");
 
@@ -135,6 +153,9 @@ bool			Configs::load_configs(const json_type &json)
 
 bool			Configs::save_configs(const std::string &path, const json_type &json)
 {
+	if (!_ready)
+		return false;
+
 	std::string		p = path;
 	if (path == DEFAULT_TARGET)
 		p = "configs/settings.json";

@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Sun Apr  2 21:06:05 CEST 2023     */
+/*       //\   /         Last Updated: Mon Apr  3 15:40:23 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -18,7 +18,7 @@
  * @param	fw: Framework to clear
  * @param	map: Map to clear
  * */
-void		unload(Framework *&fw, TileMap *&map)
+void		unload(Framework *&fw, World *&map)
 {
 	if (fw)
 		delete fw;
@@ -69,7 +69,7 @@ bool		configure(const std::string &path)
  * 
  * @return	True or False if it was successful or not
  * */
-bool		get_ready(Framework *&fw, TileMap *&map)
+bool		get_ready(Framework *&fw, World *&map)
 {
 	/** ---------------------- **/
 	/*     ALLOCATING MEMORY    */
@@ -78,7 +78,7 @@ bool		get_ready(Framework *&fw, TileMap *&map)
 	Logging::debug("Preparing the memory...");
 
 	fw = new Framework();
-	map = new TileMap(50, 10, 10);
+	map = new World(10, 10);
 
 	if (!fw || !fw->is_ready() || !map)
 	{

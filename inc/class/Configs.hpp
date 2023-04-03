@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Sun Apr  2 19:32:46 CEST 2023     */
+/*       //\   /         Last Updated: Mon Apr  3 14:34:05 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -27,31 +27,35 @@ namespace Configs
 			/*        ATTRIBUTES        */
 			/** ---------------------- **/
 
-		namespace graphics
+		struct graphics
 		{
 			static std::string	textures;
-		}
+			private: graphics();
+		};
 
-		namespace audio
+		struct audio
 		{
 			static float		music;
 			static float		sound;
-		}
+			private: audio();
+		};
 
-		namespace keybinds
+		struct keybinds
 		{
 			static key_type		move_left;
 			static key_type		move_right;
 			static key_type		move_up;
 			static key_type		move_down;
 			static key_type		exit;
-		}
+			private: keybinds();
+		};
 
-		namespace misc
+		struct misc
 		{
 			static std::string	log_file;
 			static uint32_t		log_level;
-		}
+			private: misc();
+		};
 
 			/** ---------------------- **/
 			/*          METHODS         */
