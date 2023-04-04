@@ -15,18 +15,21 @@
  * Free the memory of the given Framework and Map
  * and sets then to NULLPTR accordingly
  * 
- * @param	fw: Framework to clear
- * @param	map: Map to clear
+ * @param	ctx: Target context to free
  * */
-void		unload(Framework *&fw, World *&map)
+void		unload(Context *&ctx)
 {
-	if (fw)
-		delete fw;
-	if (map)
-		delete map;
-
-	fw = nullptr;
-	map = nullptr;
+	if (ctx)
+	{
+		if (ctx->fw)
+			delete ctx->fw;
+		if (ctx->map)
+			delete ctx->map;
+		if (ctx->ui)
+			delete ctx->ui;
+		delete ctx;
+	}
+	ctx = nullptr;
 }
 
 /**
@@ -64,12 +67,11 @@ bool		configure(const std::string &path)
  * the given pointers passed into arguments and prepares
  * the logging module aswell
  * 
- * @param	fw: Framework pointer to store into
- * @param	map: Map pointer to store into
+ * @param	ctx: Memory to store in the new Contex
  * 
  * @return	True or False if it was successful or not
  * */
-bool		get_ready(Framework *&fw, World *&map)
+bool		get_ready(Context *&ctx)
 {
 	/** ---------------------- **/
 	/*      LOADING ASSETS      */
@@ -78,7 +80,6 @@ bool		get_ready(Framework *&fw, World *&map)
 	Logging::debug("Loading the assets...");
 	if (!Assets::load_tilemap("configs/tileset.png"))
 	{
-		unload(fw, map);
 		Logging::fatal("Couldn't load the needed assets!");
 		return false;
 	}
@@ -89,16 +90,31 @@ bool		get_ready(Framework *&fw, World *&map)
 	/** ---------------------- **/
 
 	Logging::debug("Preparing the memory...");
-
-	fw = new Framework();
-	map = new World(20, 20);
-
-	if (!fw || !fw->is_ready() || !map)
+	ctx = new Context();
+	if (!ctx)
 	{
-		unload(fw, map);
+		unload(ctx);
+		Logging::fatal("Couldn't allocate the requiered memory!");
+		return false;
+	}
+
+	ctx->fw = new Framework();
+	ctx->map = new World(400, 400);
+	ctx->ui = new Interface();
+	if (!ctx->fw || !ctx->fw->is_ready() || !ctx->map || !ctx->ui)
+	{
+		unload(ctx);
 		Logging::fatal("Couldn't allocate the requiered memory!");
 		return false;
 	}
 	Logging::debug("Successfully allocated the requiered memory!");
+
+	/** ---------------------- **/
+	/*     POST MEMORY SETUP    */
+	/** ---------------------- **/
+
+	Logging::debug("Configuring the game...");
+	ctx->fw->set_framelimit(Configs::graphics::framerate);
+	Logging::debug("Successfully configured the game!");
 	return true;
 }

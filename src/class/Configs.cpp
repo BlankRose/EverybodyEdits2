@@ -28,6 +28,7 @@ using key_type = Configs::key_type;
 // Default Values
 
 std::string		Configs::graphics::textures		= "configs/tileset.png";
+uint32_t		Configs::graphics::framerate	= 60;
 float			Configs::audio::music			= 100.f;
 float			Configs::audio::sound			= 100.f;
 key_type		Configs::keybinds::move_left	= sf::Keyboard::Left;
@@ -45,7 +46,8 @@ const json_type		_default =
 		{
 			"graphics",
 			{
-				{ "textures", Configs::graphics::textures }
+				{ "textures", Configs::graphics::textures },
+				{ "framerate", Configs::graphics::framerate }
 			}
 		},
 		{
@@ -125,6 +127,7 @@ bool			Configs::load_configs(const json_type &json)
 
 		// GRAPHICS
 		Configs::graphics::textures = json.at("graphics").at("textures");
+		Configs::graphics::framerate = json.at("graphics").at("framerate");
 
 		// AUDIO
 		Configs::audio::music = json.at("audio").at("music");

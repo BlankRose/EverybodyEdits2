@@ -30,6 +30,7 @@ namespace Configs
 		struct graphics
 		{
 			static std::string	textures;
+			static uint32_t		framerate;
 			private: graphics();
 		};
 

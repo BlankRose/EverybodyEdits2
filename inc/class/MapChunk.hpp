@@ -28,6 +28,7 @@ class MapChunk:
 		class Tile;
 
 		typedef uint8_t				size_type;
+		typedef uint32_t			coord_type;
 		typedef uint32_t			id_type;
 		typedef sf::VertexArray		vertex_type;
 		typedef sf::Texture			texture_type;
@@ -56,6 +57,7 @@ class MapChunk:
 				position_type	get_position() const;
 				id_type			get_id() const;
 
+				void			set_position(const position_type &pos);
 				void			set_id(const id_type &id);
 
 			private:
@@ -70,7 +72,7 @@ class MapChunk:
 			/** ---------------------- **/
 
 		MapChunk();
-		MapChunk(const size_type &x, const size_type &y);
+		MapChunk(const coord_type &x, const coord_type &y);
 		~MapChunk();
 
 			/** ---------------------- **/
@@ -80,11 +82,11 @@ class MapChunk:
 		static void			set_tilesize(const size_type &size);
 		static size_type	&get_tilesize();
 
-		Tile				&get_tile_at(const size_type &x, const size_type &y);
-		const Tile			&get_tile_at(const size_type &x, const size_type &y) const;
+		Tile				&get_tile_at(const coord_type &x, const coord_type &y);
+		const Tile			&get_tile_at(const coord_type &x, const coord_type &y) const;
 
-		sf::Vertex *		get_tilevertex(const size_type &x, const size_type &y);
-		const sf::Vertex *	get_tilevertex(const size_type &x, const size_type &y) const;
+		sf::Vertex *		get_tilevertex(const coord_type &x, const coord_type &y);
+		const sf::Vertex *	get_tilevertex(const coord_type &x, const coord_type &y) const;
 
 		position_type		&get_position();
 		const position_type	&get_position() const;

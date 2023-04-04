@@ -21,10 +21,11 @@ using Tile = MapChunk::Tile;
 
 using id_type = MapChunk::id_type;
 using size_type = MapChunk::size_type;
+using coord_type = MapChunk::coord_type;
 using position_type = MapChunk::position_type;
 
-const size_type		MapChunk::WIDTH = 5;
-const size_type		MapChunk::HEIGHT = 5;
+const size_type		MapChunk::WIDTH = 50;
+const size_type		MapChunk::HEIGHT = 50;
 size_type			MapChunk::_tile_size = 50;
 
 	/** ---------------------- **/
@@ -45,7 +46,7 @@ Tile::~Tile() {}
 MapChunk::MapChunk():
 	MapChunk(0, 0) {}
 
-MapChunk::MapChunk(const size_type &x, const size_type &y):
+MapChunk::MapChunk(const coord_type &x, const coord_type &y):
 	_tiles(WIDTH * HEIGHT), _position(x, y)
 {
 	_vertices.setPrimitiveType(sf::PrimitiveType::Quads);
@@ -94,6 +95,9 @@ position_type		Tile::get_position() const
 id_type				Tile::get_id() const
 	{ return _id; }
 
+void				Tile::set_position(const position_type &pos)
+	{ _coords = pos; }
+
 void				Tile::set_id(const id_type &id)
 {
 	if (!_vertex)
@@ -115,16 +119,16 @@ void				MapChunk::set_tilesize(const size_type &size) /* STATIC */
 size_type			&MapChunk::get_tilesize() /* STATIC */
 	{ return _tile_size; }
 
-Tile				&MapChunk::get_tile_at(const size_type &x, const size_type &y)
+Tile				&MapChunk::get_tile_at(const coord_type &x, const coord_type &y)
 	{ return _tiles[y * WIDTH + x]; }
 
-const Tile			&MapChunk::get_tile_at(const size_type &x, const size_type &y) const
+const Tile			&MapChunk::get_tile_at(const coord_type &x, const coord_type &y) const
 	{ return _tiles[y * WIDTH + x]; }
 
-sf::Vertex *		MapChunk::get_tilevertex(const size_type &x, const size_type &y)
+sf::Vertex *		MapChunk::get_tilevertex(const coord_type &x, const coord_type &y)
 	{ return &_vertices[(x + y * WIDTH) * 4]; }
 
-const sf::Vertex *	MapChunk::get_tilevertex(const size_type &x, const size_type &y) const
+const sf::Vertex *	MapChunk::get_tilevertex(const coord_type &x, const coord_type &y) const
 	{ return &_vertices[(x + y * WIDTH) * 4]; }
 
 position_type		&MapChunk::get_position()

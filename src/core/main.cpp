@@ -25,15 +25,14 @@
  * */
 int main(int, char *[], char *[])
 {
-	Framework	*fw;
-	World		*map;
+	Context		*ctx;
 
 	if (!configure("configs/settings.json")
-		|| !get_ready(fw, map))
+		|| !get_ready(ctx))
 		return FAILURE;
-	draw_loop(fw, map);
+	draw_loop(ctx);
 
-	unload(fw, map);
+	unload(ctx);
 	Configs::save_configs();
 	Logging::info("Software ended!");
 

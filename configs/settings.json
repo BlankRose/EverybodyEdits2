@@ -4,6 +4,7 @@
         "sound": 100.0
     },
     "graphics": {
+        "framerate": 60,
         "textures": "configs/tileset.png"
     },
     "keybinds": {

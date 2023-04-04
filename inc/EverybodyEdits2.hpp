@@ -26,23 +26,39 @@
 # include "class/Assets.hpp"
 # include "class/MapChunk.hpp"
 # include "class/World.hpp"
+# include "class/Interface.hpp"
 
 # include <iostream>
 
 	/** ---------------------- **/
-	/*         SETUP.CPP        */
+	/*          CONTEXT         */
+	/** ---------------------- **/
+
+struct Context
+{
+	Context();
+	Context(const Context &other);
+	~Context();
+
+	Context		&operator=(const Context &other);
+
+	bool	up, down, right, left;
+	bool	mouse_L, mouse_R, mouse_M;
+
+	Framework	*fw;
+	World		*map;
+	Interface	*ui;
+};
+
+	/** ---------------------- **/
+	/*         FUNCTIONS        */
 	/** ---------------------- **/
 
 bool		configure(const std::string &path);
-bool		get_ready(Framework *&fw, World *&map);
-void		unload(Framework *&fw, World *&map);
+bool		get_ready(Context *&ctx);
+void		unload(Context *&ctx);
 
-	/** ---------------------- **/
-	/*        DRAWING.CPP       */
-	/** ---------------------- **/
-
-void		draw_loop(Framework *&fw, World *&map);
-void		input_handle(sf::RenderWindow &win, sf::Event event);
-void		mouse_handle(sf::RenderWindow &win, sf::Event event, World *&map);
+void		draw_loop(Context *&ctx);
+void		event_cycle(Context *&ctx);
 
 #endif /* __EVERYBODY_EDITS_2__ */
