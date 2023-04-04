@@ -5,7 +5,7 @@
 #    '-._.(;;;)._.-'                                                    #
 #    .-'  ,`"`,  '-.                                                    #
 #   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        #
-#       //\   /         Last Updated: Mon Apr  3 14:46:58 CEST 2023     #
+#       //\   /         Last Updated: Tue Apr  4 12:39:57 CEST 2023     #
 #      ||  '-'                                                          #
 # ********************************************************************* #
 
@@ -66,7 +66,7 @@ endif()
 set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/inc)
 set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
-set(CLASS_FILES Configs Logging Framework Assets MapChunk World)
+set(CLASS_FILES Configs Context Logging Framework Assets MapChunk World)
 set(CORE_FILES setup drawing events logic main)
 
 macro(append_targets base)

@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Mon Apr  3 16:20:28 CEST 2023     */
+/*       //\   /         Last Updated: Mon Apr  3 19:03:32 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -15,7 +15,9 @@
 # include "MapChunk.hpp"
 # include <vector>
 
+using Tile = MapChunk::Tile;
 class Framework;
+
 class World
 {
 	World();
@@ -46,10 +48,14 @@ class World
 		size_type	get_chunk_height() const;
 
 		bool		has_chunk(const sf::Vector2u &pos) const;
+		bool		has_tile(const sf::Vector2u &pos) const;
 		bool		has_chunk(const size_type &x, const size_type &y) const;
+		bool		has_tile(const size_type &x, const size_type &y) const;
 
 		MapChunk	&get_chunk_at(const sf::Vector2u &pos);
+		Tile		&get_tile_at(const sf::Vector2u &pos);
 		MapChunk	&get_chunk_at(const size_type &x, const size_type &y);
+		Tile		&get_tile_at(const size_type &x, const size_type &y);
 
 		void		render(Framework *&fw);
 

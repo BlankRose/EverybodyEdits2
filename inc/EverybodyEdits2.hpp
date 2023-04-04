@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Mon Apr  3 14:55:53 CEST 2023     */
+/*       //\   /         Last Updated: Tue Apr  4 14:40:26 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -27,6 +27,8 @@
 # include "class/MapChunk.hpp"
 # include "class/World.hpp"
 
+# include <iostream>
+
 	/** ---------------------- **/
 	/*         SETUP.CPP        */
 	/** ---------------------- **/
@@ -40,5 +42,7 @@ void		unload(Framework *&fw, World *&map);
 	/** ---------------------- **/
 
 void		draw_loop(Framework *&fw, World *&map);
+void		input_handle(sf::RenderWindow &win, sf::Event event);
+void		mouse_handle(sf::RenderWindow &win, sf::Event event, World *&map);
 
 #endif /* __EVERYBODY_EDITS_2__ */

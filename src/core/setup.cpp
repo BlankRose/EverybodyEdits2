@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Mon Apr  3 15:40:23 CEST 2023     */
+/*       //\   /         Last Updated: Mon Apr  3 19:03:38 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -72,23 +72,6 @@ bool		configure(const std::string &path)
 bool		get_ready(Framework *&fw, World *&map)
 {
 	/** ---------------------- **/
-	/*     ALLOCATING MEMORY    */
-	/** ---------------------- **/
-
-	Logging::debug("Preparing the memory...");
-
-	fw = new Framework();
-	map = new World(10, 10);
-
-	if (!fw || !fw->is_ready() || !map)
-	{
-		unload(fw, map);
-		Logging::fatal("Couldn't allocate the requiered memory!");
-		return false;
-	}
-	Logging::debug("Successfully allocated the requiered memory!");
-
-	/** ---------------------- **/
 	/*      LOADING ASSETS      */
 	/** ---------------------- **/
 
@@ -100,5 +83,22 @@ bool		get_ready(Framework *&fw, World *&map)
 		return false;
 	}
 	Logging::debug("Successfully loaded the needed assets!");
+
+	/** ---------------------- **/
+	/*     ALLOCATING MEMORY    */
+	/** ---------------------- **/
+
+	Logging::debug("Preparing the memory...");
+
+	fw = new Framework();
+	map = new World(20, 20);
+
+	if (!fw || !fw->is_ready() || !map)
+	{
+		unload(fw, map);
+		Logging::fatal("Couldn't allocate the requiered memory!");
+		return false;
+	}
+	Logging::debug("Successfully allocated the requiered memory!");
 	return true;
 }

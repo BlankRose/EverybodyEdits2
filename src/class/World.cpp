@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Mon Apr  3 18:52:19 CEST 2023     */
+/*       //\   /         Last Updated: Tue Apr  4 14:57:33 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -34,8 +34,7 @@ World::World(const size_type &width, const size_type &height):
 			_chunks[y * _chunks_width + x] = MapChunk(x * MapChunk::WIDTH, y * MapChunk::HEIGHT);
 }
 
-World::~World()
-	{ _chunks.clear(); }
+World::~World() {}
 
 	/** ---------------------- **/
 	/*          METHODS         */
@@ -53,11 +52,23 @@ bool		World::has_chunk(const size_type &x, const size_type &y) const
 		&& y >= 0 && y / MapChunk::HEIGHT < _chunks_height;
 }
 
+bool		World::has_tile(const sf::Vector2u &pos) const
+	{ return pos.x >= 0 && pos.x < _width && pos.y >= 0 && pos.y < _height; }
+
+bool		World::has_tile(const size_type &x, const size_type &y) const
+	{ return x >= 0 && x < _width && y >= 0 && y < _height; }
+
 MapChunk	&World::get_chunk_at(const sf::Vector2u &pos)
-	{ return _chunks[(pos.x / MapChunk::WIDTH) * _chunks_width + pos.y / MapChunk::HEIGHT]; }
+	{ return _chunks[(pos.y / MapChunk::HEIGHT) * _chunks_width + pos.x / MapChunk::WIDTH]; }
 
 MapChunk	&World::get_chunk_at(const size_type &x, const size_type &y)
-	{ return _chunks[(x / MapChunk::WIDTH) * _chunks_width + y / MapChunk::HEIGHT]; }
+	{ return _chunks[(y / MapChunk::HEIGHT) * _chunks_width + x / MapChunk::WIDTH]; }
+
+Tile		&World::get_tile_at(const sf::Vector2u &pos)
+	{ return get_chunk_at(pos).get_tile_at(pos.x % MapChunk::WIDTH, pos.y % MapChunk::HEIGHT); }
+
+Tile		&World::get_tile_at(const size_type &x, const size_type &y)
+	{ return get_chunk_at(x, y).get_tile_at(x % MapChunk::WIDTH, y % MapChunk::HEIGHT); }
 
 void		World::render(Framework *&fw)
 {
@@ -69,34 +80,10 @@ void		World::render(Framework *&fw)
 	for (chunks_type::iterator it = _chunks.begin(), end = _chunks.end(); it != end; it++)
 	{
 		sf::Vector2u	pos = it->get_position();
-		sf::FloatRect	chunk_bounds(pos.x, pos.y, MapChunk::WIDTH * tile_size, MapChunk::HEIGHT * tile_size);
-		if (view_bounds.intersects(chunk_bounds))
+		sf::FloatRect	chunk_bounds(pos.x * tile_size, pos.y * tile_size, MapChunk::WIDTH * tile_size, MapChunk::HEIGHT * tile_size);
+		if (chunk_bounds.intersects(view_bounds))
 			fw->get_window().draw(*it);
 	}
-
-	// float			sx = (center.x - size.x / 2) / tile_size;
-	// float			sy = (center.y - size.y / 2) / tile_size;
-	// float			ex = (center.x + size.x / 2) / tile_size;
-	// float			ey = (center.y + size.y / 2) / tile_size;
-
-	// std::set<std::pair<uint32_t, uint32_t>>	rendered;
-	// for (int64_t x = sx - 10; x < ex + 10; x++)
-	// 	for (int64_t y = sy - 10; y < ey + 10; y++)
-	// 	{
-	// 		sf::FloatRect chunk_bounds(
-	// 			x * MapChunk::WIDTH * tile_size, y * MapChunk::HEIGHT * tile_size,
-	// 			MapChunk::WIDTH * tile_size, MapChunk::HEIGHT * tile_size);
-	// 		if (chunk_bounds.intersects(view_bounds) && has_chunk(x, y))
-	// 		{
-	// 			MapChunk		&chunk = get_chunk_at(x, y);
-	// 			sf::Vector2u	pos = chunk.get_position();
-	// 			if (!rendered.count({pos.x, pos.y}))
-	// 			{
-	// 				rendered.insert({pos.x, pos.y});
-	// 				fw->get_window().draw(chunk);
-	// 			}
-	// 		}
-	// 	}
 }
 
 size_type	World::get_width() const
