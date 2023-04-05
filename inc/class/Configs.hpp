@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Mon Apr  3 14:34:05 CEST 2023     */
+/*       //\   /         Last Updated: Wed Apr  5 12:54:45 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -29,8 +29,9 @@ namespace Configs
 
 		struct graphics
 		{
-			static std::string	textures;
 			static uint32_t		framerate;
+			static std::string	textures;
+			static uint32_t		tilesize;
 			private: graphics();
 		};
 

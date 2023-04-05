@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Tue Apr  4 15:15:09 CEST 2023     */
+/*       //\   /         Last Updated: Wed Apr  5 20:43:07 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -17,9 +17,6 @@
 	/*        ATTRIBUTES        */
 	/** ---------------------- **/
 
-using Tile = MapChunk::Tile;
-
-using id_type = MapChunk::id_type;
 using size_type = MapChunk::size_type;
 using coord_type = MapChunk::coord_type;
 using position_type = MapChunk::position_type;
@@ -31,17 +28,6 @@ size_type			MapChunk::_tile_size = 50;
 	/** ---------------------- **/
 	/*       CONSTRUCTORS       */
 	/** ---------------------- **/
-
-Tile::Tile():
-	_vertex(nullptr), _coords(0, 0), _id(0) {}
-
-Tile::Tile(const position_type &pos, sf::Vertex *vertex, const id_type &id):
-	_vertex(vertex), _coords(pos) { set_id(id); }
-
-Tile::Tile(const Tile &other)
-	{ operator=(other); }
-
-Tile::~Tile() {}
 
 MapChunk::MapChunk():
 	MapChunk(0, 0) {}
@@ -63,55 +49,15 @@ MapChunk::MapChunk(const coord_type &x, const coord_type &y):
 			quad[2].position = sf::Vector2f((pos_x + 1) * _tile_size, (pos_y + 1) * _tile_size);	// Lower Right
 			quad[3].position = sf::Vector2f(pos_x * _tile_size, (pos_y + 1) * _tile_size);			// Lower Left
 
-			get_tile_at(dx, dy) = Tile(position_type(dx, dy), quad, 0);
+			get_tile_at(dx, dy) = Tile(position_type(dx, dy), quad, 2, "basic");
 		}
 }
 
 MapChunk::~MapChunk() {}
 
 	/** ---------------------- **/
-	/*        OVERLOADS         */
-	/** ---------------------- **/
-
-Tile				&Tile::operator=(const Tile &other)
-{
-	_vertex = other._vertex;
-	_coords = other._coords;
-	set_id(other._id);
-
-	return *this;
-}
-
-	/** ---------------------- **/
 	/*          METHODS         */
 	/** ---------------------- **/
-
-sf::Vertex *		Tile::get_vertex() const
-	{ return _vertex; }
-
-position_type		Tile::get_position() const
-	{ return _coords; }
-
-id_type				Tile::get_id() const
-	{ return _id; }
-
-void				Tile::set_position(const position_type &pos)
-	{ _coords = pos; }
-
-void				Tile::set_id(const id_type &id)
-{
-	if (!_vertex)
-		return;
-
-	uint32_t				length = Assets::get_size().x;
-	Assets::rect_type		coords = Assets::get_tile_coords(id % length, id / length);
-
-	_id = id;
-	_vertex[0].texCoords = sf::Vector2f(coords.x.x, coords.x.y);
-	_vertex[1].texCoords = sf::Vector2f(coords.y.x, coords.x.y);
-	_vertex[2].texCoords = sf::Vector2f(coords.y.x, coords.y.y);
-	_vertex[3].texCoords = sf::Vector2f(coords.x.x, coords.y.y);
-}
 
 void				MapChunk::set_tilesize(const size_type &size) /* STATIC */ 
 	{ _tile_size = size; }

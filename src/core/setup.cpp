@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Wed Apr  5 12:00:55 CEST 2023     */
+/*       //\   /         Last Updated: Wed Apr  5 19:06:45 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -78,7 +78,8 @@ bool		get_ready(Context *&ctx)
 	/** ---------------------- **/
 
 	Logging::debug("Loading the assets...");
-	if (!Assets::load_tilemap("configs/tileset.png"))
+	Assets::set_size(Configs::graphics::tilesize, Configs::graphics::tilesize);
+	if (!Assets::load_tilemap(Configs::graphics::textures))
 	{
 		Logging::fatal("Couldn't load the needed assets!");
 		return false;

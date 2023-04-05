@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Wed Apr  5 11:49:21 CEST 2023     */
+/*       //\   /         Last Updated: Wed Apr  5 13:59:47 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -82,8 +82,11 @@ void		World::render(Framework *&fw)
 		std::max(0.f, std::floor(view_bounds.left / tile_size)),
 		std::max(0.f, std::floor(view_bounds.top / tile_size)));
 	sf::Vector2f	end(
-		std::min(float(_chunks_width * MapChunk::WIDTH), std::ceil((view_bounds.left + view_bounds.width) / tile_size + MapChunk::WIDTH)),
-		std::min(float(_chunks_height * MapChunk::HEIGHT), std::ceil((view_bounds.left + view_bounds.height) / tile_size + MapChunk::HEIGHT)));
+		std::min(float(_chunks_width * MapChunk::WIDTH),
+			std::ceil((view_bounds.left + view_bounds.width) / tile_size + MapChunk::WIDTH)),
+		std::min(float(_chunks_height * MapChunk::HEIGHT),
+			std::ceil((view_bounds.top + view_bounds.height) / tile_size + MapChunk::HEIGHT)));
+
 	for (size_type x = begin.x; x < end.x; x += MapChunk::WIDTH)
 		for (size_type y = begin.y; y < end.y; y += MapChunk::HEIGHT)
 			if (has_chunk(x, y))

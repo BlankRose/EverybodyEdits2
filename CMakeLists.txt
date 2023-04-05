@@ -68,7 +68,7 @@ set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 set(CLASS_FILES
 	Configs Logging Framework Context
-	Assets MapChunk World Interface)
+	Assets Tiles MapChunk World Interface)
 set(CORE_FILES setup drawing events logic main)
 
 macro(append_targets base)

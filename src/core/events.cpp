@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Sun Apr  2 12:52:28 CEST 2023     */
+/*       //\   /         Last Updated: Wed Apr  5 20:47:08 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -40,16 +40,30 @@ void	key_press(sf::Event event, Context *&ctx)
 			ctx->fw->get_window().close();
 			break;
 		case sf::Keyboard::Num1:
-		case sf::Keyboard::Numpad1:
-			ctx->ui->set_selected(0);
-			break;
 		case sf::Keyboard::Num2:
-		case sf::Keyboard::Numpad2:
-			ctx->ui->set_selected(1);
-			break;
 		case sf::Keyboard::Num3:
+		case sf::Keyboard::Num4:
+		case sf::Keyboard::Num5:
+		case sf::Keyboard::Num6:
+		case sf::Keyboard::Num7:
+		case sf::Keyboard::Num8:
+		case sf::Keyboard::Num9:
+			ctx->ui->set_selected(event.key.code - sf::Keyboard::Num1, ctx->ui->get_selected().get_group());
+			break;
+		case sf::Keyboard::Num0:
+			ctx->ui->set_selected(9, ctx->ui->get_selected().get_group());
+			break;
+		case sf::Keyboard::Numpad1:
+			ctx->ui->set_selected(0, "basic");
+			break;
+		case sf::Keyboard::Numpad2:
+			ctx->ui->set_selected(0, "bricks");
+			break;
 		case sf::Keyboard::Numpad3:
-			ctx->ui->set_selected(2);
+			ctx->ui->set_selected(0, "beta");
+			break;
+		case sf::Keyboard::Numpad4:
+			ctx->ui->set_selected(0, "static");
 			break;
 		default: break;
 	}

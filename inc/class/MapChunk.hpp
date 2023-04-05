@@ -5,14 +5,14 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Tue Apr  4 15:14:31 CEST 2023     */
+/*       //\   /         Last Updated: Wed Apr  5 14:17:31 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
 #ifndef MAPCHUNK_HPP
 # define MAPCHUNK_HPP
 
-# include "Assets.hpp"
+# include "Tiles.hpp"
 # include <vector>
 
 class MapChunk:
@@ -25,47 +25,18 @@ class MapChunk:
 			/*     TYPE DEFINITIONS     */
 			/** ---------------------- **/
 
-		class Tile;
+		using Tile = Tile;
+
+		using coord_type = Tile::coord_type;
+		using position_type = Tile::position_type;
 
 		typedef uint8_t				size_type;
-		typedef uint32_t			coord_type;
-		typedef uint32_t			id_type;
 		typedef sf::VertexArray		vertex_type;
 		typedef sf::Texture			texture_type;
-		typedef sf::Vector2u		position_type;
 		typedef std::vector<Tile>	tiles_type;
 
 		static const size_type		WIDTH;
 		static const size_type		HEIGHT;
-
-			/** ---------------------- **/
-			/*        SUB CLASSES       */
-			/** ---------------------- **/
-
-		class Tile
-		{
-			public:
-
-				Tile();
-				Tile(const position_type &pos, sf::Vertex *vertex, const id_type &id);
-				Tile(const Tile &other);
-				~Tile();
-
-				Tile			&operator=(const Tile &other);
-
-				sf::Vertex		*get_vertex() const;
-				position_type	get_position() const;
-				id_type			get_id() const;
-
-				void			set_position(const position_type &pos);
-				void			set_id(const id_type &id);
-
-			private:
-
-				sf::Vertex *	_vertex;
-				position_type	_coords;
-				id_type			_id;
-		};
 
 			/** ---------------------- **/
 			/*       CONSTRUCTORS       */

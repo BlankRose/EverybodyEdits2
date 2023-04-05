@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Tue Apr  4 15:10:37 CEST 2023     */
+/*       //\   /         Last Updated: Wed Apr  5 18:32:54 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -52,7 +52,10 @@ void	draw_loop(Context *&ctx)
 			sf::Vector2u	tile_pos(pos.x / MapChunk::get_tilesize(), pos.y / MapChunk::get_tilesize());
 
 			if (ctx->map->has_tile(tile_pos))
-				ctx->ui->set_selected(ctx->map->get_tile_at(tile_pos).get_id());
+			{
+				Tile		target = ctx->map->get_tile_at(tile_pos);
+				ctx->ui->set_selected(target.get_id(), target.get_group());
+			}
 		}
 
 		win.clear();

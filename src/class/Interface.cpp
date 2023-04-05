@@ -1,22 +1,22 @@
 /* ********************************************************************* */
 /*          .-.                                                          */
 /*    __   /   \   __                                                    */
-/*   (  `'.\   /.'`  )   Everybody Edits 2 - Player.cpp                  */
+/*   (  `'.\   /.'`  )   Everybody Edits 2 - Interface.cpp               */
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Tue Apr  4 19:47:43 CEST 2023     */
+/*       //\   /         Last Updated: Wed Apr  5 17:21:41 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
 #include "class/Interface.hpp"
+#include "class/MapChunk.hpp"
 #include "class/Framework.hpp"
 
 	/** ---------------------- **/
 	/*        ATTRIBUTES        */
 	/** ---------------------- **/
 
-using Tile = Interface::Tile;
 using vertex_type = Interface::vertex_type;
 using texture_type = Interface::texture_type;
 
@@ -37,7 +37,7 @@ Interface::Interface()
 	quad[2].position = sf::Vector2f(size, size);	// Lower Right
 	quad[3].position = sf::Vector2f(0, size);		// Lower Left
 
-	_selected = Tile(MapChunk::position_type(0, 0), quad, 0);
+	_selected = Tile(MapChunk::position_type(0, 0), quad, 1, "basic");
 }
 
 Interface::~Interface() {}
@@ -58,9 +58,9 @@ void		Interface::set_selected(const Tile &tile)
 	_selected = tile;
 }
 
-void		Interface::set_selected(const id_type &id)
+void		Interface::set_selected(const id_type &id, const group_type &group)
 {
-	_selected.set_id(id);
+	_selected.set_id(id, group);
 	set_selected(_selected);
 }
 

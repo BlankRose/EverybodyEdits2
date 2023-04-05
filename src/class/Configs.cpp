@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Mon Apr  3 12:44:32 CEST 2023     */
+/*       //\   /         Last Updated: Wed Apr  5 12:59:32 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -29,6 +29,7 @@ using key_type = Configs::key_type;
 
 std::string		Configs::graphics::textures		= "configs/tileset.png";
 uint32_t		Configs::graphics::framerate	= 60;
+uint32_t		Configs::graphics::tilesize		= 32;
 float			Configs::audio::music			= 100.f;
 float			Configs::audio::sound			= 100.f;
 key_type		Configs::keybinds::move_left	= sf::Keyboard::Left;
@@ -46,8 +47,9 @@ const json_type		_default =
 		{
 			"graphics",
 			{
+				{ "framerate", Configs::graphics::framerate },
 				{ "textures", Configs::graphics::textures },
-				{ "framerate", Configs::graphics::framerate }
+				{ "tilesize", Configs::graphics::tilesize }
 			}
 		},
 		{
@@ -126,8 +128,9 @@ bool			Configs::load_configs(const json_type &json)
 		_loaded = json;
 
 		// GRAPHICS
-		Configs::graphics::textures = json.at("graphics").at("textures");
 		Configs::graphics::framerate = json.at("graphics").at("framerate");
+		Configs::graphics::textures = json.at("graphics").at("textures");
+		Configs::graphics::tilesize = json.at("graphics").at("tilesize");
 
 		// AUDIO
 		Configs::audio::music = json.at("audio").at("music");

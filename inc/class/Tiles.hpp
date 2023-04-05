@@ -1,23 +1,23 @@
 /* ********************************************************************* */
 /*          .-.                                                          */
 /*    __   /   \   __                                                    */
-/*   (  `'.\   /.'`  )   Everybody Edits 2 - Interface.hpp               */
+/*   (  `'.\   /.'`  )   Everybody Edits 2 - Tiles.hpp                   */
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Wed Apr  5 14:24:17 CEST 2023     */
+/*       //\   /         Last Updated: Wed Apr  5 17:16:32 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
-#ifndef PLAYER_HPP
-# define PLAYER_HPP
+#ifndef TILES_HPP
+# define TILES_HPP
 
-# include "Tiles.hpp"
-class Framework;
+# include "Assets.hpp"
 
-class Interface:
-	public sf::Drawable,
-	public sf::Transformable
+# include <string>
+# include <map>
+
+class Tile
 {
 	public:
 
@@ -25,40 +25,49 @@ class Interface:
 			/*     TYPE DEFINITIONS     */
 			/** ---------------------- **/
 
-		using Tile = Tile;
-		using id_type = Tile::id_type;
-		using group_type = Tile::group_type;
+		typedef std::string						group_type;
+		typedef uint32_t						id_type;
 
-		typedef sf::VertexArray		vertex_type;
-		typedef sf::Texture			texture_type;
-		typedef std::vector<Tile>	tiles_type;
+		typedef sf::Vertex						vertex_type;
+		typedef uint32_t						coord_type;
+		typedef sf::Vector2<coord_type>			position_type;
 
 			/** ---------------------- **/
 			/*       CONSTRUCTORS       */
 			/** ---------------------- **/
 
-		Interface();
-		~Interface();
+		Tile();
+		Tile(const position_type &pos, vertex_type *&vertex, const id_type &id, const group_type &group);
+		Tile(const Tile &other);
+		~Tile();
 
 			/** ---------------------- **/
 			/*          METHODS         */
 			/** ---------------------- **/
 
-		const Tile			&get_selected() const;
-		void				set_selected(const Tile &tile);
-		void				set_selected(const id_type &id, const group_type &group);
-		void				render(Framework *&fw);
+		Tile			&operator=(const Tile &other);
+
+		vertex_type		*get_vertex() const;
+		position_type	get_position() const;
+		group_type		get_group() const;
+		id_type			get_id() const;
+
+		void			set_position(const position_type &pos);
+		void			set_id(const id_type &id, const group_type &group);
 
 	private:
-
-		virtual void		draw(sf::RenderTarget &target, sf::RenderStates states) const;
 
 			/** ---------------------- **/
 			/*        ATTRIBUTES        */
 			/** ---------------------- **/
 
-		vertex_type			_vertices;
-		Tile				_selected;
+		vertex_type *	_vertex;
+		position_type	_coords;
+
+		group_type		_group;
+		id_type			_id;
+
+		bool			_collision;
 };
 
-#endif /* PLAYER_HPP */
+#endif /* TILES_HPP */

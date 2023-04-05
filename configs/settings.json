@@ -5,7 +5,8 @@
     },
     "graphics": {
         "framerate": 60,
-        "textures": "configs/tileset.png"
+        "textures": "configs/assets/classic.png",
+        "tilesize": 16
     },
     "keybinds": {
         "exit": 36,
