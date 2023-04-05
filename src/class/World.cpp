@@ -5,12 +5,13 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Tue Apr  4 14:57:33 CEST 2023     */
+/*       //\   /         Last Updated: Wed Apr  5 11:49:21 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
 #include "class/World.hpp"
 #include "class/Framework.hpp"
+#include <cmath>
 
 	/** ---------------------- **/
 	/*        ATTRIBUTES        */
@@ -77,13 +78,16 @@ void		World::render(Framework *&fw)
 	sf::Vector2f	size = fw->get_view().getSize();
 
 	sf::FloatRect	view_bounds(center.x - size.x / 2, center.y - size.y / 2, size.x, size.y);
-	for (chunks_type::iterator it = _chunks.begin(), end = _chunks.end(); it != end; it++)
-	{
-		sf::Vector2u	pos = it->get_position();
-		sf::FloatRect	chunk_bounds(pos.x * tile_size, pos.y * tile_size, MapChunk::WIDTH * tile_size, MapChunk::HEIGHT * tile_size);
-		if (chunk_bounds.intersects(view_bounds))
-			fw->get_window().draw(*it);
-	}
+	sf::Vector2f	begin(
+		std::max(0.f, std::floor(view_bounds.left / tile_size)),
+		std::max(0.f, std::floor(view_bounds.top / tile_size)));
+	sf::Vector2f	end(
+		std::min(float(_chunks_width * MapChunk::WIDTH), std::ceil((view_bounds.left + view_bounds.width) / tile_size + MapChunk::WIDTH)),
+		std::min(float(_chunks_height * MapChunk::HEIGHT), std::ceil((view_bounds.left + view_bounds.height) / tile_size + MapChunk::HEIGHT)));
+	for (size_type x = begin.x; x < end.x; x += MapChunk::WIDTH)
+		for (size_type y = begin.y; y < end.y; y += MapChunk::HEIGHT)
+			if (has_chunk(x, y))
+				fw->get_window().draw(get_chunk_at(x, y));
 }
 
 size_type	World::get_width() const
