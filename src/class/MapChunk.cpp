@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Wed Apr  5 20:43:07 CEST 2023     */
+/*       //\   /         Last Updated: Wed Apr  5 21:14:47 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -32,7 +32,9 @@ size_type			MapChunk::_tile_size = 50;
 MapChunk::MapChunk():
 	MapChunk(0, 0) {}
 
-MapChunk::MapChunk(const coord_type &x, const coord_type &y):
+MapChunk::MapChunk(const coord_type &x, const coord_type &y,
+			const bool &top_edge, const bool &low_edge,
+			const bool &left_edge, const bool &right_edge):
 	_tiles(WIDTH * HEIGHT), _position(x, y)
 {
 	_vertices.setPrimitiveType(sf::PrimitiveType::Quads);
@@ -49,7 +51,11 @@ MapChunk::MapChunk(const coord_type &x, const coord_type &y):
 			quad[2].position = sf::Vector2f((pos_x + 1) * _tile_size, (pos_y + 1) * _tile_size);	// Lower Right
 			quad[3].position = sf::Vector2f(pos_x * _tile_size, (pos_y + 1) * _tile_size);			// Lower Left
 
-			get_tile_at(dx, dy) = Tile(position_type(dx, dy), quad, 2, "basic");
+			if ((top_edge && !dx) || (low_edge && dx == WIDTH - 1)
+				|| (left_edge && !dy) || (right_edge && dy == HEIGHT - 1))
+				get_tile_at(dx, dy) = Tile(position_type(dx, dy), quad, 1, "basic");
+			else
+				get_tile_at(dx, dy) = Tile(position_type(dx, dy), quad, 2, "basic");
 		}
 }
 

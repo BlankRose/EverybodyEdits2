@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Wed Apr  5 13:59:47 CEST 2023     */
+/*       //\   /         Last Updated: Wed Apr  5 21:15:54 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -32,7 +32,9 @@ World::World(const size_type &width, const size_type &height):
 {
 	for (size_type x = 0; x < _chunks_width; x++)
 		for (size_type y = 0; y < _chunks_height; y++)
-			_chunks[y * _chunks_width + x] = MapChunk(x * MapChunk::WIDTH, y * MapChunk::HEIGHT);
+			_chunks[y * _chunks_width + x] = MapChunk(
+				x * MapChunk::WIDTH, y * MapChunk::HEIGHT, !x,
+				x == _chunks_width - 1, !y, y == _chunks_height - 1);
 }
 
 World::~World() {}

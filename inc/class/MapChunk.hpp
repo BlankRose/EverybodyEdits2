@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Wed Apr  5 14:17:31 CEST 2023     */
+/*       //\   /         Last Updated: Wed Apr  5 21:10:53 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -43,7 +43,9 @@ class MapChunk:
 			/** ---------------------- **/
 
 		MapChunk();
-		MapChunk(const coord_type &x, const coord_type &y);
+		MapChunk(const coord_type &x, const coord_type &y,
+			const bool &top_edge = false, const bool &low_edge = false,
+			const bool &left_edge = false, const bool &right_edge = false);
 		~MapChunk();
 
 			/** ---------------------- **/
