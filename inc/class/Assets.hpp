@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Wed Apr  5 15:50:51 CEST 2023     */
+/*       //\   /         Last Updated: Thu Apr  6 15:43:00 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -37,15 +37,15 @@ namespace Assets
 			/*          LOADERS         */
 			/** ---------------------- **/
 
-		bool			load_tilemap(const path_type &path);
+		bool			load_tilemap(const path_type &base_dir);
 
 		void			set_size(const vector_type &size);
 		void			set_size(const size_type &x, const size_type &y);
 
-		texture_type	&get_tilemap();
-		vector_type		get_size();
+		texture_type	&get_tilemap(const bool &bg = false);
+		vector_type		get_size(const bool &bg = false);
 
-		rect_type		get_tile_coords(const group_type &group, const id_type &id);
+		rect_type		get_tile_coords(const group_type &group, const id_type &id, const bool &bg = false);
 		rect_type		get_tile_coords(const size_type &x, const size_type &y);
 }
 

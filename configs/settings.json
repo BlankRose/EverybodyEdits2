@@ -4,8 +4,8 @@
         "sound": 100.0
     },
     "graphics": {
-        "framerate": 60,
-        "textures": "configs/assets/classic.png",
+        "framerate": 200,
+        "textures": "configs/assets/classic",
         "tilesize": 16
     },
     "keybinds": {
@@ -17,6 +17,8 @@
     },
     "miscellaneous": {
         "log_file": "configs/latest.log",
-        "log_level": 10
+        "log_level": 10,
+        "test_height": 100,
+        "test_width": 100
     }
 }

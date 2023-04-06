@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Wed Apr  5 21:10:53 CEST 2023     */
+/*       //\   /         Last Updated: Thu Apr  6 14:43:41 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -55,17 +55,17 @@ class MapChunk:
 		static void			set_tilesize(const size_type &size);
 		static size_type	&get_tilesize();
 
-		Tile				&get_tile_at(const coord_type &x, const coord_type &y);
-		const Tile			&get_tile_at(const coord_type &x, const coord_type &y) const;
+		Tile				&get_tile_at(const coord_type &x, const coord_type &y, const bool &bg = false);
+		const Tile			&get_tile_at(const coord_type &x, const coord_type &y, const bool &bg = false) const;
 
-		sf::Vertex *		get_tilevertex(const coord_type &x, const coord_type &y);
-		const sf::Vertex *	get_tilevertex(const coord_type &x, const coord_type &y) const;
+		sf::Vertex *		get_tilevertex(const coord_type &x, const coord_type &y, const bool &bg = false);
+		const sf::Vertex *	get_tilevertex(const coord_type &x, const coord_type &y, const bool &bg = false) const;
 
 		position_type		&get_position();
 		const position_type	&get_position() const;
 		void				set_position(const position_type &pos);
 
-		void				update_tile(const Tile &tile);
+		void				update_tile(const Tile &tile, const bool &bg = false);
 
 	private:
 
@@ -75,10 +75,14 @@ class MapChunk:
 			/*        ATTRIBUTES        */
 			/** ---------------------- **/
 
-		tiles_type			_tiles;
 		position_type		_position;
 		static size_type	_tile_size;
-		vertex_type			_vertices;
+
+		tiles_type			_fg_tiles;
+		vertex_type			_fg_vertices;
+
+		tiles_type			_bg_tiles;
+		vertex_type			_bg_vertices;
 };
 
 #endif /* MAPCHUNK_HPP */

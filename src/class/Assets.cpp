@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Wed Apr  5 20:44:23 CEST 2023     */
+/*       //\   /         Last Updated: Thu Apr  6 15:46:50 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -28,9 +28,9 @@ using rect_type = Assets::rect_type;
 using texture_map = Assets::texture_map;
 
 vector_type		_tilesize(Configs::graphics::tilesize, Configs::graphics::tilesize);
-vector_type		_mapsize(0, 0);
-texture_type	_tilemap;
 
+vector_type		_fg_mapsize(0, 0);
+texture_type	_fg_tilemap;
 texture_map		_fg_regions = {
 	// OOB-Colors - Empty - Invalid - Cursor
 	{ "special", { 0, 4 } },
@@ -42,22 +42,40 @@ texture_map		_fg_regions = {
 	{ "static", { 4, 10 } }
 };
 
+vector_type		_bg_mapsize(0, 0);
+texture_type	_bg_tilemap;
 texture_map		_bg_regions = {
-	{ "special", { 0, 1 } }
+	// OOB-Colors - Empty - Invalid - Cursor
+	{ "special", { 0, 1 } },
+
+	// Regular Tile Packs (line, length)
+	{ "basic", { 1, 10 } },
+	{ "bricks", { 2, 10 } },
+	{ "beta", { 3, 10 } },
+	{ "static", { 4, 10 } }
 };
 
 	/** ---------------------- **/
 	/*          LOADERS         */
 	/** ---------------------- **/
 
-bool			Assets::load_tilemap(const path_type &path)
+bool			Assets::load_tilemap(const path_type &base_dir)
 {
-	if (!_tilemap.loadFromFile(path))
+	path_type	dir = base_dir;
+	if (*base_dir.rbegin() != '/')
+		dir += '/';
+
+	if (!_bg_tilemap.loadFromFile(dir + "background.png")
+		|| !_fg_tilemap.loadFromFile(dir + "foreground.png"))
 		return false;
 
-	_mapsize = _tilemap.getSize();
-	_mapsize.x /= _tilesize.x;
-	_mapsize.y /= _tilesize.y;
+	_fg_mapsize = _fg_tilemap.getSize();
+	_fg_mapsize.x /= _tilesize.x;
+	_fg_mapsize.y /= _tilesize.y;
+
+	_bg_mapsize = _bg_tilemap.getSize();
+	_bg_mapsize.x /= _tilesize.x;
+	_bg_mapsize.y /= _tilesize.y;
 	return true;
 }
 
@@ -67,21 +85,28 @@ void			Assets::set_size(const vector_type &size)
 void			Assets::set_size(const size_type &x, const size_type &y)
 	{ _tilesize = vector_type(x, y); }
 
-texture_type	&Assets::get_tilemap()
-	{ return _tilemap; }
+texture_type	&Assets::get_tilemap(const bool &bg)
+{
+	if (bg) return _bg_tilemap;
+	return _fg_tilemap;
+}
 
-vector_type		Assets::get_size()
-	{ return _mapsize; }
+vector_type		Assets::get_size(const bool &bg)
+{
+	if (bg) return _bg_mapsize;
+	return _fg_mapsize;
+}
 
-rect_type		Assets::get_tile_coords(const group_type &group, const id_type &id)
+rect_type		Assets::get_tile_coords(const group_type &group, const id_type &id, const bool &bg)
 {
 	rect_type	invalid(
 		vector_type(2 * _tilesize.x, 0),
 		vector_type(3 * _tilesize.x, 0));
 
-	if (_fg_regions.find(group) == _fg_regions.end())
+	texture_map		target = bg ? _bg_regions : _fg_regions;
+	if (target.find(group) == target.end())
 		return invalid;
-	id_region	ids = _fg_regions.at(group);
+	id_region	ids = target.at(group);
 	if (id >= ids.second)
 		return invalid;
 	return get_tile_coords(id, ids.first);

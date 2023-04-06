@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Wed Apr  5 12:54:45 CEST 2023     */
+/*       //\   /         Last Updated: Thu Apr  6 16:54:44 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -56,6 +56,8 @@ namespace Configs
 		{
 			static std::string	log_file;
 			static uint32_t		log_level;
+			static uint32_t		test_width;
+			static uint32_t		test_height;
 			private: misc();
 		};
 

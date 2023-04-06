@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Tue Apr  4 14:40:26 CEST 2023     */
+/*       //\   /         Last Updated: Thu Apr  6 16:46:44 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -58,7 +58,8 @@ bool		configure(const std::string &path);
 bool		get_ready(Context *&ctx);
 void		unload(Context *&ctx);
 
-void		draw_loop(Context *&ctx);
-void		event_cycle(Context *&ctx);
+void		draws_unit(Context *&ctx);
+void		event_unit(Context *&ctx);
+void		logic_unit(Context *&ctx);
 
 #endif /* __EVERYBODY_EDITS_2__ */

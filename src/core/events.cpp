@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Wed Apr  5 20:47:08 CEST 2023     */
+/*       //\   /         Last Updated: Thu Apr  6 16:41:30 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -135,12 +135,12 @@ void	mouse_release(sf::Event event, Context *&ctx)
  * 
  * @param	ctx: Context of the target instance
  * */
-void	event_cycle(Context *&ctx)
+void	event_unit(Context *&ctx)
 {
 	sf::RenderWindow	&win = ctx->fw->get_window();
 	sf::Event			event;
 
-	while (win.pollEvent(event))
+	while (win.isOpen() && win.pollEvent(event))
 		switch (event.type)
 		{
 			case sf::Event::Closed:

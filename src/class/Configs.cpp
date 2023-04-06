@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Wed Apr  5 12:59:32 CEST 2023     */
+/*       //\   /         Last Updated: Thu Apr  6 16:54:28 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -30,15 +30,20 @@ using key_type = Configs::key_type;
 std::string		Configs::graphics::textures		= "configs/tileset.png";
 uint32_t		Configs::graphics::framerate	= 60;
 uint32_t		Configs::graphics::tilesize		= 32;
+
 float			Configs::audio::music			= 100.f;
 float			Configs::audio::sound			= 100.f;
+
 key_type		Configs::keybinds::move_left	= sf::Keyboard::Left;
 key_type		Configs::keybinds::move_right	= sf::Keyboard::Right;
 key_type		Configs::keybinds::move_up		= sf::Keyboard::Up;
 key_type		Configs::keybinds::move_down	= sf::Keyboard::Down;
 key_type		Configs::keybinds::exit			= sf::Keyboard::Escape;
+
 std::string		Configs::misc::log_file			= "configs/latest.log";
 uint32_t		Configs::misc::log_level		= Logging::DEBUG;
+uint32_t		Configs::misc::test_width		= 100;
+uint32_t		Configs::misc::test_height		= 100;
 
 const std::string	DEFAULT_TARGET = "DEFAULT";
 const json_type		_default =
@@ -73,7 +78,9 @@ const json_type		_default =
 			"miscellaneous",
 			{
 				{ "log_file", Configs::misc::log_file },
-				{ "log_level", Configs::misc::log_level }
+				{ "log_level", Configs::misc::log_level },
+				{ "test_width", Configs::misc::test_width },
+				{ "test_height", Configs::misc::test_height }
 			}
 		}
 	};
@@ -146,6 +153,8 @@ bool			Configs::load_configs(const json_type &json)
 		// MISCELLANEOUS
 		Configs::misc::log_file = json.at("miscellaneous").at("log_file");
 		Configs::misc::log_level = json.at("miscellaneous").at("log_level");
+		Configs::misc::test_width = json.at("miscellaneous").at("test_width");
+		Configs::misc::test_height = json.at("miscellaneous").at("test_height");
 
 		return (_ready = true);
 	}

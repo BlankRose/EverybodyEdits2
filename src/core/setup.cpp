@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Wed Apr  5 19:06:45 CEST 2023     */
+/*       //\   /         Last Updated: Thu Apr  6 16:55:36 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -100,7 +100,7 @@ bool		get_ready(Context *&ctx)
 	}
 
 	ctx->fw = new Framework();
-	ctx->map = new World(100, 100);
+	ctx->map = new World(Configs::misc::test_width, Configs::misc::test_height);
 	ctx->ui = new Interface();
 	if (!ctx->fw || !ctx->fw->is_ready() || !ctx->map || !ctx->ui)
 	{
