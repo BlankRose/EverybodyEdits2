@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Mon Apr  3 19:03:32 CEST 2023     */
+/*       //\   /         Last Updated: Thu Apr  6 19:44:19 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -16,7 +16,9 @@
 # include <vector>
 
 using Tile = MapChunk::Tile;
+
 class Framework;
+class Context;
 
 class World
 {

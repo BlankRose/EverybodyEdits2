@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Thu Apr  6 16:46:44 CEST 2023     */
+/*       //\   /         Last Updated: Thu Apr  6 19:38:00 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -19,6 +19,7 @@
 # include "core/generic.hpp"
 # include "core/more_types.hpp"
 
+# include "class/Context.hpp"
 # include "class/Configs.hpp"
 # include "class/Framework.hpp"
 # include "class/Logging.hpp"
@@ -28,27 +29,8 @@
 # include "class/World.hpp"
 # include "class/Interface.hpp"
 
+# include <SFML/System.hpp>
 # include <iostream>
-
-	/** ---------------------- **/
-	/*          CONTEXT         */
-	/** ---------------------- **/
-
-struct Context
-{
-	Context();
-	Context(const Context &other);
-	~Context();
-
-	Context		&operator=(const Context &other);
-
-	bool	up, down, right, left;
-	bool	mouse_L, mouse_R, mouse_M;
-
-	Framework	*fw;
-	World		*map;
-	Interface	*ui;
-};
 
 	/** ---------------------- **/
 	/*         FUNCTIONS        */
@@ -58,8 +40,9 @@ bool		configure(const std::string &path);
 bool		get_ready(Context *&ctx);
 void		unload(Context *&ctx);
 
-void		draws_unit(Context *&ctx);
+void		threads_unit(Context *&ctx);
 void		event_unit(Context *&ctx);
 void		logic_unit(Context *&ctx);
+void		draws_unit(Context *&ctx);
 
 #endif /* __EVERYBODY_EDITS_2__ */

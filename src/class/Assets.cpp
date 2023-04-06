@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Thu Apr  6 15:46:50 CEST 2023     */
+/*       //\   /         Last Updated: Thu Apr  6 21:09:14 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -26,6 +26,7 @@ using size_type = Assets::size_type;
 using vector_type = Assets::vector_type;
 using rect_type = Assets::rect_type;
 using texture_map = Assets::texture_map;
+using font_type = Assets::font_type;
 
 vector_type		_tilesize(Configs::graphics::tilesize, Configs::graphics::tilesize);
 
@@ -55,18 +56,23 @@ texture_map		_bg_regions = {
 	{ "static", { 4, 10 } }
 };
 
+font_type		_font;
+texture_type	_loadscreen;
+
 	/** ---------------------- **/
 	/*          LOADERS         */
 	/** ---------------------- **/
 
-bool			Assets::load_tilemap(const path_type &base_dir)
+bool			Assets::load_ressources(const path_type &base_dir)
 {
 	path_type	dir = base_dir;
 	if (*base_dir.rbegin() != '/')
 		dir += '/';
 
 	if (!_bg_tilemap.loadFromFile(dir + "background.png")
-		|| !_fg_tilemap.loadFromFile(dir + "foreground.png"))
+		|| !_fg_tilemap.loadFromFile(dir + "foreground.png")
+		|| !_loadscreen.loadFromFile(dir + "loadscreen.png")
+		|| !_font.loadFromFile(dir + "font.ttf"))
 		return false;
 
 	_fg_mapsize = _fg_tilemap.getSize();
@@ -84,6 +90,12 @@ void			Assets::set_size(const vector_type &size)
 
 void			Assets::set_size(const size_type &x, const size_type &y)
 	{ _tilesize = vector_type(x, y); }
+
+font_type		&Assets::get_font()
+	{ return _font; }
+
+texture_type	&Assets::get_loadscreen()
+	{ return _loadscreen; }
 
 texture_type	&Assets::get_tilemap(const bool &bg)
 {

@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Thu Apr  6 16:55:36 CEST 2023     */
+/*       //\   /         Last Updated: Thu Apr  6 21:10:09 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -79,7 +79,7 @@ bool		get_ready(Context *&ctx)
 
 	Logging::debug("Loading the assets...");
 	Assets::set_size(Configs::graphics::tilesize, Configs::graphics::tilesize);
-	if (!Assets::load_tilemap(Configs::graphics::textures))
+	if (!Assets::load_ressources(Configs::graphics::textures))
 	{
 		Logging::fatal("Couldn't load the needed assets!");
 		return false;
@@ -100,9 +100,8 @@ bool		get_ready(Context *&ctx)
 	}
 
 	ctx->fw = new Framework();
-	ctx->map = new World(Configs::misc::test_width, Configs::misc::test_height);
 	ctx->ui = new Interface();
-	if (!ctx->fw || !ctx->fw->is_ready() || !ctx->map || !ctx->ui)
+	if (!ctx->fw || !ctx->fw->is_ready() || !ctx->ui)
 	{
 		unload(ctx);
 		Logging::fatal("Couldn't allocate the requiered memory!");
@@ -118,4 +117,25 @@ bool		get_ready(Context *&ctx)
 	ctx->fw->set_framelimit(Configs::graphics::framerate);
 	Logging::debug("Successfully configured the game!");
 	return true;
+}
+
+/**
+ * Handles th processing of each threads
+ * 
+ * @param	ctx: Context of the current target process
+ * */
+void	threads_unit(Context *&ctx)
+{
+	sf::RenderWindow	&win = ctx->fw->get_window();
+
+	while (win.isOpen())
+	{
+		event_unit(ctx);
+		if (!win.isOpen())
+			break;
+		logic_unit(ctx);
+		if (!win.isOpen())
+			break;
+		draws_unit(ctx);
+	}
 }

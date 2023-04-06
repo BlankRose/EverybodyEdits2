@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Thu Apr  6 15:43:00 CEST 2023     */
+/*       //\   /         Last Updated: Thu Apr  6 20:20:43 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -32,16 +32,19 @@ namespace Assets
 		typedef sf::Vector2<size_type>			vector_type;
 		typedef sf::Vector2<vector_type>		rect_type;
 		typedef sf::Texture						texture_type;
+		typedef sf::Font						font_type;
 
 			/** ---------------------- **/
 			/*          LOADERS         */
 			/** ---------------------- **/
 
-		bool			load_tilemap(const path_type &base_dir);
+		bool			load_ressources(const path_type &base_dir);
 
 		void			set_size(const vector_type &size);
 		void			set_size(const size_type &x, const size_type &y);
 
+		font_type		&get_font();
+		texture_type	&get_loadscreen();
 		texture_type	&get_tilemap(const bool &bg = false);
 		vector_type		get_size(const bool &bg = false);
 

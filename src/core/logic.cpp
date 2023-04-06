@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Thu Apr  6 16:49:42 CEST 2023     */
+/*       //\   /         Last Updated: Thu Apr  6 21:23:03 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -20,6 +20,18 @@
 void	logic_unit(Context *&ctx)
 {
 	sf::RenderWindow	&win = ctx->fw->get_window();
+
+	if (ctx->display == Context::LOADING && !ctx->map)
+	{
+		draws_unit(ctx);
+		ctx->map = new World(Configs::misc::test_width, Configs::misc::test_height);
+		if (!ctx->map)
+		{
+			Logging::fatal("Couldn't generate the target World!");
+			return;
+		}
+		ctx->display = Context::WORLD;
+	}
 
 	if (ctx->up || ctx->down || ctx->right || ctx->left)
 	{

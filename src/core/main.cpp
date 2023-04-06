@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Tue Apr  4 22:02:32 CEST 2023     */
+/*       //\   /         Last Updated: Thu Apr  6 16:48:05 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -30,7 +30,7 @@ int main(int, char *[], char *[])
 	if (!configure("configs/settings.json")
 		|| !get_ready(ctx))
 		return FAILURE;
-	draws_unit(ctx);
+	threads_unit(ctx);
 
 	unload(ctx);
 	Configs::save_configs();
