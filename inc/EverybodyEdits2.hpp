@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Fri Apr  7 13:32:23 CEST 2023     */
+/*       //\   /         Last Updated: Fri Apr  7 21:01:46 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -38,10 +38,8 @@
 
 # define VERSION_NAME		"alpha"
 # define VERSION_MAJOR		0
-# define VERSION_MINOR		5
+# define VERSION_MINOR		6
 # define VERSION_SAVES		1
-
-# define SAVES_SEP			':'
 
 	/** ---------------------- **/
 	/*         FUNCTIONS        */

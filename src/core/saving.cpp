@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Fri Apr  7 19:15:02 CEST 2023     */
+/*       //\   /         Last Updated: Fri Apr  7 21:12:59 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -41,12 +41,14 @@ bool	save_world(Context *&ctx, const std::string &path)
 		/*        WORLD DATA        */
 		/** ---------------------- **/
 
-	World	*&map = ctx->map;
-	ofile << char(VERSION_SAVES) << map->get_width() << SAVES_SEP << map->get_height() << std::endl;
-
+	World				*&map = ctx->map;
 	World::data_type	data = map->as_data();
+	uint32_t			size[2] = { map->get_width(), map->get_height() };
+
+	ofile << char(VERSION_SAVES);
+	ofile.write((char *) size, 2 * sizeof(uint32_t));
 	for (World::data_type::iterator it = data.begin(), end = data.end(); it != end; it++)
-		ofile << *it << std::endl;
+		ofile << std::endl << *it;
 	return true;
 }
 
@@ -78,10 +80,9 @@ bool	load_world(Context *&ctx, const std::string &path)
 	std::string		str;
 	std::getline(ifile, str);
 
+	uint32_t *		data = (uint32_t *) (str.c_str() + 1);
 	uint32_t		ver = str[0];
-	sf::Vector2u	size(
-		std::atoi(str.substr(1, str.find_first_of(SAVES_SEP)).c_str()),
-		std::atoi(str.substr(str.find_first_of(SAVES_SEP) + 1).c_str()));
+	sf::Vector2u	size(data[0], data[1]);
 
 	if (ver < VERSION_SAVES)
 		Logging::warn("The target save file is from an older version of the game!");
