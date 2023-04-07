@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Thu Apr  6 16:54:44 CEST 2023     */
+/*       //\   /         Last Updated: Fri Apr  7 13:07:34 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -21,6 +21,7 @@ namespace Configs
 			/** ---------------------- **/
 
 		typedef nlohmann::json			json_type;
+		typedef std::string				path_type;
 		typedef uint32_t				key_type;
 
 			/** ---------------------- **/
@@ -30,7 +31,7 @@ namespace Configs
 		struct graphics
 		{
 			static uint32_t		framerate;
-			static std::string	textures;
+			static path_type	textures;
 			static uint32_t		tilesize;
 			private: graphics();
 		};
@@ -54,7 +55,8 @@ namespace Configs
 
 		struct misc
 		{
-			static std::string	log_file;
+			static path_type	save_file;
+			static path_type	log_file;
 			static uint32_t		log_level;
 			static uint32_t		test_width;
 			static uint32_t		test_height;

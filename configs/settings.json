@@ -4,7 +4,7 @@
         "sound": 100.0
     },
     "graphics": {
-        "framerate": 200,
+        "framerate": 120,
         "textures": "configs/assets/classic",
         "tilesize": 16
     },
@@ -18,7 +18,8 @@
     "miscellaneous": {
         "log_file": "configs/latest.log",
         "log_level": 10,
-        "test_height": 100,
-        "test_width": 100
+        "save_file": "configs/data/world.dat",
+        "test_height": 50,
+        "test_width": 50
     }
 }

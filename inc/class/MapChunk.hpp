@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Thu Apr  6 14:43:41 CEST 2023     */
+/*       //\   /         Last Updated: Fri Apr  7 16:05:02 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -46,6 +46,7 @@ class MapChunk:
 		MapChunk(const coord_type &x, const coord_type &y,
 			const bool &top_edge = false, const bool &low_edge = false,
 			const bool &left_edge = false, const bool &right_edge = false);
+		MapChunk(const std::string &data, const char &sep);
 		~MapChunk();
 
 			/** ---------------------- **/
@@ -66,6 +67,7 @@ class MapChunk:
 		void				set_position(const position_type &pos);
 
 		void				update_tile(const Tile &tile, const bool &bg = false);
+		std::string			as_data(const char &sep) const;
 
 	private:
 

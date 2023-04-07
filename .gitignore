@@ -3,9 +3,9 @@
 .vscode/
 .header
 *.log
+*.dat
 *.dSYM/
 /build/
-/logs/
 tmp/
 
 # Prerequisites

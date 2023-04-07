@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Thu Apr  6 19:38:00 CEST 2023     */
+/*       //\   /         Last Updated: Fri Apr  7 13:32:23 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -33,6 +33,17 @@
 # include <iostream>
 
 	/** ---------------------- **/
+	/*        DEFINITIONS       */
+	/** ---------------------- **/
+
+# define VERSION_NAME		"alpha"
+# define VERSION_MAJOR		0
+# define VERSION_MINOR		5
+# define VERSION_SAVES		1
+
+# define SAVES_SEP			':'
+
+	/** ---------------------- **/
 	/*         FUNCTIONS        */
 	/** ---------------------- **/
 
@@ -42,7 +53,11 @@ void		unload(Context *&ctx);
 
 void		threads_unit(Context *&ctx);
 void		event_unit(Context *&ctx);
-void		logic_unit(Context *&ctx);
+bool		logic_unit(Context *&ctx);
 void		draws_unit(Context *&ctx);
+
+bool		save_world(Context *&ctx, const std::string &path);
+bool		load_world(Context *&ctx, const std::string &path);
+bool		new_world(Context *&ctx);
 
 #endif /* __EVERYBODY_EDITS_2__ */

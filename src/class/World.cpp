@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Thu Apr  6 20:34:03 CEST 2023     */
+/*       //\   /         Last Updated: Fri Apr  7 16:18:11 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -20,6 +20,7 @@
 
 using size_type = World::size_type;
 using chunks_type = World::chunks_type;
+using data_type = World::data_type;
 
 	/** ---------------------- **/
 	/*       CONSTRUCTORS       */
@@ -36,6 +37,16 @@ World::World(const size_type &width, const size_type &height):
 			_chunks[y * _chunks_width + x] = MapChunk(
 				x * MapChunk::WIDTH, y * MapChunk::HEIGHT, !x,
 				x == _chunks_width - 1, !y, y == _chunks_height - 1);
+}
+
+World::World(const size_type &width, const size_type &height, const data_type &data, const char &sep):
+	_width(width), _height(height),
+	_chunks_width((width / MapChunk::WIDTH) + (width % MapChunk::WIDTH ? 1 : 0)),
+	_chunks_height((height / MapChunk::HEIGHT) + (height % MapChunk::HEIGHT ? 1 : 0)),
+	_chunks(_chunks_width * _chunks_height)
+{
+	for (uint8_t i = 0; i < data.size(); i++)
+		_chunks[i] = MapChunk(data[i], sep);
 }
 
 World::~World() {}
@@ -94,6 +105,15 @@ void		World::render(Framework *&fw)
 		for (size_type y = begin.y; y < end.y; y += MapChunk::HEIGHT)
 			if (has_chunk(x, y))
 				fw->get_window().draw(get_chunk_at(x, y));
+}
+
+data_type	World::as_data(const char &sep) const
+{
+	data_type	data(_chunks_width * _chunks_height);
+
+	for (uint32_t i = 0, end = _chunks.size(); i < end; i++)
+		data[i] = _chunks[i].as_data(sep);
+	return data;
 }
 
 size_type	World::get_width() const

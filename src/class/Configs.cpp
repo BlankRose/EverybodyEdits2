@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Thu Apr  6 16:54:28 CEST 2023     */
+/*       //\   /         Last Updated: Fri Apr  7 13:40:37 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -24,12 +24,13 @@
 
 using json_type = Configs::json_type;
 using key_type = Configs::key_type;
+using path_type = Configs::path_type;
 
 // Default Values
 
-std::string		Configs::graphics::textures		= "configs/tileset.png";
+path_type		Configs::graphics::textures		= "configs/assets/classic";
 uint32_t		Configs::graphics::framerate	= 60;
-uint32_t		Configs::graphics::tilesize		= 32;
+uint32_t		Configs::graphics::tilesize		= 16;
 
 float			Configs::audio::music			= 100.f;
 float			Configs::audio::sound			= 100.f;
@@ -40,7 +41,8 @@ key_type		Configs::keybinds::move_up		= sf::Keyboard::Up;
 key_type		Configs::keybinds::move_down	= sf::Keyboard::Down;
 key_type		Configs::keybinds::exit			= sf::Keyboard::Escape;
 
-std::string		Configs::misc::log_file			= "configs/latest.log";
+path_type		Configs::misc::save_file		= "configs/data/world.dat";
+path_type		Configs::misc::log_file			= "configs/latest.log";
 uint32_t		Configs::misc::log_level		= Logging::DEBUG;
 uint32_t		Configs::misc::test_width		= 100;
 uint32_t		Configs::misc::test_height		= 100;
@@ -77,6 +79,7 @@ const json_type		_default =
 		{
 			"miscellaneous",
 			{
+				{ "save_file", Configs::misc::save_file },
 				{ "log_file", Configs::misc::log_file },
 				{ "log_level", Configs::misc::log_level },
 				{ "test_width", Configs::misc::test_width },
@@ -90,6 +93,23 @@ const json_type		_default =
 bool			_ready = true;
 std::string		_from = DEFAULT_TARGET;
 json_type		_loaded = _default;
+
+	/** ---------------------- **/
+	/*      PRIVATE METHODS     */
+	/** ---------------------- **/
+
+template < class T >
+static void		get_target(const json_type &json, T &value, const char *entry, const char *sub)
+{
+	try
+		{ value = json.at(entry).at(sub); }
+	catch (const std::exception &err)
+	{
+		std::cout << "There's an error in the configuration: (Attemped for: "
+			<< entry << " : " << sub << ")" << std::endl << err.what() << std::endl;
+		value = _default.at(entry).at(sub);
+	}
+}
 
 	/** ---------------------- **/
 	/*          METHODS         */
@@ -151,6 +171,7 @@ bool			Configs::load_configs(const json_type &json)
 		Configs::keybinds::exit = json.at("keybinds").at("exit");
 
 		// MISCELLANEOUS
+		Configs::misc::save_file = json.at("miscellaneous").at("save_file");
 		Configs::misc::log_file = json.at("miscellaneous").at("log_file");
 		Configs::misc::log_level = json.at("miscellaneous").at("log_level");
 		Configs::misc::test_width = json.at("miscellaneous").at("test_width");

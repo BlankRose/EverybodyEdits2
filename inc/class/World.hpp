@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Thu Apr  6 19:44:19 CEST 2023     */
+/*       //\   /         Last Updated: Fri Apr  7 16:14:15 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -30,14 +30,16 @@ class World
 			/*     TYPE DEFINITIONS     */
 			/** ---------------------- **/
 
-		typedef uint32_t				size_type;
-		typedef std::vector<MapChunk>	chunks_type;
+		typedef uint32_t					size_type;
+		typedef std::vector<MapChunk>		chunks_type;
+		typedef std::vector<std::string>	data_type;
 
 			/** ---------------------- **/
 			/*       CONSTRUCTORS       */
 			/** ---------------------- **/
 
 		World(const size_type &width, const size_type &height);
+		World(const size_type &width, const size_type &height, const data_type &data, const char &sep);
 		~World();
 
 			/** ---------------------- **/
@@ -60,6 +62,7 @@ class World
 		Tile		&get_tile_at(const size_type &x, const size_type &y);
 
 		void		render(Framework *&fw);
+		data_type	as_data(const char &sep) const;
 
 	private:
 

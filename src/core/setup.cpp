@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Thu Apr  6 21:10:09 CEST 2023     */
+/*       //\   /         Last Updated: Fri Apr  7 13:43:44 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -40,9 +40,9 @@ void		unload(Context *&ctx)
  * */
 bool		configure(const std::string &path)
 {
-	/** ---------------------- **/
-	/*  SETTING CONFIGURATIONS  */
-	/** ---------------------- **/
+		/** ---------------------- **/
+		/*  SETTING CONFIGURATIONS  */
+		/** ---------------------- **/
 
 	if (!Configs::load_configs(path)
 		&& !Configs::load_default())
@@ -51,9 +51,9 @@ bool		configure(const std::string &path)
 		return false;
 	}
 
-	/** ---------------------- **/
-	/*      PREPARING LOGS      */
-	/** ---------------------- **/
+		/** ---------------------- **/
+		/*      PREPARING LOGS      */
+		/** ---------------------- **/
 
 	Logging::init(Configs::misc::log_file, Configs::misc::log_level);
 	Logging::debug("Logging module init!");
@@ -73,9 +73,9 @@ bool		configure(const std::string &path)
  * */
 bool		get_ready(Context *&ctx)
 {
-	/** ---------------------- **/
-	/*      LOADING ASSETS      */
-	/** ---------------------- **/
+		/** ---------------------- **/
+		/*      LOADING ASSETS      */
+		/** ---------------------- **/
 
 	Logging::debug("Loading the assets...");
 	Assets::set_size(Configs::graphics::tilesize, Configs::graphics::tilesize);
@@ -86,9 +86,9 @@ bool		get_ready(Context *&ctx)
 	}
 	Logging::debug("Successfully loaded the needed assets!");
 
-	/** ---------------------- **/
-	/*     ALLOCATING MEMORY    */
-	/** ---------------------- **/
+		/** ---------------------- **/
+		/*     ALLOCATING MEMORY    */
+		/** ---------------------- **/
 
 	Logging::debug("Preparing the memory...");
 	ctx = new Context();
@@ -109,9 +109,9 @@ bool		get_ready(Context *&ctx)
 	}
 	Logging::debug("Successfully allocated the requiered memory!");
 
-	/** ---------------------- **/
-	/*     POST MEMORY SETUP    */
-	/** ---------------------- **/
+		/** ---------------------- **/
+		/*     POST MEMORY SETUP    */
+		/** ---------------------- **/
 
 	Logging::debug("Configuring the game...");
 	ctx->fw->set_framelimit(Configs::graphics::framerate);
@@ -133,9 +133,10 @@ void	threads_unit(Context *&ctx)
 		event_unit(ctx);
 		if (!win.isOpen())
 			break;
-		logic_unit(ctx);
-		if (!win.isOpen())
+		if (!logic_unit(ctx)
+			|| !win.isOpen())
 			break;
 		draws_unit(ctx);
 	}
+	save_world(ctx, Configs::misc::save_file);
 }

@@ -45,9 +45,8 @@ if(APPLE)
 		${BREW_DIR}/opt/glfw/lib/
 		${BREW_DIR}/lib/ )
 	set(LIBRARY_NAMES glfw sfml-system sfml-window sfml-graphics sfml-audio)
-endif()
 
-if(WIN32)
+elseif(WIN32)
 	set(LIBRARY_PATH C:/Librairies)
 	set(EXTERN_INCLUDE_DIR
 		${LIBRARY_PATH}/SFML-2.5.1/include
@@ -67,7 +66,7 @@ set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/inc)
 set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 set(CLASS_FILES Configs Logging Framework Context Assets Tiles MapChunk World Interface)
-set(CORE_FILES setup drawing events logic main)
+set(CORE_FILES setup saving drawing events logic main)
 
 macro(append_targets base)
 	foreach (arg IN ITEMS ${ARGN})
