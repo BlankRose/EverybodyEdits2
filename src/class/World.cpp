@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Fri Apr  7 16:18:11 CEST 2023     */
+/*       //\   /         Last Updated: Fri Apr  7 20:29:55 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -32,21 +32,21 @@ World::World(const size_type &width, const size_type &height):
 	_chunks_height((height / MapChunk::HEIGHT) + (height % MapChunk::HEIGHT ? 1 : 0)),
 	_chunks(_chunks_width * _chunks_height)
 {
-	for (size_type x = 0; x < _chunks_width; x++)
-		for (size_type y = 0; y < _chunks_height; y++)
+	for (uint32_t x = 0; x < _chunks_width; x++)
+		for (uint32_t y = 0; y < _chunks_height; y++)
 			_chunks[y * _chunks_width + x] = MapChunk(
 				x * MapChunk::WIDTH, y * MapChunk::HEIGHT, !x,
 				x == _chunks_width - 1, !y, y == _chunks_height - 1);
 }
 
-World::World(const size_type &width, const size_type &height, const data_type &data, const char &sep):
+World::World(const size_type &width, const size_type &height, const data_type &data):
 	_width(width), _height(height),
 	_chunks_width((width / MapChunk::WIDTH) + (width % MapChunk::WIDTH ? 1 : 0)),
 	_chunks_height((height / MapChunk::HEIGHT) + (height % MapChunk::HEIGHT ? 1 : 0)),
 	_chunks(_chunks_width * _chunks_height)
 {
-	for (uint8_t i = 0; i < data.size(); i++)
-		_chunks[i] = MapChunk(data[i], sep);
+	for (uint32_t i = 0; i < data.size(); i++)
+		_chunks[i] = MapChunk(data[i].c_str());
 }
 
 World::~World() {}
@@ -107,12 +107,12 @@ void		World::render(Framework *&fw)
 				fw->get_window().draw(get_chunk_at(x, y));
 }
 
-data_type	World::as_data(const char &sep) const
+data_type	World::as_data() const
 {
 	data_type	data(_chunks_width * _chunks_height);
 
 	for (uint32_t i = 0, end = _chunks.size(); i < end; i++)
-		data[i] = _chunks[i].as_data(sep);
+		data[i] = _chunks[i].as_data();
 	return data;
 }
 

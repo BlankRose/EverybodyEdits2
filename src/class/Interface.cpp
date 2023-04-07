@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Wed Apr  5 17:21:41 CEST 2023     */
+/*       //\   /         Last Updated: Fri Apr  7 17:51:44 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -37,7 +37,7 @@ Interface::Interface()
 	quad[2].position = sf::Vector2f(size, size);	// Lower Right
 	quad[3].position = sf::Vector2f(0, size);		// Lower Left
 
-	_selected = Tile(MapChunk::position_type(0, 0), quad, 1, "basic");
+	_selected = Tile(MapChunk::position_type(0, 0), quad, 1, Assets::BASIC);
 }
 
 Interface::~Interface() {}

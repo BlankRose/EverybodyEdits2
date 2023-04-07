@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Wed Apr  5 17:16:32 CEST 2023     */
+/*       //\   /         Last Updated: Fri Apr  7 17:48:01 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -25,8 +25,8 @@ class Tile
 			/*     TYPE DEFINITIONS     */
 			/** ---------------------- **/
 
-		typedef std::string						group_type;
-		typedef uint32_t						id_type;
+		typedef Assets::group_type				group_type;
+		typedef Assets::id_type					id_type;
 
 		typedef sf::Vertex						vertex_type;
 		typedef uint32_t						coord_type;

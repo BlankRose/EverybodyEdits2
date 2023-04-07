@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Thu Apr  6 16:47:05 CEST 2023     */
+/*       //\   /         Last Updated: Fri Apr  7 20:50:33 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -48,22 +48,27 @@ void	key_press(sf::Event event, Context *&ctx)
 		case sf::Keyboard::Num7:
 		case sf::Keyboard::Num8:
 		case sf::Keyboard::Num9:
-			ctx->ui->set_selected(event.key.code - sf::Keyboard::Num1, ctx->ui->get_selected().get_group());
+			if (ctx->ui->get_selected().get_group() != Assets::SPECIAL)
+				ctx->ui->set_selected(event.key.code - sf::Keyboard::Num1, ctx->ui->get_selected().get_group());
 			break;
 		case sf::Keyboard::Num0:
-			ctx->ui->set_selected(9, ctx->ui->get_selected().get_group());
+			if (ctx->ui->get_selected().get_group() != Assets::SPECIAL)
+				ctx->ui->set_selected(9, ctx->ui->get_selected().get_group());
+			break;
+		case sf::Keyboard::Numpad0:
+			ctx->ui->set_selected(1, Assets::SPECIAL);
 			break;
 		case sf::Keyboard::Numpad1:
-			ctx->ui->set_selected(0, "basic");
+			ctx->ui->set_selected(0, Assets::BASIC);
 			break;
 		case sf::Keyboard::Numpad2:
-			ctx->ui->set_selected(0, "bricks");
+			ctx->ui->set_selected(0, Assets::BRICKS);
 			break;
 		case sf::Keyboard::Numpad3:
-			ctx->ui->set_selected(0, "beta");
+			ctx->ui->set_selected(0, Assets::BETA);
 			break;
 		case sf::Keyboard::Numpad4:
-			ctx->ui->set_selected(0, "static");
+			ctx->ui->set_selected(0, Assets::STATIC);
 			break;
 		default: break;
 	}

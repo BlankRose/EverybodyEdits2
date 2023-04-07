@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Fri Apr  7 16:09:34 CEST 2023     */
+/*       //\   /         Last Updated: Fri Apr  7 19:36:43 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -61,26 +61,20 @@ MapChunk::MapChunk(const coord_type &x, const coord_type &y,
 			bg_quad[2].position = sf::Vector2f((pos_x + 1) * _tile_size, (pos_y + 1) * _tile_size);	// Lower Right
 			bg_quad[3].position = sf::Vector2f(pos_x * _tile_size, (pos_y + 1) * _tile_size);		// Lower Left
 
-			get_tile_at(dx, dy, true) = Tile(position_type(dx, dy), bg_quad, 2, "basic");
+			get_tile_at(dx, dy, true) = Tile(position_type(dx, dy), bg_quad, 1, Assets::SPECIAL);
 			if ((top_edge && !dx) || (low_edge && dx == WIDTH - 1)
 				|| (left_edge && !dy) || (right_edge && dy == HEIGHT - 1))
-				get_tile_at(dx, dy) = Tile(position_type(dx, dy), fg_quad, 1, "basic");
+				get_tile_at(dx, dy) = Tile(position_type(dx, dy), fg_quad, 1, Assets::BASIC);
 			else
-				get_tile_at(dx, dy) = Tile(position_type(dx, dy), fg_quad, 1, "special");
+				get_tile_at(dx, dy) = Tile(position_type(dx, dy), fg_quad, 1, Assets::SPECIAL);
 		}
 }
 
-MapChunk::MapChunk(const std::string &data, const char &sep):
+MapChunk::MapChunk(const char *data):
 	_fg_tiles(WIDTH * HEIGHT), _bg_tiles(WIDTH * HEIGHT)
 {
-	std::stringstream			test(data);
-	std::vector<std::string>	frag;
-	std::string					cur;
-
-	while(std::getline(test, cur, sep))
-		frag.push_back(cur);
-
-	_position = MapChunk::position_type(atoi(frag.at(0).c_str()), atoi(frag.at(1).c_str()));
+	const uint32_t	*pos = (const uint32_t *) data;
+	_position = MapChunk::position_type(*pos, *(pos + 1));
 
 	_fg_vertices.setPrimitiveType(sf::PrimitiveType::Quads);
 	_fg_vertices.resize(WIDTH * HEIGHT * 4);
@@ -88,6 +82,7 @@ MapChunk::MapChunk(const std::string &data, const char &sep):
 	_bg_vertices.setPrimitiveType(sf::PrimitiveType::Quads);
 	_bg_vertices.resize(WIDTH * HEIGHT * 4);
 
+	const uint8_t	*tiles = (const uint8_t *) data + 2 * sizeof(uint32_t);
 	for (size_type dx = 0; dx < WIDTH; dx++)
 		for (size_type dy = 0; dy < HEIGHT; dy++)
 		{
@@ -105,9 +100,10 @@ MapChunk::MapChunk(const std::string &data, const char &sep):
 			bg_quad[2].position = sf::Vector2f((pos_x + 1) * _tile_size, (pos_y + 1) * _tile_size);	// Lower Right
 			bg_quad[3].position = sf::Vector2f(pos_x * _tile_size, (pos_y + 1) * _tile_size);		// Lower Left
 
-			uint32_t	base = (dy * WIDTH + dx) * 4 + 2;
-			get_tile_at(dx, dy) = Tile(position_type(dx, dy), fg_quad, atoi(frag.at(base).c_str()), frag.at(base + 1));
-			get_tile_at(dx, dy, true) = Tile(position_type(dx, dy), bg_quad, atoi(frag.at(base + 2).c_str()), frag.at(base + 3));
+			uint32_t	base = (dy * WIDTH + dx) * 4;
+
+			get_tile_at(dx, dy) = Tile(position_type(dx, dy), fg_quad, *(tiles + base), Assets::Packs(*(tiles + base + 1)));
+			get_tile_at(dx, dy, true) = Tile(position_type(dx, dy), bg_quad, *(tiles + base + 2), Assets::Packs(*(tiles + base + 3)));
 		}
 }
 
@@ -167,15 +163,19 @@ void				MapChunk::update_tile(const Tile &tile, const bool &bg)
 	get_tile_at(pos.x, pos.y, bg) = tile;
 }
 
-std::string			MapChunk::as_data(const char &sep) const
+std::string			MapChunk::as_data() const
 {
 	std::string		data;
 
-	data += std::to_string(_position.x) + sep + std::to_string(_position.y);
+	uint32_t	pos[2] = {_position.x, _position.y};
+	data.append((char *) pos, 2 * sizeof(uint32_t));
+
 	for (uint32_t i = 0, end = _fg_tiles.size(); i < end; i++)
 	{
-		data += sep + std::to_string(_fg_tiles[i].get_id()) + sep + _fg_tiles[i].get_group();
-		data += sep + std::to_string(_bg_tiles[i].get_id()) + sep + _bg_tiles[i].get_group();
+		uint8_t		tiles[4] = {
+			_fg_tiles[i].get_id(), static_cast<uint8_t>(_fg_tiles[i].get_group()),
+			_bg_tiles[i].get_id(), static_cast<uint8_t>(_bg_tiles[i].get_group())};
+		data.append((char *) tiles, 4 * sizeof(uint8_t));
 	}
 	return data;
 }

@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Thu Apr  6 20:20:43 CEST 2023     */
+/*       //\   /         Last Updated: Fri Apr  7 18:32:34 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -21,10 +21,19 @@ namespace Assets
 			/*     TYPE DEFINITIONS     */
 			/** ---------------------- **/
 
+		enum Packs
+		{
+			SPECIAL = 0,
+			BASIC,
+			BRICKS,
+			BETA,
+			STATIC
+		};
+
 		typedef std::string						path_type;
 
-		typedef std::string						group_type;
-		typedef uint32_t						id_type;
+		typedef Packs							group_type;
+		typedef uint8_t							id_type;
 		typedef std::pair<id_type, id_type>		id_region;
 		typedef std::map<group_type, id_region>	texture_map;
 

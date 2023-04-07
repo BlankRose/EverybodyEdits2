@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Thu Apr  6 21:09:14 CEST 2023     */
+/*       //\   /         Last Updated: Fri Apr  7 17:44:37 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -34,26 +34,26 @@ vector_type		_fg_mapsize(0, 0);
 texture_type	_fg_tilemap;
 texture_map		_fg_regions = {
 	// OOB-Colors - Empty - Invalid - Cursor
-	{ "special", { 0, 4 } },
+	{ Assets::SPECIAL, { 0, 4 } },
 
 	// Regular Tile Packs (line, length)
-	{ "basic", { 1, 10 } },
-	{ "bricks", { 2, 10 } },
-	{ "beta", { 3, 10 } },
-	{ "static", { 4, 10 } }
+	{ Assets::BASIC, { 1, 10 } },
+	{ Assets::BRICKS, { 2, 10 } },
+	{ Assets::BETA, { 3, 10 } },
+	{ Assets::STATIC, { 4, 10 } }
 };
 
 vector_type		_bg_mapsize(0, 0);
 texture_type	_bg_tilemap;
 texture_map		_bg_regions = {
 	// OOB-Colors - Empty - Invalid - Cursor
-	{ "special", { 0, 1 } },
+	{ Assets::SPECIAL, { 0, 1 } },
 
 	// Regular Tile Packs (line, length)
-	{ "basic", { 1, 10 } },
-	{ "bricks", { 2, 10 } },
-	{ "beta", { 3, 10 } },
-	{ "static", { 4, 10 } }
+	{ Assets::BASIC, { 1, 10 } },
+	{ Assets::BRICKS, { 2, 10 } },
+	{ Assets::BETA, { 3, 10 } },
+	{ Assets::STATIC, { 4, 10 } }
 };
 
 font_type		_font;

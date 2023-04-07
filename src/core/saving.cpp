@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Fri Apr  7 16:23:12 CEST 2023     */
+/*       //\   /         Last Updated: Fri Apr  7 19:15:02 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -44,7 +44,7 @@ bool	save_world(Context *&ctx, const std::string &path)
 	World	*&map = ctx->map;
 	ofile << char(VERSION_SAVES) << map->get_width() << SAVES_SEP << map->get_height() << std::endl;
 
-	World::data_type	data = map->as_data(SAVES_SEP);
+	World::data_type	data = map->as_data();
 	for (World::data_type::iterator it = data.begin(), end = data.end(); it != end; it++)
 		ofile << *it << std::endl;
 	return true;
@@ -113,7 +113,7 @@ bool	load_world(Context *&ctx, const std::string &path)
 		/*        APPLY DATA        */
 		/** ---------------------- **/
 
-	ctx->map = new World(size.x, size.y, arr, SAVES_SEP);
+	ctx->map = new World(size.x, size.y, arr);
 	if (!ctx->map)
 		return (Logging::fatal("Couldn't allocate the sufficient memory for the world to load in!"), false);
 	Logging::info("Map loaded!");

@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Fri Apr  7 16:14:15 CEST 2023     */
+/*       //\   /         Last Updated: Fri Apr  7 18:55:17 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -39,7 +39,7 @@ class World
 			/** ---------------------- **/
 
 		World(const size_type &width, const size_type &height);
-		World(const size_type &width, const size_type &height, const data_type &data, const char &sep);
+		World(const size_type &width, const size_type &height, const data_type &data);
 		~World();
 
 			/** ---------------------- **/
@@ -62,7 +62,7 @@ class World
 		Tile		&get_tile_at(const size_type &x, const size_type &y);
 
 		void		render(Framework *&fw);
-		data_type	as_data(const char &sep) const;
+		data_type	as_data() const;
 
 	private:
 

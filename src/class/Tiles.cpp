@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                    */
 /*    .-'  ,`"`,  '-.                                                    */
 /*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Wed Apr  5 18:09:03 CEST 2023     */
+/*       //\   /         Last Updated: Fri Apr  7 17:48:12 CEST 2023     */
 /*      ||  '-'                                                          */
 /* ********************************************************************* */
 
@@ -27,7 +27,7 @@ using position_type = Tile::position_type;
 	/** ---------------------- **/
 
 Tile::Tile():
-	_vertex(nullptr), _coords(0, 0), _group("special"), _id(0), _collision(true) {}
+	_vertex(nullptr), _coords(0, 0), _group(Assets::SPECIAL), _id(0), _collision(true) {}
 
 Tile::Tile(const position_type &pos, vertex_type *&vertex, const id_type &id, const group_type &group):
 	_vertex(vertex), _coords(pos), _collision(true) { set_id(id, group); }
