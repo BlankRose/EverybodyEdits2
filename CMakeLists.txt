@@ -15,55 +15,70 @@
 # *                                      * #
 #==--------------------------------------==#
 
-cmake_minimum_required(VERSION 3.24.0)
+cmake_minimum_required(VERSION 3.22.0)
 
 project(EverybodyEdits2 VERSION 1.0)
 message(STATUS "${PROJECT_NAME} (Alpha ${CMAKE_PROJECT_VERSION})")
 
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_STANDARD 11)
-
-add_compile_options(
-	-Wall
-	-Wextra
-	-Wpedantic
-	-Wunreachable-code
-	-Werror
-	-g3
-)
+set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/inc)
+set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
+set(LIBRARY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libs)
 
 add_definitions(-D LOG_DEBUG)
 
-if(APPLE)
-	add_link_options(-fsanitize=address)
-	add_compile_options(-Wunreachable-code-aggressive)
-	set(BREW_DIR $ENV{HOME}/.brew)
-	set(EXTERN_INCLUDE_DIR
-		${BREW_DIR}/include
-		${BREW_DIR}/Cellar/nlohmann-json/3.11.2/include )
-	set(LIBRARY_DIR
-		${BREW_DIR}/opt/glfw/lib/
-		${BREW_DIR}/lib/ )
-	set(LIBRARY_NAMES glfw sfml-system sfml-window sfml-graphics sfml-audio)
+#==--------------------------------------==#
+# *                                      * #
+#            LIBRARIES LISTING             #
+# *                                      * #
+#==--------------------------------------==#
 
-elseif(WIN32)
-	set(LIBRARY_PATH C:/Librairies)
-	set(EXTERN_INCLUDE_DIR
-		${LIBRARY_PATH}/SFML-2.5.1/include
-		${LIBRARY_PATH}/JSON-3.11.2
-	)
-	set(LIBRARY_DIR ${LIBRARY_PATH}/SFML-2.5.1/lib)
-	set(LIBRARY_NAMES glfw3 opengl32 gdi32 sfml-system sfml-window sfml-graphics sfml-audio)
+set(LIBRARIES_FOLDERS
+	${INCLUDE_DIR} ${SOURCE_DIR} ${LIBRARY_DIR}
+	$ENV{HOME}/.brew
+	C:/Librairies
+)
+set(LIBRARY_NAMES
+	sfml-system
+	sfml-window
+	sfml-graphics
+)
+set(LIBRARY_INCLUDES
+	SFML
+	nlohmann
+)
+
+if (WIN32)
+	list(APPEND LIBRARY_NAMES glfw3 opengl32 gdi32)
+elseif(APPLE)
+	list(APPEND LIBRARY_NAMES glfw)
 endif()
+
+message(STATUS "Potential Paths: ${LIBRARIES_FOLDERS}")
+foreach(lib IN ITEMS ${LIBRARY_NAMES})
+	set(dir) # NO_CACHE + set() reset ensures it stops if not found
+	find_library(dir ${lib} PATHS ${LIBRARIES_FOLDERS} REQUIRED NO_CACHE)
+	get_filename_component(raw ${dir} DIRECTORY)
+	if (NOT raw IN_LIST LIBRARY_DIRS)
+		list(APPEND LIBRARY_DIRS ${raw})
+	endif()
+endforeach()
+
+foreach(lib IN ITEMS ${LIBRARY_INCLUDES})
+	set(dir) # NO_CACHE + set() reset ensures it stops if not found
+	find_path(dir NAMES ${lib} PATHS ${LIBRARIES_FOLDERS} REQUIRED NO_CACHE)
+	if (NOT dir IN_LIST EXTERN_INCLUDE_DIR)
+		list(APPEND EXTERN_INCLUDE_DIR ${dir})
+	endif()
+endforeach()
+
+message(STATUS "Found LIB folder: ${LIBRARY_DIRS}")
+message(STATUS "Found INC folder: ${EXTERN_INCLUDE_DIR}")
 
 #==--------------------------------------==#
 # *                                      * #
 #             SOURCES LISTING              #
 # *                                      * #
 #==--------------------------------------==#
-
-set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/inc)
-set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 set(CLASS_FILES Configs Logging Framework Context Assets Tiles MapChunk World Interface)
 set(CORE_FILES setup saving drawing events logic main)
@@ -93,6 +108,29 @@ append_sources(cpp ${CXX_FILES})
 
 #==--------------------------------------==#
 # *                                      * #
+#            COMPILATION INFOS             #
+# *                                      * #
+#==--------------------------------------==#
+
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD 11)
+
+add_compile_options(
+	-Wall
+	-Wextra
+	-Wpedantic
+	-Wunreachable-code
+	-Werror
+	-g3
+)
+
+if (NOT WIN32)
+	add_link_options(-fsanitize=address)
+	add_compile_options(-Wunreachable-code-aggressive)
+endif()
+
+#==--------------------------------------==#
+# *                                      * #
 #           SOFTWARE COMPILATION           #
 # *                                      * #
 #==--------------------------------------==#
@@ -111,9 +149,9 @@ if(DEFINED INCLUDES)
 	target_include_directories(${PROJECT_NAME} PUBLIC ${INCLUDES})
 endif()
 
-if(DEFINED LIBRARY_DIR)
-	print_list("Library Directories" ${LIBRARY_DIR})
-	target_link_directories(${PROJECT_NAME} PUBLIC ${LIBRARY_DIR})
+if(DEFINED LIBRARY_DIRS)
+	print_list("Library Directories" ${LIBRARY_DIRS})
+	target_link_directories(${PROJECT_NAME} PUBLIC ${LIBRARY_DIRS})
 endif()
 
 if(DEFINED LIBRARY_NAMES)
