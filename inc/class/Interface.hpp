@@ -25,7 +25,6 @@ class Interface:
 			/*     TYPE DEFINITIONS     */
 			/** ---------------------- **/
 
-		using Tile = Tile;
 		using id_type = Tile::id_type;
 		using group_type = Tile::group_type;
 

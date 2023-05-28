@@ -15,8 +15,6 @@
 # include "MapChunk.hpp"
 # include <vector>
 
-using Tile = MapChunk::Tile;
-
 class Framework;
 class Context;
 

@@ -55,7 +55,7 @@ endif()
 
 message(STATUS "Potential Paths: ${LIBRARIES_FOLDERS}")
 foreach(lib IN ITEMS ${LIBRARY_NAMES})
-	set(dir) # NO_CACHE + set() reset ensures it stops if not found
+	set(dir) # NO_CACHE + set() reset ensures overwrite and stops if not found
 	find_library(dir ${lib} PATHS ${LIBRARIES_FOLDERS} REQUIRED NO_CACHE)
 	get_filename_component(raw ${dir} DIRECTORY)
 	if (NOT raw IN_LIST LIBRARY_DIRS)
@@ -64,15 +64,12 @@ foreach(lib IN ITEMS ${LIBRARY_NAMES})
 endforeach()
 
 foreach(lib IN ITEMS ${LIBRARY_INCLUDES})
-	set(dir) # NO_CACHE + set() reset ensures it stops if not found
+	set(dir) # NO_CACHE + set() reset ensures overwrite and stops if not found
 	find_path(dir NAMES ${lib} PATHS ${LIBRARIES_FOLDERS} REQUIRED NO_CACHE)
 	if (NOT dir IN_LIST EXTERN_INCLUDE_DIR)
 		list(APPEND EXTERN_INCLUDE_DIR ${dir})
 	endif()
 endforeach()
-
-message(STATUS "Found LIB folder: ${LIBRARY_DIRS}")
-message(STATUS "Found INC folder: ${EXTERN_INCLUDE_DIR}")
 
 #==--------------------------------------==#
 # *                                      * #
@@ -126,7 +123,6 @@ add_compile_options(
 
 if (NOT WIN32)
 	add_link_options(-fsanitize=address)
-	add_compile_options(-Wunreachable-code-aggressive)
 endif()
 
 #==--------------------------------------==#

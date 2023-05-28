@@ -25,8 +25,6 @@ class MapChunk:
 			/*     TYPE DEFINITIONS     */
 			/** ---------------------- **/
 
-		using Tile = Tile;
-
 		using coord_type = Tile::coord_type;
 		using position_type = Tile::position_type;
 
