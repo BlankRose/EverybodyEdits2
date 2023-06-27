@@ -1,64 +1,126 @@
-# ********************************************************************* #
-#          .-.                                                          #
-#    __   /   \   __                                                    #
-#   (  `'.\   /.'`  )   Everybody Edits 2 - Makefile                    #
-#    '-._.(;;;)._.-'                                                    #
-#    .-'  ,`"`,  '-.                                                    #
-#   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        #
-#       //\   /         Last Updated: Mon Apr  3 19:04:55 CEST 2023     #
-#      ||  '-'                                                          #
-# ********************************************************************* #
-
-# -- CONFIGURATIONS -- #
-
-IN_DIR		= .
-OUT_DIR		= build
-
-EXE_NAME	= EverybodyEdits2
-EXE_ARGS	= 
+# ############################################################################ #
+#          .-.                                                                 #
+#    __   /   \   __                                                           #
+#   (  `'.\   /.'`  )   EverybodyEdits2 - Makefile                             #
+#    '-._.(;;;)._.-'                                                           #
+#    .-'  ,`"`,  '-.                                                           #
+#   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)               #
+#       //\   /         Last Updated: Tuesday, June 27, 2023 7:01 PM           #
+#      ||  '-'                                                                 #
+# ############################################################################ #
 
 
-# -- COMPILATION -- #
+###############################
+# -- PROJECT CONFIGURATION -- #
+###############################
 
-SUB_MAKE	= $(MAKE) -sC $(OUT_DIR)
-ifeq ($(OS), Windows_NT)
-WIN_GEN		= -G "MinGW Makefiles"
-WIN_IDC		= > NUL 2>&1 || exit 0
-else
-UNIX_RECURS	= -p
-endif
+# Project's name
+NAME      = EverybodyEdits2
+VERSION   = 0.0.1
+ARGS      = 
 
+# Directories of source files and where to put the object files
+SRC_DIR   = src
+OUT_DIR   = bin
+
+# Target Compiler and options
+CC        = g++
+CFLAGS    = -Wall -Wextra -Wpedantic -Wunreachable-code -Werror -std=c++11 -g3
+LINKER    = -fsanitize=address
+
+# Libraries to link and where to find them
+LIBRARIES = sfml-graphics sfml-window sfml-system
+SEARCHDIR = 
+
+
+#############################
+# -- PROJECT PREPARATION -- #
+#############################
+
+# Get all source files
+HEADERS     = $(shell find $(SRC_DIR) . -type f -iregex '.*\.h\(pp\)?')
+SOURCES     = $(shell find $(SRC_DIR) -type f -iregex '.*\.c\(pp\)?')
+OBJECTS     = $(SOURCES:$(SRC_DIR)/%.cpp=$(OUT_DIR)/%.o)
+
+# Get all directories (uses find with regex)
+PWD         = $(shell pwd)
+INCLUDES    = $(shell find . $(SEARCHDIR) -type d -iregex '.*/inc\(lude\)?[s]?' 2>/dev/null)
+POSSIBLELIB = $(foreach lib, $(LIBRARIES), $(shell find . $(SEARCHDIR) -iregex '.*/lib\($(lib)\).*' 2>/dev/null))
+LIB_FOLDERS = $(shell dirname $(POSSIBLELIB) | uniq)
+
+# Special sequences
+ESCAPE      = 
+RESET       = $(ESCAPE)[0m
+BREAK	    = $(ESCAPE)[2K\r
+FAILURE     = $(BREAK)$(ESCAPE)[31m
+SUCCESS     = $(BREAK)$(ESCAPE)[32m
+PENDING     = $(BREAK)$(ESCAPE)[33m
+
+# Final compositions
+DEFINES     = -DVERSION=\"$(VERSION)\" -DNAME=\"$(NAME)\"
+FINAL_LINK  = $(foreach lib, $(LIBRARIES), -l$(lib)) $(foreach dir, $(LIB_FOLDERS), -L$(dir)) $(LINKER) $(CFLAGS)
+FINAL_OBJ   = $(foreach dir, $(INCLUDES), -I$(dir)) $(DEFINES) $(CFLAGS)
+
+
+#############################
+# -- BUILDING TOOLCHAINS -- #
+#############################
+
+# Build the project
 a: all
-all: compile
+all: $(NAME)
 
-b: build
-build:
-	@cmake -S $(IN_DIR) -B $(OUT_DIR) $(WIN_GEN)
+# Compile object files (depends on headers)
+$(OUT_DIR)/%.o: $(SRC_DIR)/%.cpp $(HEADERS)
+	@echo -n "$(PENDING)Compiling $<...$(RESET)"
+	@mkdir -p $(dir $@)
+	@$(CC) $(FINAL_OBJ) $(CFLAGS) -c $< -o $@
 
-c: compile
-compile: build
-	@$(SUB_MAKE) all
+# Compile the executable
+$(NAME): $(OBJECTS)
+	@echo -n "$(PENDING)Linking $(NAME) v$(VERSION)...$(RESET)"
+	@$(CC) $(FINAL_LINK) -o $(NAME) $(OBJECTS)
+	@echo "$(SUCCESS)$(NAME) v$(VERSION) built successfully!$(RESET)"
 
+# Clean up the object files
+c: clean
 clean:
-	@$(SUB_MAKE) clean
+	@echo -n "$(PENDING)Cleaning up object files...$(RESET)"
+	@rm -f $(OBJECTS)
+	@echo "$(SUCCESS)Object files cleaned up!$(RESET)"
 
+# Clean up the executable
 fc: fullclean
-fullclean:
-ifeq ($(OS), Windows_NT)
-	@del /f /q /s $(OUT_DIR) $(WIN_IDC)
-else
-	@rm -Rf $(OUT_DIR)/**
-endif
+fullclean: clean
+	@echo -n "$(PENDING)Cleaning up executable...$(RESET)"
+	@rm -f $(NAME)
+	@echo "$(SUCCESS)Executable cleaned up!$(RESET)"
 
+# Recompile the project from scratch
 re: remake
 remake: fullclean all
 
+# Run the executable (ensures shared library paths are set aswell)
 r: run
-run: compile
-	@$(OUT_DIR)/$(EXE_NAME) $(EXE_ARGS)
+run:
+	@echo "$(PENDING)Running $(NAME)... OUTPUT:$(RESET)"
+	@export LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(LIB_FOLDERS) && ./$(NAME) $(ARGS)
+	@echo "$(SUCCESS)$(NAME) exited successfully!$(RESET)"
+
+# Displays debug messages
+d: debug
+debug:
+	@echo "Debugging $(NAME) v$(VERSION)..."
+	@echo " > Sources: $(SOURCES)"
+	@echo " > Objects: $(OBJECTS)"
+	@echo " > Includes: $(INCLUDES)"
+	@echo " > Libraries: $(LIBRARIES)"
+	@echo " > Library Folders: $(LIB_FOLDERS)"
 
 
-# -- MAKEFILE CONFIGS -- #
+#################################
+# -- MAKEFILE CONFIGURATIONS -- #
+#################################
 
 .DEFAULT_GOAL = all
-.PHONY: all build compile fullclean remake run
+.PHONY: all build compile clean fullclean remake run

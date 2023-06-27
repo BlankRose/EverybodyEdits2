@@ -1,13 +1,13 @@
-/* ********************************************************************* */
-/*          .-.                                                          */
-/*    __   /   \   __                                                    */
-/*   (  `'.\   /.'`  )   Everybody Edits 2 - World.cpp                   */
-/*    '-._.(;;;)._.-'                                                    */
-/*    .-'  ,`"`,  '-.                                                    */
-/*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Fri Apr  7 20:29:55 CEST 2023     */
-/*      ||  '-'                                                          */
-/* ********************************************************************* */
+/* ************************************************************************** */
+/*          .-.                                                               */
+/*    __   /   \   __                                                         */
+/*   (  `'.\   /.'`  )   class - World.cpp                                    */
+/*    '-._.(;;;)._.-'                                                         */
+/*    .-'  ,`"`,  '-.                                                         */
+/*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
+/*       //\   /         Last Updated: Tuesday, June 27, 2023 6:21 PM         */
+/*      ||  '-'                                                               */
+/* ************************************************************************** */
 
 #include "class/World.hpp"
 #include "class/Framework.hpp"
@@ -57,21 +57,21 @@ World::~World() {}
 
 bool		World::has_chunk(const sf::Vector2u &pos) const
 {
-	return pos.x >= 0 && pos.x / MapChunk::WIDTH < _chunks_width
-		&& pos.y >= 0 && pos.y / MapChunk::HEIGHT < _chunks_height;
+	return pos.x / MapChunk::WIDTH < _chunks_width
+		&& pos.y / MapChunk::HEIGHT < _chunks_height;
 }
 
 bool		World::has_chunk(const size_type &x, const size_type &y) const
 {
-	return x >= 0 && x / MapChunk::WIDTH < _chunks_width
-		&& y >= 0 && y / MapChunk::HEIGHT < _chunks_height;
+	return x / MapChunk::WIDTH < _chunks_width
+		&& y / MapChunk::HEIGHT < _chunks_height;
 }
 
 bool		World::has_tile(const sf::Vector2u &pos) const
-	{ return pos.x >= 0 && pos.x < _width && pos.y >= 0 && pos.y < _height; }
+	{ return pos.x < _width && pos.y < _height; }
 
 bool		World::has_tile(const size_type &x, const size_type &y) const
-	{ return x >= 0 && x < _width && y >= 0 && y < _height; }
+	{ return x < _width && y < _height; }
 
 MapChunk	&World::get_chunk_at(const sf::Vector2u &pos)
 	{ return _chunks[(pos.y / MapChunk::HEIGHT) * _chunks_width + pos.x / MapChunk::WIDTH]; }
