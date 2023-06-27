@@ -1,19 +1,17 @@
-/* ********************************************************************* */
-/*          .-.                                                          */
-/*    __   /   \   __                                                    */
-/*   (  `'.\   /.'`  )   Everybody Edits 2 - Assets.hpp                  */
-/*    '-._.(;;;)._.-'                                                    */
-/*    .-'  ,`"`,  '-.                                                    */
-/*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Fri Apr  7 18:32:34 CEST 2023     */
-/*      ||  '-'                                                          */
-/* ********************************************************************* */
+/* ************************************************************************** */
+/*          .-.                                                               */
+/*    __   /   \   __                                                         */
+/*   (  `'.\   /.'`  )   EverybodyEdits2 - Assets.hpp                         */
+/*    '-._.(;;;)._.-'                                                         */
+/*    .-'  ,`"`,  '-.                                                         */
+/*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
+/*       //\   /         Last Updated: Tuesday, June 27, 2023 8:05 PM         */
+/*      ||  '-'                                                               */
+/* ************************************************************************** */
 
-#ifndef ASSETS_HPP
-# define ASSETS_HPP
-
-# include <SFML/Graphics.hpp>
-# include <map>
+#pragma once
+#include <SFML/Graphics.hpp>
+#include <map>
 
 namespace Assets
 {
@@ -60,5 +58,3 @@ namespace Assets
 		rect_type		get_tile_coords(const group_type &group, const id_type &id, const bool &bg = false);
 		rect_type		get_tile_coords(const size_type &x, const size_type &y);
 }
-
-#endif /* ASSETS_HPP */

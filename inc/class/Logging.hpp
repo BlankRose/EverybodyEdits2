@@ -1,18 +1,17 @@
-/* ********************************************************************* */
-/*          .-.                                                          */
-/*    __   /   \   __                                                    */
-/*   (  `'.\   /.'`  )   Everybody Edits 2 - Logging.hpp                 */
-/*    '-._.(;;;)._.-'                                                    */
-/*    .-'  ,`"`,  '-.                                                    */
-/*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Fri Mar 31 18:58:34 CEST 2023     */
-/*      ||  '-'                                                          */
-/* ********************************************************************* */
+/* ************************************************************************** */
+/*          .-.                                                               */
+/*    __   /   \   __                                                         */
+/*   (  `'.\   /.'`  )   EverybodyEdits2 - Logging.hpp                        */
+/*    '-._.(;;;)._.-'                                                         */
+/*    .-'  ,`"`,  '-.                                                         */
+/*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
+/*       //\   /         Last Updated: Tuesday, June 27, 2023 8:01 PM         */
+/*      ||  '-'                                                               */
+/* ************************************************************************** */
 
-#ifndef LOGGING_HPP
-# define LOGGING_HPP
+#pragma once
+#include <string>
 
-# include <string>
 namespace Logging
 {
 			/** ---------------------- **/
@@ -65,5 +64,3 @@ namespace Logging
 		void		critical(message_type &msg);
 		void		fatal(message_type &msg);
 }
-
-#endif /* LOGGING_HPP */

@@ -1,13 +1,13 @@
-/* ********************************************************************* */
-/*          .-.                                                          */
-/*    __   /   \   __                                                    */
-/*   (  `'.\   /.'`  )   Everybody Edits 2 - Framework.cpp               */
-/*    '-._.(;;;)._.-'                                                    */
-/*    .-'  ,`"`,  '-.                                                    */
-/*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Fri Mar 31 21:57:29 CEST 2023     */
-/*      ||  '-'                                                          */
-/* ********************************************************************* */
+/* ************************************************************************** */
+/*          .-.                                                               */
+/*    __   /   \   __                                                         */
+/*   (  `'.\   /.'`  )   EverybodyEdits2 - Framework.cpp                      */
+/*    '-._.(;;;)._.-'                                                         */
+/*    .-'  ,`"`,  '-.                                                         */
+/*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
+/*       //\   /         Last Updated: Tuesday, June 27, 2023 8:15 PM         */
+/*      ||  '-'                                                               */
+/* ************************************************************************** */
 
 #include "class/Framework.hpp"
 #include <stdexcept>
@@ -44,7 +44,10 @@ Framework::Framework(const size_type &width, const size_type &height):
 }
 
 Framework::~Framework()
-	{ if (_window) delete _window; }
+{
+	_window->close();
+	delete _window;
+}
 
 	/** ---------------------- **/
 	/*         OVERLOADS        */

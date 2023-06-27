@@ -5,7 +5,7 @@
 #    '-._.(;;;)._.-'                                                           #
 #    .-'  ,`"`,  '-.                                                           #
 #   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)               #
-#       //\   /         Last Updated: Tuesday, June 27, 2023 7:01 PM           #
+#       //\   /         Last Updated: Tuesday, June 27, 2023 9:13 PM           #
 #      ||  '-'                                                                 #
 # ############################################################################ #
 
@@ -102,9 +102,11 @@ remake: fullclean all
 
 # Run the executable (ensures shared library paths are set aswell)
 r: run
-run:
+run: all
 	@echo "$(PENDING)Running $(NAME)... OUTPUT:$(RESET)"
-	@export LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(LIB_FOLDERS) && ./$(NAME) $(ARGS)
+	@export LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(LIB_FOLDERS) \
+		&& export ASAN_OPTIONS=detect_leaks=0 \
+		&& ./$(NAME) $(ARGS)
 	@echo "$(SUCCESS)$(NAME) exited successfully!$(RESET)"
 
 # Displays debug messages

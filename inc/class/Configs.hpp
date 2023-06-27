@@ -1,18 +1,16 @@
-/* ********************************************************************* */
-/*          .-.                                                          */
-/*    __   /   \   __                                                    */
-/*   (  `'.\   /.'`  )   Everybody Edits 2 - Configs.hpp                 */
-/*    '-._.(;;;)._.-'                                                    */
-/*    .-'  ,`"`,  '-.                                                    */
-/*   (__.-'/   \'-.__)   BY: Rosie (https://github.com/BlankRose)        */
-/*       //\   /         Last Updated: Fri Apr  7 13:07:34 CEST 2023     */
-/*      ||  '-'                                                          */
-/* ********************************************************************* */
+/* ************************************************************************** */
+/*          .-.                                                               */
+/*    __   /   \   __                                                         */
+/*   (  `'.\   /.'`  )   EverybodyEdits2 - Configs.hpp                        */
+/*    '-._.(;;;)._.-'                                                         */
+/*    .-'  ,`"`,  '-.                                                         */
+/*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
+/*       //\   /         Last Updated: Tuesday, June 27, 2023 8:02 PM         */
+/*      ||  '-'                                                               */
+/* ************************************************************************** */
 
-#ifndef CONFIGS_HPP
-# define CONFIGS_HPP
-
-# include <nlohmann/json_fwd.hpp>
+#pragma once
+#include <nlohmann/json_fwd.hpp>
 
 namespace Configs
 {
@@ -80,5 +78,3 @@ namespace Configs
 		json_type	&get_configs();
 		json_type	get_default();
 }
-
-#endif /* CONFIGS_HPP */
