@@ -5,18 +5,18 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Tuesday, June 27, 2023 8:03 PM         */
+/*       //\   /         Last Updated: Wednesday, June 28, 2023 5:57 PM       */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
-#include "class/Configs.hpp"
+#include "base/Configs.hpp"
 
 #include <fstream>
 #include <iostream>
 
 #include <nlohmann/json.hpp>
 #include <SFML/Window/Keyboard.hpp>
-#include "class/Logging.hpp"
+#include "base/Logging.hpp"
 
 	/** ---------------------- **/
 	/*        ATTRIBUTES        */

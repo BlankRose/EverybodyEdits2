@@ -5,12 +5,12 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Tuesday, June 27, 2023 8:06 PM         */
+/*       //\   /         Last Updated: Wednesday, June 28, 2023 4:53 PM       */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
-#include "class/Configs.hpp"
-#include "class/Assets.hpp"
+#include "base/Configs.hpp"
+#include "base/Assets.hpp"
 
 	/** ---------------------- **/
 	/*        ATTRIBUTES        */

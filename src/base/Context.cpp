@@ -5,11 +5,11 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Tuesday, June 27, 2023 8:09 PM         */
+/*       //\   /         Last Updated: Wednesday, June 28, 2023 4:58 PM       */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
-#include "class/Context.hpp"
+#include "base/Context.hpp"
 
 	/** ---------------------- **/
 	/*       CONSTRUCTORS       */
@@ -18,7 +18,7 @@
 Context::Context():
 	up(false), down(false), right(false), left(false),
 	mouse_L(false), mouse_R(false), mouse_M(false),
-	display(LOADING) {}
+	display(LOADING), fw(nullptr), map(nullptr) {}
 
 Context::Context(const Context &other)
 	{ operator=(other); }
@@ -41,6 +41,8 @@ Context		&Context::operator=(const Context &other)
 	mouse_M = other.mouse_M;
 
 	display = other.display;
+	fw = other.fw;
+	map = other.map;
 
 	return *this;
 }
