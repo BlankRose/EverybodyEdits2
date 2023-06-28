@@ -5,7 +5,7 @@
 #    '-._.(;;;)._.-'                                                           #
 #    .-'  ,`"`,  '-.                                                           #
 #   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)               #
-#       //\   /         Last Updated: Tuesday, June 27, 2023 9:13 PM           #
+#       //\   /         Last Updated: Wednesday, June 28, 2023 8:13 PM         #
 #      ||  '-'                                                                 #
 # ############################################################################ #
 
@@ -106,6 +106,13 @@ run: all
 	@echo "$(PENDING)Running $(NAME)... OUTPUT:$(RESET)"
 	@export LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(LIB_FOLDERS) \
 		&& export ASAN_OPTIONS=detect_leaks=0 \
+		&& ./$(NAME) $(ARGS)
+	@echo "$(SUCCESS)$(NAME) exited successfully!$(RESET)"
+
+rl: run-leak
+run-leak: all
+	@echo "$(PENDING)Running $(NAME)... OUTPUT:$(RESET)"
+	@export LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(LIB_FOLDERS) \
 		&& ./$(NAME) $(ARGS)
 	@echo "$(SUCCESS)$(NAME) exited successfully!$(RESET)"
 

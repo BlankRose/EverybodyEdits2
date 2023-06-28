@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Wednesday, June 28, 2023 7:41 PM       */
+/*       //\   /         Last Updated: Wednesday, June 28, 2023 8:07 PM       */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 
 using size_type = World::size_type;
 using position_type = World::position_type;
+#define BUFFER_SIZE sizeof(Tile::raw_type) * 2 * 100000
 
 	/** ---------------------- **/
 	/*       CONSTRUCTORS       */
@@ -77,8 +78,8 @@ World::World(const char *data):
 World::World(std::ifstream &file)
 {
 	// Prepare buffer (10000 tiles at once)
-	uint32_t buffer_size = sizeof(Tile::raw_type) * 2 * 10000;
-	char buffer[sizeof(Tile::raw_type) * 2 * 10000 + 1];
+	uint32_t buffer_size = BUFFER_SIZE;
+	char buffer[BUFFER_SIZE + 1];
 
 	// Retrieve basic details
 	file.read(buffer, sizeof(size_type) * 2);
