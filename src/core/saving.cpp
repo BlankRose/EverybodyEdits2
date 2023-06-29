@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Wednesday, June 28, 2023 7:47 PM       */
+/*       //\   /         Last Updated: Thursday, June 29, 2023 11:42 AM       */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ bool	save_world(Context *&ctx, const std::string &path)
 		/*        WORLD DATA        */
 		/** ---------------------- **/
 
-	World *&map = ctx->map;
-	ofile << map->raw_data() << std::endl;
+	ctx->map->save(ofile);
 	return true;
 }
 

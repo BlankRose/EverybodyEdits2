@@ -5,14 +5,12 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Wednesday, June 28, 2023 8:07 PM       */
+/*       //\   /         Last Updated: Thursday, June 29, 2023 12:23 PM       */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
 #include "game/World.hpp"
 #include <fstream>
-
-#include <iostream>
 
 	/** ---------------------- **/
 	/*        ATTRIBUTES        */
@@ -20,7 +18,10 @@
 
 using size_type = World::size_type;
 using position_type = World::position_type;
-#define BUFFER_SIZE sizeof(Tile::raw_type) * 2 * 100000
+
+#define TILES_PER_BUFFER 100000
+#define TILES_BASE_SIZE sizeof(Tile::raw_type) * 2
+#define BUFFER_SIZE TILES_BASE_SIZE * TILES_PER_BUFFER
 
 	/** ---------------------- **/
 	/*       CONSTRUCTORS       */
@@ -177,4 +178,23 @@ std::string		World::raw_data() const
 
 	// Return final data
 	return data;
+}
+
+// Save world's data in binary format, straight to the given file
+// (Time saved by not using std::string: half time compared to raw_data())
+void			World::save(std::ofstream &file) const
+{
+	// Store world's size
+	size_type size[] = { _size.x, _size.y };
+	file.write(reinterpret_cast<const char *>(&size), sizeof(size));
+
+	// Store tiles' data
+	tiles_array::const_iterator fg = _fg_tiles.begin();
+	tiles_array::const_iterator bg = _bg_tiles.begin();
+
+	for (; fg != _fg_tiles.end(); ++fg, ++bg)
+	{
+		uint32_t raw[] = { fg->get_raw(), bg->get_raw() };
+		file.write((char *) raw, sizeof(raw));
+	}
 }

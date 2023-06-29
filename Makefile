@@ -5,7 +5,7 @@
 #    '-._.(;;;)._.-'                                                           #
 #    .-'  ,`"`,  '-.                                                           #
 #   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)               #
-#       //\   /         Last Updated: Wednesday, June 28, 2023 8:13 PM         #
+#       //\   /         Last Updated: Thursday, June 29, 2023 11:39 AM         #
 #      ||  '-'                                                                 #
 # ############################################################################ #
 
@@ -24,13 +24,13 @@ SRC_DIR   = src
 OUT_DIR   = bin
 
 # Target Compiler and options
-CC        = g++
+CC        = c++
 CFLAGS    = -Wall -Wextra -Wpedantic -Wunreachable-code -Werror -std=c++11 -g3
 LINKER    = -fsanitize=address
 
 # Libraries to link and where to find them
 LIBRARIES = sfml-graphics sfml-window sfml-system
-SEARCHDIR = 
+SEARCHDIR = $(HOME)/sgoinfre/libs
 
 
 #############################

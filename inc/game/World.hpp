@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Wednesday, June 28, 2023 5:24 PM       */
+/*       //\   /         Last Updated: Thursday, June 29, 2023 11:41 AM       */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ class World
 		void			set_bg_tile(const size_type &x, const size_type &y, const Tile &tile);
 
 		std::string		raw_data() const;
+		void			save(std::ofstream &file) const;
 
 			/** ---------------------- **/
 			/*          DELETED         */
