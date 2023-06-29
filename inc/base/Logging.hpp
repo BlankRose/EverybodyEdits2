@@ -5,11 +5,12 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Tuesday, June 27, 2023 8:01 PM         */
+/*       //\   /         Last Updated: Thursday, June 29, 2023 1:47 PM        */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
 #pragma once
+
 #include <string>
 
 namespace Logging

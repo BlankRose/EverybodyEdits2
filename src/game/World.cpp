@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Thursday, June 29, 2023 12:43 PM       */
+/*       //\   /         Last Updated: Thursday, June 29, 2023 1:27 PM        */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 	/** ---------------------- **/
 
 using size_type = World::size_type;
-using position_type = World::position_type;
+using scale_type = World::scale_type;
 
 #define TILES_PER_BUFFER 100000
 #define TILES_BASE_SIZE sizeof(Tile::raw_type) * 2
@@ -26,8 +26,6 @@ using position_type = World::position_type;
 	/** ---------------------- **/
 	/*       CONSTRUCTORS       */
 	/** ---------------------- **/
-
-World::World(): World(0, 0) {}
 
 // Generates new world with given width and height
 World::World(const size_type &width, const size_type &height):
@@ -83,7 +81,7 @@ World::World(std::ifstream &file)
 
 	// Retrieve basic details
 	file.read(buffer, sizeof(size_type) * 2);
-	_size = position_type(*reinterpret_cast<size_type *>(buffer),
+	_size = scale_type(*reinterpret_cast<size_type *>(buffer),
 		*reinterpret_cast<size_type *>(&buffer[sizeof(size_type)]));
 	_fg_tiles.resize(_size.x * _size.y);
 	_bg_tiles.resize(_size.x * _size.y);
@@ -122,43 +120,41 @@ World::~World()
 	/*          METHODS         */
 	/** ---------------------- **/
 
-size_type		World::get_width() const { return _size.x; }
-size_type		World::get_height() const { return _size.y; }
+scale_type	World::get_size() const
+	{ return _size; }
 
-Tile			&World::get_fg_tile(const size_type &x, const size_type &y)
+size_type	World::get_width() const
+	{ return _size.x; }
+
+size_type	World::get_height() const
+	{ return _size.y; }
+
+Tile		&World::get_fg_tile(const size_type &x, const size_type &y)
 	{ return _fg_tiles[x + y * _size.x]; }
 
-Tile			&World::get_bg_tile(const size_type &x, const size_type &y)
+Tile		&World::get_bg_tile(const size_type &x, const size_type &y)
 	{ return _bg_tiles[x + y * _size.x]; }
 
-const Tile		&World::get_fg_tile(const size_type &x, const size_type &y) const
+const Tile	&World::get_fg_tile(const size_type &x, const size_type &y) const
 	{ return _fg_tiles[x + y * _size.x]; }
 
-const Tile		&World::get_bg_tile(const size_type &x, const size_type &y) const
+const Tile	&World::get_bg_tile(const size_type &x, const size_type &y) const
 	{ return _bg_tiles[x + y * _size.x]; }
 
-void			World::set_width(const size_type &width)
-{
-	_size.x = width;
-	_fg_tiles.resize(width * _size.y);
-	_bg_tiles.resize(width * _size.y);
-}
-
-void			World::set_height(const size_type &height)
-{
-	_size.y = height;
-	_fg_tiles.resize(_size.x * height);
-	_bg_tiles.resize(_size.x * height);
-}
-
-void			World::set_fg_tile(const size_type &x, const size_type &y, const Tile &tile)
+void		World::set_fg_tile(const size_type &x, const size_type &y, const Tile &tile)
 	{ _fg_tiles[x + y * _size.x] = tile; }
 
-void			World::set_bg_tile(const size_type &x, const size_type &y, const Tile &tile)
+void		World::set_bg_tile(const size_type &x, const size_type &y, const Tile &tile)
 	{ _bg_tiles[x + y * _size.x] = tile; }
 
+void		World::set_fg_tile(const size_type &x, const size_type &y, Tile &&tile)
+	{ _fg_tiles[x + y * _size.x] = std::move(tile); }
+
+void		World::set_bg_tile(const size_type &x, const size_type &y, Tile &&tile)
+	{ _bg_tiles[x + y * _size.x] = std::move(tile); }
+
 // Retrieves world's data in binary format, as a string
-std::string		World::raw_data() const
+std::string	World::raw_data() const
 {
 	// Store world's size
 	std::string data;
@@ -180,7 +176,7 @@ std::string		World::raw_data() const
 
 // Save world's data in binary format, straight to the given file
 // (Time saved by not using std::string: almost half time compared to raw_data())
-void			World::save(std::ofstream &file) const
+void		World::save(std::ofstream &file) const
 {
 	// Store world's size
 	size_type size[] = { _size.x, _size.y };

@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Wednesday, June 28, 2023 4:53 PM       */
+/*       //\   /         Last Updated: Thursday, June 29, 2023 1:42 PM        */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ using size_type = Framework::size_type;
 using window_type = Framework::window_type;
 using view_type = Framework::view_type;
 
-const std::string	Framework::TITLE = "Everybody Edits 2";
+const char *Framework::TITLE = "Everybody Edits 2";
 
 	/** ---------------------- **/
 	/*       CONSTRUCTORS       */

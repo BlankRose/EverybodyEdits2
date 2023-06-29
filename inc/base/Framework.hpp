@@ -5,20 +5,22 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Tuesday, June 27, 2023 9:36 PM         */
+/*       //\   /         Last Updated: Thursday, June 29, 2023 1:42 PM        */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
 #pragma once
+
+#include "utils/NonCopyable.hpp"
 #include <SFML/Graphics.hpp>
-#include <string>
 
 /**
  * Framework
  * 
  * This class serves as a wrapper for the SFML's basic rendering features.
  * */
-class Framework
+class Framework:
+	public NonCopyable
 {
 	public:
 
@@ -30,7 +32,7 @@ class Framework
 		typedef sf::RenderWindow	window_type;
 		typedef sf::View			view_type;
 
-		static const std::string	TITLE;
+		static const char			*TITLE;
 
 			/** ---------------------- **/
 			/*       CONSTRUCTORS       */
@@ -44,7 +46,7 @@ class Framework
 			/*         OVERLOADS        */
 			/** ---------------------- **/
 
-		explicit operator bool() const;
+		explicit operator	bool() const;
 
 			/** ---------------------- **/
 			/*          METHODS         */
@@ -61,16 +63,6 @@ class Framework
 
 		void				set_view(const view_type &view);
 		void				set_framelimit(const size_type &limit);
-
-			/** ---------------------- **/
-			/*          DELETED         */
-			/** ---------------------- **/
-
-		Framework(const Framework &) = delete;
-		Framework(Framework &&) = delete;
-
-		Framework			&operator=(const Framework &) = delete;
-		Framework			&operator=(Framework &&) = delete;
 
 	private:
 

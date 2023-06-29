@@ -5,16 +5,20 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Wednesday, June 28, 2023 7:47 PM       */
+/*       //\   /         Last Updated: Thursday, June 29, 2023 1:47 PM        */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
 #pragma once
 
 // Standard libraries
+////////////////////
+
 #include <iostream>
 
 // Base classes
+//////////////
+
 #include "base/Configs.hpp"
 #include "base/Assets.hpp"
 #include "base/Context.hpp"
@@ -22,6 +26,8 @@
 #include "base/Logging.hpp"
 
 // Game's Core Mechanics classes
+///////////////////////////////
+
 #include "game/Tile.hpp"
 #include "game/World.hpp"
 #include "game/View.hpp"

@@ -5,7 +5,7 @@
 #    '-._.(;;;)._.-'                                                           #
 #    .-'  ,`"`,  '-.                                                           #
 #   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)               #
-#       //\   /         Last Updated: Thursday, June 29, 2023 11:39 AM         #
+#       //\   /         Last Updated: Thursday, June 29, 2023 1:16 PM          #
 #      ||  '-'                                                                 #
 # ############################################################################ #
 
@@ -25,7 +25,7 @@ OUT_DIR   = bin
 
 # Target Compiler and options
 CC        = c++
-CFLAGS    = -Wall -Wextra -Wpedantic -Wunreachable-code -Werror -std=c++11 -g3
+CFLAGS    = -Wall -Wextra -Wpedantic -Wunreachable-code -Werror -std=c++11 -g3 -Ofast
 LINKER    = -fsanitize=address
 
 # Libraries to link and where to find them
@@ -60,6 +60,7 @@ PENDING     = $(BREAK)$(ESCAPE)[33m
 DEFINES     = -DVERSION=\"$(VERSION)\" -DNAME=\"$(NAME)\"
 FINAL_LINK  = $(foreach lib, $(LIBRARIES), -l$(lib)) $(foreach dir, $(LIB_FOLDERS), -L$(dir)) $(LINKER) $(CFLAGS)
 FINAL_OBJ   = $(foreach dir, $(INCLUDES), -I$(dir)) $(DEFINES) $(CFLAGS)
+LD_EXPORT   = export LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(LIB_FOLDERS)
 
 
 #############################
@@ -100,20 +101,21 @@ fullclean: clean
 re: remake
 remake: fullclean all
 
-# Run the executable (ensures shared library paths are set aswell)
+# Run the executable without leaks detections
+# NOTE: ensures shared library paths are set aswell
 r: run
 run: all
 	@echo "$(PENDING)Running $(NAME)... OUTPUT:$(RESET)"
-	@export LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(LIB_FOLDERS) \
-		&& export ASAN_OPTIONS=detect_leaks=0 \
+	@$(LD_EXPORT) && export ASAN_OPTIONS=detect_leaks=0 \
 		&& ./$(NAME) $(ARGS)
 	@echo "$(SUCCESS)$(NAME) exited successfully!$(RESET)"
 
+# Run the executable with leak detections
+# NOTE: 5600 bytes from 18 allocations are false-positives, caused by SFML's globals
 rl: run-leak
 run-leak: all
 	@echo "$(PENDING)Running $(NAME)... OUTPUT:$(RESET)"
-	@export LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(LIB_FOLDERS) \
-		&& ./$(NAME) $(ARGS)
+	@$(LD_EXPORT) && ./$(NAME) $(ARGS)
 	@echo "$(SUCCESS)$(NAME) exited successfully!$(RESET)"
 
 # Displays debug messages
@@ -132,4 +134,4 @@ debug:
 #################################
 
 .DEFAULT_GOAL = all
-.PHONY: all build compile clean fullclean remake run
+.PHONY: all clean fullclean remake run run-leak debug

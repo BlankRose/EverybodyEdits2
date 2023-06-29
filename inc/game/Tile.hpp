@@ -5,11 +5,12 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Wednesday, June 28, 2023 5:54 PM       */
+/*       //\   /         Last Updated: Thursday, June 29, 2023 1:47 PM        */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
 #pragma once
+
 #include <cstdint>
 
 // Raw data format:

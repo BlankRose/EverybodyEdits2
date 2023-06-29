@@ -5,13 +5,17 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Thursday, June 29, 2023 11:41 AM       */
+/*       //\   /         Last Updated: Thursday, June 29, 2023 1:45 PM        */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
 #pragma once
+
 #include "Tile.hpp"
-#include <SFML/Graphics.hpp>
+#include "utils/NonCopyable.hpp"
+
+#include <SFML/System.hpp>
+
 #include <vector>
 #include <string>
 #include <iosfwd>
@@ -34,7 +38,8 @@
  * Represents a world loaded within the game. Contains all the tiles and
  * information about the world.
  * */
-class World
+class World:
+	public NonCopyable
 {
 	World();
 	public:
@@ -44,7 +49,7 @@ class World
 			/** ---------------------- **/
 
 		typedef uint16_t				size_type;
-		typedef sf::Vector2<size_type>	position_type;
+		typedef sf::Vector2<size_type>	scale_type;
 		typedef std::vector<Tile>		tiles_array;
 
 			/** ---------------------- **/
@@ -60,32 +65,22 @@ class World
 			/*          METHODS         */
 			/** ---------------------- **/
 
-		size_type		get_width() const;
-		size_type		get_height() const;
+		scale_type	get_size() const;
+		size_type	get_width() const;
+		size_type	get_height() const;
 
-		Tile			&get_fg_tile(const size_type &x, const size_type &y);
-		Tile			&get_bg_tile(const size_type &x, const size_type &y);
-		const Tile		&get_fg_tile(const size_type &x, const size_type &y) const;
-		const Tile		&get_bg_tile(const size_type &x, const size_type &y) const;
+		Tile		&get_fg_tile(const size_type &x, const size_type &y);
+		Tile		&get_bg_tile(const size_type &x, const size_type &y);
+		const Tile	&get_fg_tile(const size_type &x, const size_type &y) const;
+		const Tile	&get_bg_tile(const size_type &x, const size_type &y) const;
 
-		void			set_width(const size_type &width);
-		void			set_height(const size_type &height);
+		void		set_fg_tile(const size_type &x, const size_type &y, const Tile &tile);
+		void		set_bg_tile(const size_type &x, const size_type &y, const Tile &tile);
+		void 		set_fg_tile(const size_type &x, const size_type &y, Tile &&tile);
+		void		set_bg_tile(const size_type &x, const size_type &y, Tile &&tile);
 
-		void			set_fg_tile(const size_type &x, const size_type &y, const Tile &tile);
-		void			set_bg_tile(const size_type &x, const size_type &y, const Tile &tile);
-
-		std::string		raw_data() const;
-		void			save(std::ofstream &file) const;
-
-			/** ---------------------- **/
-			/*          DELETED         */
-			/** ---------------------- **/
-
-		World(const World &world) = delete;
-		World(World &&world) = delete;
-
-		World			&operator=(const World &world) = delete;
-		World			&operator=(World &&world) = delete;
+		std::string	raw_data() const;
+		void		save(std::ofstream &file) const;
 
 	private:
 
@@ -93,7 +88,7 @@ class World
 			/*           FIELDS         */
 			/** ---------------------- **/
 
-		position_type		_size;
+		scale_type			_size;
 		std::vector<Tile>	_fg_tiles;
 		std::vector<Tile>	_bg_tiles;
 };

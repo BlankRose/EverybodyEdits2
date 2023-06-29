@@ -5,12 +5,14 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Wednesday, June 28, 2023 2:06 PM       */
+/*       //\   /         Last Updated: Thursday, June 29, 2023 1:45 PM        */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
 #pragma once
+
 #include "World.hpp"
+#include <SFML/Graphics.hpp>
 
 /**
  * View
@@ -19,7 +21,9 @@
  * player's position and will be used to render the world.
  * */
 class View:
-	sf::Drawable, sf::Transformable
+	public sf::Drawable,
+	public sf::Transformable,
+	public NonCopyable
 {
 	public:
 
@@ -54,16 +58,6 @@ class View:
 
 		void			update();
 		void			draw(sf::RenderTarget &target, sf::RenderStates states) const;
-
-			/** ---------------------- **/
-			/*          DELETED         */
-			/** ---------------------- **/
-
-		View(const View &other) = delete;
-		View(View &&other) = delete;
-
-		View &operator=(const View &other) = delete;
-		View &operator=(View &&other) = delete;
 
 	private:
 
