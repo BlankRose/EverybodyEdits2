@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Thursday, June 29, 2023 12:23 PM       */
+/*       //\   /         Last Updated: Thursday, June 29, 2023 12:43 PM       */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -62,15 +62,14 @@ World::World(const char *data):
 	// Prepare iterators
 	tiles_array::iterator fg = _fg_tiles.begin();
 	tiles_array::iterator bg = _bg_tiles.begin();
-	Tile::size_type	raw_size = Tile::raw_size;
 
 	// Assign tiles from data
 	data = &data[sizeof(size_type) * 2]; // Skip size data
 	for (; fg != _fg_tiles.end(); ++fg, ++bg)
 	{
 		*fg = Tile(data);
-		*bg = Tile(&data[raw_size]);
-		data += raw_size * 2;
+		*bg = Tile(&data[sizeof(Tile::raw_type)]);
+		data += sizeof(Tile::raw_type) * 2;
 	}
 }
 
@@ -92,7 +91,6 @@ World::World(std::ifstream &file)
 	// Prepare iterators
 	tiles_array::iterator fg = _fg_tiles.begin();
 	tiles_array::iterator bg = _bg_tiles.begin();
-	Tile::size_type	raw_size = Tile::raw_size;
 
 	while (true)
 	{
@@ -105,10 +103,10 @@ World::World(std::ifstream &file)
 		// Assign tiles from buffer
 		for (size_type i = 0;
 			i < buffer_size && fg != _fg_tiles.end();
-			i += raw_size * 2, ++fg, ++bg)
+			i += sizeof(Tile::raw_type) * 2, ++fg, ++bg)
 		{
 			*fg = Tile(&buffer[i]);
-			*bg = Tile(&buffer[i + raw_size]);
+			*bg = Tile(&buffer[i + sizeof(Tile::raw_type)]);
 		}
 	}
 }
@@ -159,7 +157,7 @@ void			World::set_fg_tile(const size_type &x, const size_type &y, const Tile &ti
 void			World::set_bg_tile(const size_type &x, const size_type &y, const Tile &tile)
 	{ _bg_tiles[x + y * _size.x] = tile; }
 
-// Retrieves world's data in binary format, with the given format:
+// Retrieves world's data in binary format, as a string
 std::string		World::raw_data() const
 {
 	// Store world's size
@@ -172,8 +170,8 @@ std::string		World::raw_data() const
 	tiles_array::const_iterator bg = _bg_tiles.begin();
 	for (; fg != _fg_tiles.end(); ++fg, ++bg)
 	{
-		uint32_t raw[2] = { fg->get_raw(), bg->get_raw() };
-		data.append((char *) raw, sizeof(uint32_t) * 2);
+		Tile::raw_type raw[2] = { fg->get_raw(), bg->get_raw() };
+		data.append((char *) raw, sizeof(raw));
 	}
 
 	// Return final data
@@ -181,7 +179,7 @@ std::string		World::raw_data() const
 }
 
 // Save world's data in binary format, straight to the given file
-// (Time saved by not using std::string: half time compared to raw_data())
+// (Time saved by not using std::string: almost half time compared to raw_data())
 void			World::save(std::ofstream &file) const
 {
 	// Store world's size
@@ -194,7 +192,7 @@ void			World::save(std::ofstream &file) const
 
 	for (; fg != _fg_tiles.end(); ++fg, ++bg)
 	{
-		uint32_t raw[] = { fg->get_raw(), bg->get_raw() };
+		Tile::raw_type raw[] = { fg->get_raw(), bg->get_raw() };
 		file.write((char *) raw, sizeof(raw));
 	}
 }
