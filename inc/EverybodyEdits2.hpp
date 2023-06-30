@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Thursday, June 29, 2023 1:47 PM        */
+/*       //\   /         Last Updated: Thursday, June 29, 2023 4:50 PM        */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 
 #include "game/Tile.hpp"
 #include "game/World.hpp"
-#include "game/View.hpp"
+#include "game/GameView.hpp"
 
 // saving.cpp: Handles savestates for the game
 /////////////////////////////////////////////

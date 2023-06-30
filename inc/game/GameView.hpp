@@ -1,11 +1,11 @@
 /* ************************************************************************** */
 /*          .-.                                                               */
 /*    __   /   \   __                                                         */
-/*   (  `'.\   /.'`  )   EverybodyEdits2 - View.hpp                           */
+/*   (  `'.\   /.'`  )   EverybodyEdits2 - GameView.hpp                       */
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Thursday, June 29, 2023 1:45 PM        */
+/*       //\   /         Last Updated: Friday, June 30, 2023 5:40 PM          */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -14,17 +14,27 @@
 #include "World.hpp"
 #include <SFML/Graphics.hpp>
 
+// View structure:
+// 
+// - Contains 9 chunks of the world
+// - Each chunk is 50x50 tiles
+// - Each tile is 16x16 pixels
+// - Center chunk is the chunk the player is in
+// - When player goes into another chunk, the forward chunk is loaded, and the
+//   backward chunk is unloaded (if it exists)
+
 /**
- * View
+ * GameView
  * 
  * Represents a rendered portion of the world. It will be adjusted to the
  * player's position and will be used to render the world.
  * */
-class View:
+class GameView:
 	public sf::Drawable,
 	public sf::Transformable,
 	public NonCopyable
 {
+	GameView();
 	public:
 
 			/** ---------------------- **/
@@ -38,12 +48,8 @@ class View:
 			/*       CONSTRUCTORS       */
 			/** ---------------------- **/
 
-	private:
-		View();
-
-	public:
-		View(World *world, const pos_type &position = pos_type(0, 0));
-		~View();
+		GameView(World *world, const pos_type &position = pos_type(0, 0));
+		~GameView();
 
 			/** ---------------------- **/
 			/*          METHODS         */
@@ -56,7 +62,8 @@ class View:
 		void			set_world(World *world);
 		void			set_position(const pos_type &position);
 
-		void			update();
+		void			update_position(const pos_type &position);
+		void			update_tile(const pos_type &position);
 		void			draw(sf::RenderTarget &target, sf::RenderStates states) const;
 
 	private:
@@ -65,7 +72,19 @@ class View:
 			/*        ATTRIBUTES        */
 			/** ---------------------- **/
 
+		struct Chunk:
+			public sf::Drawable,
+			public sf::Transformable
+		{
+			Chunk();
+			~Chunk();
+
+			void draw(sf::RenderTarget &target, sf::RenderStates states) const;
+			sf::VertexArray	_fg_vertices;
+			sf::VertexArray	_bg_vertices;
+		};
+
 		World			*_world;
 		pos_type		_position;
-		vertex_array	_vertices;
+		Chunk			_chunks[9];
 };
