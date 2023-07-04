@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Thursday, June 29, 2023 1:45 PM        */
+/*       //\   /         Last Updated: Tuesday, July 4, 2023 1:46 PM          */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 
 /**
  * World
+ * << MVC (Game's Model) >>
  * 
  * Represents a world loaded within the game. Contains all the tiles and
  * information about the world.

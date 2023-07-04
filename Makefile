@@ -5,7 +5,7 @@
 #    '-._.(;;;)._.-'                                                           #
 #    .-'  ,`"`,  '-.                                                           #
 #   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)               #
-#       //\   /         Last Updated: Thursday, June 29, 2023 1:16 PM          #
+#       //\   /         Last Updated: Tuesday, July 4, 2023 10:07 PM           #
 #      ||  '-'                                                                 #
 # ############################################################################ #
 
@@ -58,9 +58,9 @@ PENDING     = $(BREAK)$(ESCAPE)[33m
 
 # Final compositions
 DEFINES     = -DVERSION=\"$(VERSION)\" -DNAME=\"$(NAME)\"
-FINAL_LINK  = $(foreach lib, $(LIBRARIES), -l$(lib)) $(foreach dir, $(LIB_FOLDERS), -L$(dir)) $(LINKER) $(CFLAGS)
+FINAL_LINK  = $(foreach dir, $(LIB_FOLDERS), -L$(dir)) $(foreach lib, $(LIBRARIES), -l$(lib)) $(LINKER) $(CFLAGS)
 FINAL_OBJ   = $(foreach dir, $(INCLUDES), -I$(dir)) $(DEFINES) $(CFLAGS)
-LD_EXPORT   = export LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(LIB_FOLDERS)
+LD_EXPORT   = export LD_LIBRARY_PATH=$(LD_LIBRARY_PATH)$(foreach dir, $(LIB_FOLDERS),:$(dir))
 
 
 #############################
@@ -111,7 +111,9 @@ run: all
 	@echo "$(SUCCESS)$(NAME) exited successfully!$(RESET)"
 
 # Run the executable with leak detections
-# NOTE: 5600 bytes from 18 allocations are false-positives, caused by SFML's globals
+# /!\ NOTE: leaks /usr/lib/x86_64-linux-gnu/dri/radeonsi_dri.so (OpenGL)
+#       are caused by SFML's global variables (from: devs)
+#     Oddly enough: they may not always appears ? (The fuck ?!)
 rl: run-leak
 run-leak: all
 	@echo "$(PENDING)Running $(NAME)... OUTPUT:$(RESET)"

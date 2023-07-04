@@ -31,14 +31,14 @@ Version: 0.6
 # Compilation
 
 Before compiling the project, you will need two libraries, there are listed below with the versions used and tested:
- - `SFML`: Graphic library (2.5.1) (https://www.sfml-dev.org/)
- - `Nholomann JSON`: Utility library (3.11.2) (https://github.com/nlohmann/json)
+ - `SFML`: Graphic library (2.6.0) (https://www.sfml-dev.org/)
+ - `Nholomann JSON`: Utility library (3.11.2) (https://github.com/nlohmann/json) - INCLUDED
 
-The project is using CMake to compile, it also includes a Makefile with the following rules to simplify steps:
- - `all`: Execute both `build` and `compile` rules
- - `build`: Build the CMake target into a `build` directory
- - `compile`: Compile the project (same as: `make -C build all`)
- - `clean`: Delete the compiled objects and executable (same as: `make -C build clean`)
- - `fullclean`: Delete the entire `build` folder
- - `remake`: Clean and rebuild everything
- - `run`: Compile and run the executable located in `build`
+The project is using Makefiles to compile, it also includes a Makefile with the following rules to simplify steps:
+ - `all`: Compile the project into a binary (DEFAULT_GOAL)
+ - `clean`: Clear all objects files created during compilation
+ - `fullclean`: Clear all objects files AND remove the final executable aswell
+ - `remake`: Rebuild from scratch the project (Equivalent: `make fullclean all`)
+ - `run`: Execute the binary, compiling it before hand if necessary
+ - `run-leak`: Execute with leak-sanitizer, compiling aswell if necessary
+ - `debug`: Displays all targetted files and dependacies by the projects

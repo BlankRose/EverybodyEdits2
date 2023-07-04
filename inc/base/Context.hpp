@@ -5,14 +5,12 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Wednesday, June 28, 2023 4:58 PM       */
+/*       //\   /         Last Updated: Tuesday, July 4, 2023 8:51 PM          */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
-#include <cstdint>
-
 class Framework;
-class World;
+class GameController;
 
 class Context
 {
@@ -28,12 +26,12 @@ class Context
 		Context(const Context &other);
 		~Context();
 
-		Context		&operator=(const Context &other);
+		Context			&operator=(const Context &other);
 
-		bool		up, down, right, left;
-		bool		mouse_L, mouse_R, mouse_M;
-		Displays	display;
+		bool			up, down, right, left;
+		bool			mouse_L, mouse_R, mouse_M;
+		Displays		display;
 
-		Framework	*fw;
-		World		*map;
+		Framework		*fw;
+		GameController	*game;
 };

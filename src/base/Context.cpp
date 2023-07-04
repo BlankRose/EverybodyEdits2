@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Wednesday, June 28, 2023 4:58 PM       */
+/*       //\   /         Last Updated: Tuesday, July 4, 2023 8:51 PM          */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 Context::Context():
 	up(false), down(false), right(false), left(false),
 	mouse_L(false), mouse_R(false), mouse_M(false),
-	display(LOADING), fw(nullptr), map(nullptr) {}
+	display(LOADING), fw(nullptr), game(nullptr) {}
 
 Context::Context(const Context &other)
 	{ operator=(other); }
@@ -42,7 +42,7 @@ Context		&Context::operator=(const Context &other)
 
 	display = other.display;
 	fw = other.fw;
-	map = other.map;
+	game = other.game;
 
 	return *this;
 }

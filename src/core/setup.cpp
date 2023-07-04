@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Wednesday, June 28, 2023 7:50 PM       */
+/*       //\   /         Last Updated: Tuesday, July 4, 2023 8:54 PM          */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -25,10 +25,8 @@ void		unload(Context *&ctx)
 	{
 		if (ctx->fw)
 			delete ctx->fw;
-		if (ctx->map)
-			delete ctx->map;
-		//if (ctx->ui)
-		//	delete ctx->ui;
+		if (ctx->game)
+			delete ctx->game;
 		delete ctx;
 	}
 	ctx = nullptr;
@@ -105,8 +103,8 @@ bool		get_ready(Context *&ctx)
 	}
 
 	ctx->fw = new Framework();
-	//ctx->ui = new Interface();
-	if (!ctx->fw || !ctx->fw->is_ready() /*|| !ctx->ui*/)
+	ctx->game = new GameController();
+	if (!ctx->fw || !ctx->fw->is_ready() || !ctx->game)
 	{
 		unload(ctx);
 		Logging::fatal("Couldn't allocate the requiered memory!");
@@ -132,7 +130,7 @@ bool		get_ready(Context *&ctx)
 /*void	threads_unit(Context *&ctx)
 {
 	sf::RenderWindow	&win = ctx->fw->get_window();
-
+`
 	while (win.isOpen())
 	{
 		event_unit(ctx);

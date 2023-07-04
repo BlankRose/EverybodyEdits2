@@ -5,11 +5,12 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Thursday, June 29, 2023 1:27 PM        */
+/*       //\   /         Last Updated: Tuesday, July 4, 2023 3:46 PM          */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
 #include "game/World.hpp"
+#include "utils/Settings.hpp"
 #include <fstream>
 
 	/** ---------------------- **/
@@ -19,7 +20,6 @@
 using size_type = World::size_type;
 using scale_type = World::scale_type;
 
-#define TILES_PER_BUFFER 100000
 #define TILES_BASE_SIZE sizeof(Tile::raw_type) * 2
 #define BUFFER_SIZE TILES_BASE_SIZE * TILES_PER_BUFFER
 
