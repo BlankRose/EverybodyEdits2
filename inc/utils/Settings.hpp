@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Tuesday, July 4, 2023 9:31 PM          */
+/*       //\   /         Last Updated: Wednesday, July 5, 2023 6:59 PM        */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@
 
 #ifndef TILE_WIDTH
 // Defines the width of a tile in pixels
-# define TILE_WIDTH 16.f
+# define TILE_WIDTH 32.f
 #endif
 
 #ifndef TILE_HEIGHT
 // Defines the height of a tile in pixels
-# define TILE_HEIGHT 16.f
+# define TILE_HEIGHT 32.f
 #endif

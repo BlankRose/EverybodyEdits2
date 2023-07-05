@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Tuesday, July 4, 2023 3:46 PM          */
+/*       //\   /         Last Updated: Wednesday, July 5, 2023 5:26 PM        */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ World::World(std::ifstream &file)
 			break;
 
 		// Assign tiles from buffer
-		for (size_type i = 0;
+		for (uint32_t i = 0;
 			i < buffer_size && fg != _fg_tiles.end();
 			i += sizeof(Tile::raw_type) * 2, ++fg, ++bg)
 		{

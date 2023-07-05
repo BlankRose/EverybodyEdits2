@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Tuesday, July 4, 2023 10:29 PM         */
+/*       //\   /         Last Updated: Wednesday, July 5, 2023 7:52 PM        */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	test(Context *ctx)
 
 	World *world = ctx->game->getWorld();
 	std::cout << "World size: " << world->get_width() << "x" << world->get_height() << std::endl;
+	std::cout << "Tile at 0:0 is " << world->get_fg_tile(0, 0).get_id() << " | " << world->get_bg_tile(0, 0).get_id() << std::endl;
+	std::cout << "Tile at 1:1 is " << world->get_fg_tile(1, 1).get_id() << " | " << world->get_bg_tile(1, 1).get_id() << std::endl;
 
 	// Test initialize camera time
 	sf::View view = ctx->fw->get_window().getView();

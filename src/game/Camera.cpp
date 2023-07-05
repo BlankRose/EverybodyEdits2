@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Tuesday, July 4, 2023 10:01 PM         */
+/*       //\   /         Last Updated: Wednesday, July 5, 2023 7:49 PM        */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ Camera::Camera(const sf::View &view)
 	_current = scale_type(
 		origin.left / TILE_WIDTH,
 		origin.top / TILE_HEIGHT,
-		origin.width / TILE_WIDTH,
-		origin.height / TILE_HEIGHT
+		origin.width / TILE_WIDTH + 1,
+		origin.height / TILE_HEIGHT + 1
 	);
 
 	// Resize the vertices array to fit the view

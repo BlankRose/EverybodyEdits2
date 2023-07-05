@@ -5,7 +5,7 @@
 #    '-._.(;;;)._.-'                                                           #
 #    .-'  ,`"`,  '-.                                                           #
 #   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)               #
-#       //\   /         Last Updated: Tuesday, July 4, 2023 10:07 PM           #
+#       //\   /         Last Updated: Wednesday, July 5, 2023 8:00 PM          #
 #      ||  '-'                                                                 #
 # ############################################################################ #
 
@@ -25,7 +25,7 @@ OUT_DIR   = bin
 
 # Target Compiler and options
 CC        = c++
-CFLAGS    = -Wall -Wextra -Wpedantic -Wunreachable-code -Werror -std=c++11 -g3 -Ofast
+CFLAGS    = -Wall -Wextra -Wpedantic -Wunreachable-code -Werror -std=c++11 -O3 -g3
 LINKER    = -fsanitize=address
 
 # Libraries to link and where to find them

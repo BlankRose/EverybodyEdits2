@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Tuesday, July 4, 2023 9:08 PM          */
+/*       //\   /         Last Updated: Wednesday, July 5, 2023 4:00 PM        */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -163,7 +163,10 @@ bool GameController::saveWorld(const std::string &path)
 	if (!ofile.is_open())
 		return (Logging::error("Cannot open the target file: " + path + "!"), false);
 
+	// Closing and Saving takes about same time
+	// (3.5s each for 10k x 10k or 7s for both)
 	world->save(ofile);
+	ofile.close();
 	return true;
 }
 
