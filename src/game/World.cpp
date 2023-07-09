@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Sunday, July 9, 2023 6:57 PM           */
+/*       //\   /         Last Updated: Sunday, July 9, 2023 10:33 PM          */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ using scale_type = World::scale_type;
 
 #define TILES_BASE_SIZE sizeof(Tile::raw_type) * 2
 #define BUFFER_SIZE TILES_BASE_SIZE * TILES_PER_BUFFER
+#define DEFAULT_ID 2
 
 	/** ---------------------- **/
 	/*       CONSTRUCTORS       */
@@ -39,15 +40,15 @@ World::World(const size_type &width, const size_type &height):
 	// Set top and bottom rows
 	for (size_type x = 0; x < width; ++x)
 	{
-		_fg_tiles[x] = Tile(1);
-		_fg_tiles[x + limit_y * width] = Tile(1);
+		_fg_tiles[x] = Tile(DEFAULT_ID);
+		_fg_tiles[x + limit_y * width] = Tile(DEFAULT_ID);
 	}
 
 	// Set left and right columns (corner tiles already set)
 	for (size_type y = 1; y < limit_y; ++y)
 	{
-		_fg_tiles[y * width] = Tile(1);
-		_fg_tiles[limit_x + y * width] = Tile(1);
+		_fg_tiles[y * width] = Tile(DEFAULT_ID);
+		_fg_tiles[limit_x + y * width] = Tile(DEFAULT_ID);
 	}
 }
 
@@ -152,6 +153,21 @@ void		World::set_fg_tile(const size_type &x, const size_type &y, Tile &&tile)
 
 void		World::set_bg_tile(const size_type &x, const size_type &y, Tile &&tile)
 	{ _bg_tiles[x + y * _size.x] = std::move(tile); }
+
+/**
+ * Indicates whether the world has a tile at the given position
+ * (Mostly used for detecting out-of-bounds positions)
+ * 
+ * @param	x: The tile's x position
+ * @param	y: The tile's y position
+ * 
+ * @return	True if the world has a tile at the given position, false otherwise
+ * */
+bool World::has_tile(const int32_t &x, const int32_t &y) const
+{
+	return x >= 0 && x < _size.x
+		&& y >= 0 && y < _size.y;
+}
 
 // Retrieves world's data in binary format, as a string
 std::string	World::raw_data() const

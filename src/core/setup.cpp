@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Sunday, July 9, 2023 2:06 PM           */
+/*       //\   /         Last Updated: Sunday, July 9, 2023 8:33 PM           */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -127,10 +127,10 @@ bool		get_ready(Context *&ctx)
  * 
  * @param	ctx: Context of the current target process
  * */
-/*void	threads_unit(Context *&ctx)
+void	threads_unit(Context *&ctx)
 {
 	sf::RenderWindow	&win = ctx->fw->get_window();
-`
+
 	while (win.isOpen())
 	{
 		event_unit(ctx);
@@ -141,5 +141,4 @@ bool		get_ready(Context *&ctx)
 			break;
 		draws_unit(ctx);
 	}
-	save_world(ctx, Configs::misc::save_file);
-}*/
+}

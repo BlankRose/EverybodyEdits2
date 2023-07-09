@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Sunday, July 9, 2023 8:04 PM           */
+/*       //\   /         Last Updated: Sunday, July 9, 2023 9:45 PM           */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ bool prepareGame(Context *ctx)
 	)
 
 	sf::View view = ctx->fw->get_window().getView();
-	view.move(-400.f, 300.f);
+	view.setCenter(0.f, 0.f);
 	ctx->fw->get_window().setView(view);
 
 	__TIME_TEST("Initializing the camera",

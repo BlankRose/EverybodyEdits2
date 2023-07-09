@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Tuesday, July 4, 2023 9:58 PM          */
+/*       //\   /         Last Updated: Sunday, July 9, 2023 10:12 PM          */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -49,15 +49,30 @@ bool			Assets::load_ressources(const path_type &base_dir)
 	if (*base_dir.rbegin() != '/')
 		dir += '/';
 
+	texture_type fg_tex, bg_tex;
 	_tilesize = size_type(Configs::graphics::tilesize, Configs::graphics::tilesize);
+
+	// Load all tile textures
 	for (id_type i = 0; id_paths[i]; ++i)
 	{
-		texture_type fg_tex; //bg_tex;
-		if (!fg_tex.loadFromFile(dir + "foreground/" + id_paths[i] + ".png"))
+		if (!fg_tex.loadFromFile(dir + "foreground/" + id_paths[i] + ".png")
+			|| !bg_tex.loadFromFile(dir + "background/" + id_paths[i] + ".png"))
 			return false;
 		_fg_texmap.insert(std::make_pair(i, fg_tex));
-		//_bg_texmap.insert(std::make_pair(i, bg_tex));
+		_bg_texmap.insert(std::make_pair(i, bg_tex));
 	}
+
+	// Load additional "unknown" tile textures
+	// (Will be used when a tile is not found in the map)
+	if (!fg_tex.loadFromFile(dir + "foreground/unknown.png")
+		|| !bg_tex.loadFromFile(dir + "background/unknown.png"))
+		return false;
+	_fg_texmap.insert(std::make_pair(-1, fg_tex));
+	_bg_texmap.insert(std::make_pair(-1, bg_tex));
+
+	// Load font
+	if (!_font.loadFromFile(dir + "font.ttf"))
+		return false;
 
 	return true;
 }
@@ -81,7 +96,14 @@ texture_type	&Assets::get_loadscreen()
 texture_type	&Assets::get_texture(const id_type &id, const bool &bg)
 {
 	if (bg)
+	{
+		if (_bg_texmap.find(id) == _bg_texmap.end())
+			return _bg_texmap.at(-1);
 		return _bg_texmap.at(id);
+	}
+
+	if (_fg_texmap.find(id) == _fg_texmap.end())
+		return _fg_texmap.at(-1);
 	return _fg_texmap.at(id);
 }
 

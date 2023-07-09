@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Sunday, July 9, 2023 3:12 PM           */
+/*       //\   /         Last Updated: Sunday, July 9, 2023 8:48 PM           */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ int main()
 		return EXIT_FAILURE;
 	}
 
-	test(ctx);
+	//test(ctx);
+	threads_unit(ctx);
 
 	unloadGame(ctx);
 	unload(ctx);

@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Sunday, July 9, 2023 6:17 PM           */
+/*       //\   /         Last Updated: Sunday, July 9, 2023 9:26 PM           */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@
 
 #ifndef SCROLL_PADDING
 // Defines how much extra tiles the camera should calculate beyong the view
+// (Usually 2 tiles is enough, to cover the tiles that is half off the screen)
 # define SCROLL_PADDING 2
 #endif
 

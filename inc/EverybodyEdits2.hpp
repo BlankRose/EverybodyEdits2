@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Sunday, July 9, 2023 3:04 PM           */
+/*       //\   /         Last Updated: Sunday, July 9, 2023 8:47 PM           */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ bool unloadGame(Context *ctx);
 void event_unit(Context *&ctx);
 bool logic_unit(Context *&ctx);
 void draws_unit(Context *&ctx);
+void loading_screen(sf::RenderWindow &win);
 
 // testing.cpp: Tests some features of the game
 

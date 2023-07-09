@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Sunday, July 9, 2023 8:07 PM           */
+/*       //\   /         Last Updated: Sunday, July 9, 2023 10:15 PM          */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -65,16 +65,16 @@ void Camera::move(const sf::View &view)
 	// (The amount of tiles to shift by)
 	int32_t
 		// The amount of tiles to shift on the x-axis
-		sx = (pos.x / TILE_WIDTH) - _current.left,
+		sx = pos.x / TILE_WIDTH - SCROLL_PADDING - _current.left,
 		// The amount of tiles to shift on the y-axis
-		sy = (pos.y / TILE_HEIGHT) - _current.top;
+		sy = pos.y / TILE_HEIGHT - SCROLL_PADDING - _current.top;
 
 	// If there's too much to shift or the size of the view has changed,
 	// recalculate the entire view. Shifting would be too much costly.
 	if (abs(sx) > abs(_current.width / 2)
 		|| abs(sy) > abs(_current.height / 2)
-		|| (int) (size.x / TILE_WIDTH + SCROLL_PADDING) != _current.width
-		|| (int) (size.y / TILE_HEIGHT + SCROLL_PADDING) != _current.height)
+		|| (int) (size.x / TILE_WIDTH + SCROLL_PADDING * 2) != _current.width
+		|| (int) (size.y / TILE_HEIGHT + SCROLL_PADDING * 2) != _current.height)
 	{
 		redefine(view);
 		return;
@@ -208,10 +208,10 @@ void Camera::redefine(const sf::View &view)
 	sf::Vector2f pos(view.getCenter() - size / 2.f);
 
 	_current = scale_type(
-		pos.x / TILE_WIDTH,
-		pos.y / TILE_HEIGHT,
-		size.x / TILE_WIDTH + SCROLL_PADDING,
-		size.y / TILE_HEIGHT + SCROLL_PADDING
+		pos.x / TILE_WIDTH - SCROLL_PADDING,
+		pos.y / TILE_HEIGHT - SCROLL_PADDING,
+		size.x / TILE_WIDTH + SCROLL_PADDING * 2,
+		size.y / TILE_HEIGHT + SCROLL_PADDING * 2
 	);
 
 	// Resize the vertices array to fit the view
@@ -290,12 +290,12 @@ void Camera::draw(sf::RenderTarget &target, sf::RenderStates states) const
 		for (uint32_t y = sy ; y < ey; ++y, ++ity)
 		{
 			states.texture = &Assets::get_texture(
-				_reference->get_fg_tile(x, y).get_id());
+				_reference->get_bg_tile(sx, sy).get_id(), true);
 			target.draw(*ity, states);
 
-			//states.texture = &Assets::get_texture(
-			//	_reference->get_bg_tile(sx, sy).get_id());
-			//target.draw(*ity, states);
+			states.texture = &Assets::get_texture(
+				_reference->get_fg_tile(x, y).get_id());
+			target.draw(*ity, states);
 		}
 	}
 }

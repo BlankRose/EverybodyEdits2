@@ -20,7 +20,7 @@
  * @param	event: Event handle which has the information stored
  * @param	ctx: Context of the current target window
  * */
-void	key_press(sf::Event event, Context *&ctx)
+void key_press(const sf::Event &event, Context *&ctx)
 {
 	switch (event.key.code)
 	{
@@ -52,7 +52,7 @@ void	key_press(sf::Event event, Context *&ctx)
  * @param	event: Event handle which has the information stored
  * @param	ctx: Context of the current target window
  * */
-void	key_release(sf::Event event, Context *&ctx)
+void key_release(const sf::Event &event, Context *&ctx)
 {
 	switch(event.key.code)
 	{
@@ -78,7 +78,7 @@ void	key_release(sf::Event event, Context *&ctx)
  * @param	ctx: Context of the current target window
  * @param	win: Window which handle the current input event
  * */
-void	mouse_press(sf::Event event, Context *&ctx)
+void mouse_press(const sf::Event &event, Context *&ctx)
 {
 	if (event.mouseButton.button == sf::Mouse::Left)
 		ctx->mouse_L = true;
@@ -94,7 +94,7 @@ void	mouse_press(sf::Event event, Context *&ctx)
  * @param	ctx: Context of the current target window
  * @param	win: Window which handle the current input event
  * */
-void	mouse_release(sf::Event event, Context *&ctx)
+void mouse_release(const sf::Event &event, Context *&ctx)
 {
 	if (event.mouseButton.button == sf::Mouse::Left)
 		ctx->mouse_L = false;
@@ -109,7 +109,7 @@ void	mouse_release(sf::Event event, Context *&ctx)
  * 
  * @param	ctx: Context of the target instance
  * */
-void	event_unit(Context *&ctx)
+void event_unit(Context *&ctx)
 {
 	sf::RenderWindow	&win = ctx->fw->get_window();
 	sf::Event			event;
