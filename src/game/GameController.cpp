@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Wednesday, July 5, 2023 4:00 PM        */
+/*       //\   /         Last Updated: Sunday, July 9, 2023 4:23 PM           */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -181,6 +181,8 @@ bool GameController::destroyWorld()
 		return (Logging::error("Tried to destroy the world but the internal world is not defined!"), false);
 
 	delete world;
+	world = nullptr;
+
 	return true;
 }
 
@@ -211,17 +213,19 @@ bool GameController::newCamera(const sf::View &view)
 }
 
 /**
- * Resizes the camera to the new given viewport as reference
+ * Moves the camera to the given viewport
  * 
  * @param	view: Viewport of the camera
  * 
  * @return	True or False upon Success or Failure
  * */
-bool GameController::resizeCamera(const sf::View &view)
+bool GameController::moveCamera(const sf::View &view)
 {
-	// TODO: Implement once Camera is done
-	(void) view;
-	return false;
+	if (!camera)
+		return (Logging::error("Tried to move the camera but the internal camera is not defined!"), false);
+
+	camera->move(view);
+	return true;
 }
 
 /**
@@ -235,6 +239,7 @@ bool GameController::destroyCamera()
 		return (Logging::error("Tried to destroy the camera but the internal camera is not defined!"), false);
 
 	delete camera;
+	camera = nullptr;
 	return true;
 }
 

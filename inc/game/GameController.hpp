@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Tuesday, July 4, 2023 7:36 PM          */
+/*       //\   /         Last Updated: Sunday, July 9, 2023 4:19 PM           */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ class GameController:
 		bool destroyWorld();
 
 		bool newCamera(const sf::View &view);
-		bool resizeCamera(const sf::View &size);
+		bool moveCamera(const sf::View &view);
 		bool destroyCamera();
 
 		void update();

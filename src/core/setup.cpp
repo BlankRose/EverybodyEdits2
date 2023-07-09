@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Tuesday, July 4, 2023 8:54 PM          */
+/*       //\   /         Last Updated: Sunday, July 9, 2023 2:06 PM           */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -116,9 +116,9 @@ bool		get_ready(Context *&ctx)
 		/*     POST MEMORY SETUP    */
 		/** ---------------------- **/
 
-	Logging::debug("Configuring the game...");
+	Logging::debug("Configuring the framework...");
 	ctx->fw->set_framelimit(Configs::graphics::framerate);
-	Logging::debug("Successfully configured the game!");
+	Logging::debug("Successfully configured the framework!");
 	return true;
 }
 

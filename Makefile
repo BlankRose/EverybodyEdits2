@@ -5,7 +5,7 @@
 #    '-._.(;;;)._.-'                                                           #
 #    .-'  ,`"`,  '-.                                                           #
 #   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)               #
-#       //\   /         Last Updated: Wednesday, July 5, 2023 8:00 PM          #
+#       //\   /         Last Updated: Sunday, July 9, 2023 2:30 PM             #
 #      ||  '-'                                                                 #
 # ############################################################################ #
 
@@ -57,9 +57,9 @@ SUCCESS     = $(BREAK)$(ESCAPE)[32m
 PENDING     = $(BREAK)$(ESCAPE)[33m
 
 # Final compositions
-DEFINES     = -DVERSION=\"$(VERSION)\" -DNAME=\"$(NAME)\"
+DEFINES     = VERSION=\"$(VERSION)\" NAME=\"$(NAME)\" DEBUG_MODE
 FINAL_LINK  = $(foreach dir, $(LIB_FOLDERS), -L$(dir)) $(foreach lib, $(LIBRARIES), -l$(lib)) $(LINKER) $(CFLAGS)
-FINAL_OBJ   = $(foreach dir, $(INCLUDES), -I$(dir)) $(DEFINES) $(CFLAGS)
+FINAL_OBJ   = $(foreach dir, $(INCLUDES), -I$(dir)) $(foreach def, $(DEFINES), -D$(def)) $(CFLAGS)
 LD_EXPORT   = export LD_LIBRARY_PATH=$(LD_LIBRARY_PATH)$(foreach dir, $(LIB_FOLDERS),:$(dir))
 
 
@@ -112,7 +112,7 @@ run: all
 
 # Run the executable with leak detections
 # /!\ NOTE: leaks /usr/lib/x86_64-linux-gnu/dri/radeonsi_dri.so (OpenGL)
-#       are caused by SFML's global variables (from: devs)
+#       are caused by SFML's global variables (from: SFML's devs)
 #     Oddly enough: they may not always appears ? (The fuck ?!)
 rl: run-leak
 run-leak: all

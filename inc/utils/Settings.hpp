@@ -5,19 +5,31 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Wednesday, July 5, 2023 6:59 PM        */
+/*       //\   /         Last Updated: Sunday, July 9, 2023 6:17 PM           */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
 // Toggles debug features
 //////////////////////////////
 
-#ifdef DEBUG
+#ifdef DEBUG_MODE
 // DEBUG Features Enabled
 # define __DEBUG(x) x
+# include <chrono>
+# define __TIME_INIT \
+	std::chrono::steady_clock clock; \
+	std::chrono::steady_clock::time_point start, end;
+# define __TIME_TEST(label, x) \
+	start = clock.now(); \
+	x; \
+	end = clock.now(); \
+	Logging::info(label + std::string(" took ") + std::to_string(std::chrono::duration_cast<std::chrono::microseconds>(end - start).count()) + "us");
+
 #else
 // DEBUG Features Disabled
 # define __DEBUG(x)
+# define __TIME_TEST(label, x) x;
+# define __TIME_INIT
 #endif
 
 // World Settings
