@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Sunday, July 9, 2023 4:23 PM           */
+/*       //\   /         Last Updated: Sunday, July 9, 2023 7:51 PM           */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -225,6 +225,22 @@ bool GameController::moveCamera(const sf::View &view)
 		return (Logging::error("Tried to move the camera but the internal camera is not defined!"), false);
 
 	camera->move(view);
+	return true;
+}
+
+/**
+ * Reinitializes the camera at given viewport
+ * 
+ * @param	view: Viewport of the camera
+ * 
+ * @return	True or False upon Success or Failure
+ * */
+bool GameController::resetCamera(const sf::View &view)
+{
+	if (!camera)
+		return (Logging::error("Tried to reset the camera but the internal camera is not defined!"), false);
+
+	camera->redefine(view);
 	return true;
 }
 

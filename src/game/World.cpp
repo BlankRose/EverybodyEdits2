@@ -5,13 +5,14 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Wednesday, July 5, 2023 5:26 PM        */
+/*       //\   /         Last Updated: Sunday, July 9, 2023 6:57 PM           */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
 #include "game/World.hpp"
 #include "utils/Settings.hpp"
 #include <fstream>
+#include <cstring>
 
 	/** ---------------------- **/
 	/*        ATTRIBUTES        */
@@ -75,8 +76,7 @@ World::World(const char *data):
 // Data are stored in binary format, with the first 4 bytes being the world's size
 World::World(std::ifstream &file)
 {
-	// Prepare buffer (10000 tiles at once)
-	uint32_t buffer_size = BUFFER_SIZE;
+	// Prepare buffer
 	char buffer[BUFFER_SIZE + 1];
 
 	// Retrieve basic details
@@ -93,14 +93,14 @@ World::World(std::ifstream &file)
 	while (true)
 	{
 		// Multiple tile reads at once
-		file.read(buffer, buffer_size);
+		file.read(buffer, BUFFER_SIZE);
 		if (file.gcount() == 0
 			|| fg == _fg_tiles.end())
 			break;
 
 		// Assign tiles from buffer
 		for (uint32_t i = 0;
-			i < buffer_size && fg != _fg_tiles.end();
+			i < BUFFER_SIZE && fg != _fg_tiles.end();
 			i += sizeof(Tile::raw_type) * 2, ++fg, ++bg)
 		{
 			*fg = Tile(&buffer[i]);

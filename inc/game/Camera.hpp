@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Sunday, July 9, 2023 5:32 PM           */
+/*       //\   /         Last Updated: Sunday, July 9, 2023 7:12 PM           */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ class Camera:
 
 	private:
 
-		vertices_type _fg_vertices; // The vertices to draw
+		vertices_type _vertices; // The vertices to draw
 		scale_type _current; // The current view position, relative to the world
 		World *_reference; // The world to use as reference
 

@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Sunday, July 9, 2023 6:18 PM           */
+/*       //\   /         Last Updated: Sunday, July 9, 2023 8:07 PM           */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	test(Context *ctx)
 		)
 
 		__TIME_TEST("Moving the camera",
-			view.move(5.f, 5.f);
+			view.move(0.f, 5.f);
 			ctx->fw->get_window().setView(view);
 			ctx->game->moveCamera(view);
 		)

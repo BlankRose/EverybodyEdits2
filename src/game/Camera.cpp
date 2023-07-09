@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Sunday, July 9, 2023 5:52 PM           */
+/*       //\   /         Last Updated: Sunday, July 9, 2023 8:07 PM           */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ Camera::Camera(const sf::View &view)
  * */
 Camera::~Camera()
 {
-	for (auto &fgx : _fg_vertices)
+	for (auto &itx : _vertices)
 	{
-		for (auto &fgy : fgx)
-			fgy.clear();
-		fgx.clear();
+		for (auto &ity : itx)
+			ity.clear();
+		itx.clear();
 	}
-	_fg_vertices.clear();
+	_vertices.clear();
 }
 
 	/** ---------------------- **/
@@ -55,9 +55,8 @@ void Camera::move(const sf::View &view)
 {
 	// Retrieve the coordinates of tiles on the very edge of the view still
 	// visible, even if they are only partially visible.
-	sf::Vector2f	center = view.getCenter();
 	sf::Vector2f	size = view.getSize();
-	sf::FloatRect	origin(center.x - size.x / 2, center.y - size.y / 2, size.x, size.y);
+	sf::Vector2f	pos(view.getCenter() - size / 2.f);
 
 	// (Back to front when moving left, front to back when moving right)
 	// (Top to bottom when moving up, bottom to top when moving down)
@@ -66,16 +65,16 @@ void Camera::move(const sf::View &view)
 	// (The amount of tiles to shift by)
 	int32_t
 		// The amount of tiles to shift on the x-axis
-		sx = (origin.left / TILE_WIDTH) - _current.left,
+		sx = (pos.x / TILE_WIDTH) - _current.left,
 		// The amount of tiles to shift on the y-axis
-		sy = (origin.top / TILE_HEIGHT) - _current.top;
+		sy = (pos.y / TILE_HEIGHT) - _current.top;
 
 	// If there's too much to shift or the size of the view has changed,
 	// recalculate the entire view. Shifting would be too much costly.
 	if (abs(sx) > abs(_current.width / 2)
 		|| abs(sy) > abs(_current.height / 2)
-		|| (int) (size.x / TILE_WIDTH + 1) != _current.width
-		|| (int) (size.y / TILE_HEIGHT + 1) != _current.height)
+		|| (int) (size.x / TILE_WIDTH + SCROLL_PADDING) != _current.width
+		|| (int) (size.y / TILE_HEIGHT + SCROLL_PADDING) != _current.height)
 	{
 		redefine(view);
 		return;
@@ -93,8 +92,8 @@ void Camera::move(const sf::View &view)
 		for (size_type x = 0; x < sx; ++x)
 		{
 			// Move the vertices on the x-axis
-			_fg_vertices.push_back(std::move(_fg_vertices.front()));
-			_fg_vertices.pop_front();
+			_vertices.push_back(std::move(_vertices.front()));
+			_vertices.pop_front();
 
 			// Calculate the x position of the tile
 			float x_align = (_current.left + _current.width - 1) * TILE_WIDTH;
@@ -103,7 +102,7 @@ void Camera::move(const sf::View &view)
 			for (size_type y = 0; y < _current.height; ++y)
 			{
 				// Get the vertex array of the current tile
-				sf::VertexArray &va = _fg_vertices.back()[y];
+				sf::VertexArray &va = _vertices.back()[y];
 
 				// Update the position of each vertex
 				va[0].position.x = x_align;
@@ -117,8 +116,8 @@ void Camera::move(const sf::View &view)
 		for (size_type x = 0; x < -sx; ++x)
 		{
 			// Move the vertices on the x-axis
-			_fg_vertices.push_front(std::move(_fg_vertices.back()));
-			_fg_vertices.pop_back();
+			_vertices.push_front(std::move(_vertices.back()));
+			_vertices.pop_back();
 
 			// Calculate the x position of the tile
 			float x_align = _current.left * TILE_WIDTH;
@@ -127,7 +126,7 @@ void Camera::move(const sf::View &view)
 			for (size_type y = 0; y < _current.height; ++y)
 			{
 				// Get the vertex array of the current tile
-				sf::VertexArray &va = _fg_vertices.front()[y];
+				sf::VertexArray &va = _vertices.front()[y];
 
 				// Update the position of each vertex
 				va[0].position.x = x_align;
@@ -143,10 +142,10 @@ void Camera::move(const sf::View &view)
 		for (size_type y = 0; y < sy; ++y)
 		{
 			// Move the vertices on the y-axis
-			for (auto &fgx : _fg_vertices)
+			for (auto &itx : _vertices)
 			{
-				fgx.push_back(std::move(fgx.front()));
-				fgx.pop_front();
+				itx.push_back(std::move(itx.front()));
+				itx.pop_front();
 			}
 
 			// Calculate the y position of the tile
@@ -156,7 +155,7 @@ void Camera::move(const sf::View &view)
 			for (size_type x = 0; x < _current.width; ++x)
 			{
 				// Get the vertex array of the current tile
-				sf::VertexArray &va = _fg_vertices[x].back();
+				sf::VertexArray &va = _vertices[x].back();
 
 				// Update the position of each vertex
 				va[0].position.y = y_align;
@@ -166,14 +165,14 @@ void Camera::move(const sf::View &view)
 			}
 		}
 	else if (sy < 0)
-		// Shift the vertices on the y-axis
+		// Shift the vertices on the y-axis up
 		for (size_type y = 0; y < -sy; ++y)
 		{
-			// Move the vertices on the y-axis up
-			for (auto &fgx : _fg_vertices)
+			// Move the vertices on the y-axis
+			for (auto &itx : _vertices)
 			{
-				fgx.push_front(std::move(fgx.back()));
-				fgx.pop_back();
+				itx.push_front(std::move(itx.back()));
+				itx.pop_back();
 			}
 
 			// Calculate the y position of the tile
@@ -183,7 +182,7 @@ void Camera::move(const sf::View &view)
 			for (size_type x = 0; x < _current.width; ++x)
 			{
 				// Get the vertex array of the current tile
-				sf::VertexArray &va = _fg_vertices[x].front();
+				sf::VertexArray &va = _vertices[x].front();
 
 				// Update the position of each vertex
 				va[0].position.y = y_align;
@@ -205,36 +204,35 @@ void Camera::redefine(const sf::View &view)
 {
 	// Retrieve the coordinates of tiles on the very edge of the view still
 	// visible, even if they are only partially visible.
-	sf::Vector2f	center = view.getCenter();
-	sf::Vector2f	size = view.getSize();
-	sf::FloatRect	origin(center.x - size.x / 2, center.y - size.y / 2, size.x, size.y);
+	sf::Vector2f size = view.getSize();
+	sf::Vector2f pos(view.getCenter() - size / 2.f);
 
 	_current = scale_type(
-		origin.left / TILE_WIDTH,
-		origin.top / TILE_HEIGHT,
-		origin.width / TILE_WIDTH + 1,
-		origin.height / TILE_HEIGHT + 1
+		pos.x / TILE_WIDTH,
+		pos.y / TILE_HEIGHT,
+		size.x / TILE_WIDTH + SCROLL_PADDING,
+		size.y / TILE_HEIGHT + SCROLL_PADDING
 	);
 
 	// Resize the vertices array to fit the view
-	_fg_vertices.resize(_current.width);
-	auto fgx = _fg_vertices.begin();
+	_vertices.resize(_current.width);
+	auto itx = _vertices.begin();
 	Assets::size_type texture_size = Assets::get_size();
-	for (size_type x = 0; x < _current.width; ++x, ++fgx)
+	for (size_type x = 0; x < _current.width; ++x, ++itx)
 	{
-		fgx->resize(_current.height);
-		auto fgy = fgx->begin();
-		for (size_type y = 0; y < _current.height; ++y, ++fgy) {
+		itx->resize(_current.height);
+		auto ity = itx->begin();
+		for (size_type y = 0; y < _current.height; ++y, ++ity) {
 
 			// Create and assign the vertex array of each tiles
-			*fgy = sf::VertexArray(sf::Quads, 4);
-			sf::VertexArray &va = *fgy;
+			*ity = sf::VertexArray(sf::Quads, 4);
+			sf::VertexArray &va = *ity;
 
 			// Set the position of each vertex at the position relative to the view
-			va[0].position = sf::Vector2f(x * TILE_WIDTH, y * TILE_HEIGHT); // Top Left
-			va[1].position = sf::Vector2f((x + 1) * TILE_WIDTH, y * TILE_HEIGHT); // Top Right
-			va[2].position = sf::Vector2f((x + 1) * TILE_WIDTH, (y + 1) * TILE_HEIGHT); // Bottom Right
-			va[3].position = sf::Vector2f(x * TILE_WIDTH, (y + 1) * TILE_HEIGHT); // Bottom Left
+			va[0].position = sf::Vector2f((_current.left + x) * TILE_WIDTH, (_current.top + y) * TILE_HEIGHT); // Top Left
+			va[1].position = sf::Vector2f((_current.left + x + 1) * TILE_WIDTH, (_current.top + y) * TILE_HEIGHT); // Top Right
+			va[2].position = sf::Vector2f((_current.left + x + 1) * TILE_WIDTH, (_current.top + y + 1) * TILE_HEIGHT); // Bottom Right
+			va[3].position = sf::Vector2f((_current.left + x) * TILE_WIDTH, (_current.top + y + 1) * TILE_HEIGHT); // Bottom Left
 
 			// Set the texture coordinates of each vertex
 			va[0].texCoords = sf::Vector2f(0, 0); // Top Left
@@ -285,19 +283,19 @@ void Camera::draw(sf::RenderTarget &target, sf::RenderStates states) const
 		iy = _current.top < 0 ? -_current.top : 0;
 
 	// Draw the vertices
-	auto fgx = _fg_vertices.begin() + ix;
-	for (uint32_t x = sx; x < ex; ++x, ++fgx)
+	auto itx = _vertices.begin() + ix;
+	for (uint32_t x = sx; x < ex; ++x, ++itx)
 	{
-		auto fgy = fgx->begin() + iy;
-		for (uint32_t y = sy ; y < ey; ++y, ++fgy)
+		auto ity = itx->begin() + iy;
+		for (uint32_t y = sy ; y < ey; ++y, ++ity)
 		{
 			states.texture = &Assets::get_texture(
 				_reference->get_fg_tile(x, y).get_id());
-			target.draw(*fgy, states);
+			target.draw(*ity, states);
 
 			//states.texture = &Assets::get_texture(
 			//	_reference->get_bg_tile(sx, sy).get_id());
-			//target.draw(*bgy, states);
+			//target.draw(*ity, states);
 		}
 	}
 }
