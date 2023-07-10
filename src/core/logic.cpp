@@ -32,14 +32,14 @@ bool	logic_unit(Context *&ctx)
 
 		// Make sure the view doesn't go out of bounds
 		sf::Vector2f center = view.getCenter();
-		if (center.x < 0.f)
-			center.x = 0.f;
-		else if (center.x > world->get_width() * TILE_WIDTH)
-			center.x = world->get_width() * TILE_WIDTH;
-		if (center.y < 0.f)
-			center.y = 0.f;
-		else if (center.y > world->get_height() * TILE_HEIGHT)
-			center.y = world->get_height() * TILE_HEIGHT;
+		if (center.x < TILE_WIDTH / 2)
+			center.x = TILE_WIDTH / 2;
+		else if (center.x > world->get_width() * TILE_WIDTH - TILE_WIDTH / 2)
+			center.x = world->get_width() * TILE_WIDTH - TILE_WIDTH / 2;
+		if (center.y < TILE_HEIGHT / 2)
+			center.y = TILE_HEIGHT / 2;
+		else if (center.y > world->get_height() * TILE_HEIGHT - TILE_HEIGHT / 2)
+			center.y = world->get_height() * TILE_HEIGHT - TILE_HEIGHT / 2;
 		view.setCenter(center);
 
 		// Apply the final view

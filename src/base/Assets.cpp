@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Sunday, July 9, 2023 10:12 PM          */
+/*       //\   /         Last Updated: Monday, July 10, 2023 8:42 PM          */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ texture_map		_bg_texmap;
 
 font_type		_font;
 texture_type	_loadscreen;
+texture_type	_player;
 
 const char *id_paths[] = {
 	"empty",
@@ -43,7 +44,7 @@ const char *id_paths[] = {
 	/*          LOADERS         */
 	/** ---------------------- **/
 
-bool			Assets::load_ressources(const path_type &base_dir)
+bool Assets::load_ressources(const path_type &base_dir)
 {
 	path_type	dir = base_dir;
 	if (*base_dir.rbegin() != '/')
@@ -70,6 +71,10 @@ bool			Assets::load_ressources(const path_type &base_dir)
 	_fg_texmap.insert(std::make_pair(-1, fg_tex));
 	_bg_texmap.insert(std::make_pair(-1, bg_tex));
 
+	// Load player texture
+	if (!_player.loadFromFile(dir + "player.png"))
+		return false;
+
 	// Load font
 	if (!_font.loadFromFile(dir + "font.ttf"))
 		return false;
@@ -77,23 +82,26 @@ bool			Assets::load_ressources(const path_type &base_dir)
 	return true;
 }
 
-void			Assets::set_size(const size_type &size)
+void Assets::set_size(const size_type &size)
 	{ _tilesize = size; }
 
-void			Assets::set_size(const unsigned int &x, const unsigned int &y)
+void Assets::set_size(const unsigned int &x, const unsigned int &y)
 	{ _tilesize = size_type(x, y); }
 
 	/** ---------------------- **/
 	/*        ATTRIBUTES        */
 	/** ---------------------- **/
 
-font_type		&Assets::get_font()
+font_type &Assets::get_font()
 	{ return _font; }
 
-texture_type	&Assets::get_loadscreen()
+texture_type &Assets::get_loadscreen()
 	{ return _loadscreen; }
 
-texture_type	&Assets::get_texture(const id_type &id, const bool &bg)
+texture_type &Assets::get_player()
+	{ return _player; }
+
+texture_type &Assets::get_texture(const id_type &id, const bool &bg)
 {
 	if (bg)
 	{
@@ -107,5 +115,5 @@ texture_type	&Assets::get_texture(const id_type &id, const bool &bg)
 	return _fg_texmap.at(id);
 }
 
-size_type		Assets::get_size()
+size_type Assets::get_size()
 	{ return _tilesize; }

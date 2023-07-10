@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Monday, July 10, 2023 2:51 PM          */
+/*       //\   /         Last Updated: Monday, July 10, 2023 7:40 PM          */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "base/Logging.hpp"
 #include "game/World.hpp"
 #include "game/Camera.hpp"
-#include "game/Selector.hpp"
+#include "game/TileSelector.hpp"
 
 	/** ---------------------- **/
 	/*       CONSTRUCTORS       */
@@ -26,7 +26,7 @@
  * */
 GameController::GameController():
 	_world(nullptr), _camera(nullptr)
-	{ _selector = new Selector(2); }
+	{ _selector = new TileSelector(2); }
 
 /**
  * Defined Constructor: Initializes the world and camera to the given ones
@@ -36,7 +36,7 @@ GameController::GameController():
  * */
 GameController::GameController(World *world, Camera *camera):
 	_world(world), _camera(camera)
-	{ _selector = new Selector(2); }
+	{ _selector = new TileSelector(2); }
 
 /**
  * Destructor: Destroys the world and camera along with the controller

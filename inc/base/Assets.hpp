@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Tuesday, July 4, 2023 7:01 PM          */
+/*       //\   /         Last Updated: Monday, July 10, 2023 8:41 PM          */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ namespace Assets
 
 		font_type		&get_font();
 		texture_type	&get_loadscreen();
+		texture_type	&get_player();
 		texture_type	&get_texture(const id_type &id, const bool &bg = false);
 		size_type		get_size();
 }

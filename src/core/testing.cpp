@@ -5,11 +5,12 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Monday, July 10, 2023 1:17 PM          */
+/*       //\   /         Last Updated: Monday, July 10, 2023 6:47 PM          */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
 #include "EverybodyEdits2.hpp"
+#include <dirent.h>
 #include <unistd.h>
 
 /**

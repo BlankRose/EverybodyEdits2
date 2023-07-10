@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Sunday, July 9, 2023 8:47 PM           */
+/*       //\   /         Last Updated: Monday, July 10, 2023 7:39 PM          */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 
 #include "game/Tile.hpp"
 #include "game/World.hpp"
-#include "game/Camera.hpp"
 #include "game/GameController.hpp"
 
 // FUNCTIONS

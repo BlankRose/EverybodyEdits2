@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Sunday, July 9, 2023 7:12 PM           */
+/*       //\   /         Last Updated: Monday, July 10, 2023 8:38 PM          */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@
 class Camera:
 	public sf::Drawable
 {
-
 	Camera() = delete;
 	public:
 
@@ -50,4 +49,5 @@ class Camera:
 		scale_type _current; // The current view position, relative to the world
 		World *_reference; // The world to use as reference
 
+		sf::VertexArray _player; // The player's vertices
 };

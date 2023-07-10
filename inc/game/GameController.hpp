@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Monday, July 10, 2023 2:04 PM          */
+/*       //\   /         Last Updated: Monday, July 10, 2023 7:40 PM          */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 class World;
 class Camera;
-class Selector;
+class TileSelector;
 
 /**
  * GameController
@@ -61,5 +61,5 @@ class GameController:
 
 		World *_world;
 		Camera *_camera;
-		Selector *_selector;
+		TileSelector *_selector;
 };

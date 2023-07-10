@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*          .-.                                                               */
 /*    __   /   \   __                                                         */
-/*   (  `'.\   /.'`  )   EverybodyEdits2 - Selector.cpp                       */
+/*   (  `'.\   /.'`  )   EverybodyEdits2 - TileSelector.cpp                   */
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Monday, July 10, 2023 1:57 PM          */
+/*       //\   /         Last Updated: Monday, July 10, 2023 7:40 PM          */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
-#include "game/Selector.hpp"
+#include "game/TileSelector.hpp"
 #include "utils/Settings.hpp"
 #include "base/Assets.hpp"
 
-Selector::Selector():
-	Selector(Tile()) {}
+TileSelector::TileSelector():
+	TileSelector(Tile()) {}
 
-Selector::Selector(const Tile::id_type &id):
-	Selector(Tile(id)) {}
+TileSelector::TileSelector(const Tile::id_type &id):
+	TileSelector(Tile(id)) {}
 
-Selector::Selector(const Tile &tile):
+TileSelector::TileSelector(const Tile &tile):
 	_vertices(sf::Quads, 4), _texture(nullptr), _tile(tile)
 {
 	_vertices[0].position = sf::Vector2f(0, 0);
@@ -36,29 +36,29 @@ Selector::Selector(const Tile &tile):
 	_texture = &Assets::get_texture(_tile.get_id());
 }
 
-Selector::~Selector() {}
+TileSelector::~TileSelector() {}
 
-Selector &Selector::operator=(const Selector &src)
+TileSelector &TileSelector::operator=(const TileSelector &src)
 {
 	_tile = src._tile;
 	_texture = src._texture;
 	return *this;
 }
 
-Selector &Selector::operator=(const Tile &tile)
+TileSelector &TileSelector::operator=(const Tile &tile)
 {
 	_tile = tile;
 	_texture = &Assets::get_texture(_tile.get_id());
 	return *this;
 }
 
-void Selector::setTile(const Tile &tile)
+void TileSelector::setTile(const Tile &tile)
 	{ *this = tile; }
 
-const Tile &Selector::getTile() const
+const Tile &TileSelector::getTile() const
 	{ return _tile; }
 
-void Selector::draw(sf::RenderTarget &target, sf::RenderStates states) const
+void TileSelector::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
 	// First Step: Anchor the selector to the upper-left corner of the view.
 	sf::View view = target.getView();
