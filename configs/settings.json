@@ -19,7 +19,7 @@
         "log_file": "configs/latest.log",
         "log_level": 10,
         "save_file": "configs/data/world.dat",
-        "test_height": 10,
-        "test_width": 10
+        "test_height": 1000,
+        "test_width": 1000
     }
 }

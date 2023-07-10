@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Sunday, July 9, 2023 8:07 PM           */
+/*       //\   /         Last Updated: Monday, July 10, 2023 1:17 PM          */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -20,20 +20,21 @@
 void	test(Context *ctx)
 {
 	__TIME_INIT
-	sf::View view = ctx->fw->get_window().getView();
+	Framework::window_type &win = ctx->fw->get_window();
+	sf::View view = win.getView();
 	int i = 0;
 
 	while (i++ < 20)
 	{
 		__TIME_TEST("Rendering the world",
-			ctx->fw->get_window().clear();
-			ctx->game->render(ctx->fw);
-			ctx->fw->get_window().display();
+			win.clear();
+			win.draw(*ctx->game);
+			win.display();
 		)
 
 		__TIME_TEST("Moving the camera",
 			view.move(0.f, 5.f);
-			ctx->fw->get_window().setView(view);
+			win.setView(view);
 			ctx->game->moveCamera(view);
 		)
 

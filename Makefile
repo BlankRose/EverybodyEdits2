@@ -5,7 +5,7 @@
 #    '-._.(;;;)._.-'                                                           #
 #    .-'  ,`"`,  '-.                                                           #
 #   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)               #
-#       //\   /         Last Updated: Sunday, July 9, 2023 9:27 PM             #
+#       //\   /         Last Updated: Monday, July 10, 2023 2:57 PM            #
 #      ||  '-'                                                                 #
 # ############################################################################ #
 
@@ -16,7 +16,7 @@
 
 # Project's name
 NAME      = EverybodyEdits2
-VERSION   = 0.0.1
+VERSION   = 0.7
 ARGS      = 
 
 # Directories of source files and where to put the object files
@@ -73,20 +73,20 @@ all: $(NAME)
 
 # Compile object files (depends on headers)
 $(OUT_DIR)/%.o: $(SRC_DIR)/%.cpp $(HEADERS)
-	@echo -n "$(PENDING)Compiling $<...$(RESET)"
+	@echo -n "$(PENDING)Compiling $<... $(RESET)"
 	@mkdir -p $(dir $@)
 	@$(CC) $(FINAL_OBJ) $(CFLAGS) -c $< -o $@
 
 # Compile the executable
 $(NAME): $(OBJECTS)
-	@echo -n "$(PENDING)Linking $(NAME) v$(VERSION)...$(RESET)"
+	@echo -n "$(PENDING)Linking $(NAME) v$(VERSION)... $(RESET)"
 	@$(CC) $(FINAL_LINK) -o $(NAME) $(OBJECTS)
 	@echo "$(SUCCESS)$(NAME) v$(VERSION) built successfully!$(RESET)"
 
 # Clean up the object files
 c: clean
 clean:
-	@echo -n "$(PENDING)Cleaning up object files...$(RESET)"
+	@echo -n "$(PENDING)Cleaning up object files... $(RESET)"
 	@rm -f $(OBJECTS)
 	@echo "$(SUCCESS)Object files cleaned up!$(RESET)"
 

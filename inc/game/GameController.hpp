@@ -5,18 +5,20 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Sunday, July 9, 2023 7:19 PM           */
+/*       //\   /         Last Updated: Monday, July 10, 2023 2:04 PM          */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
 #pragma once
 
 #include "utils/NonCopyable.hpp"
+#include "Tile.hpp"
+
 #include <SFML/Graphics.hpp>
 
 class World;
 class Camera;
-class Framework;
+class Selector;
 
 /**
  * GameController
@@ -26,17 +28,15 @@ class Framework;
  * Handles the savestates, and its display.
  * */
 class GameController:
-	public NonCopyable
+	public NonCopyable,
+	public sf::Drawable
 {
-
 	public:
 
 		GameController();
 		GameController(World *world, Camera *camera);
 		~GameController();
 
-		inline bool hasWorld() const;
-		inline bool hasCamera() const;
 		inline bool isReady() const;
 		inline operator bool() const;
 		inline bool operator!() const;
@@ -45,21 +45,21 @@ class GameController:
 		bool loadWorld(const std::string &path);
 		bool saveWorld(const std::string &path);
 		bool destroyWorld();
+		World *getWorld() const;
 
 		bool newCamera(const sf::View &view);
 		bool moveCamera(const sf::View &view);
 		bool resetCamera(const sf::View &view);
 		bool destroyCamera();
 
-		void update();
-		void render(Framework *framework);
+		const Tile &getSelected() const;
+		void setSelected(const Tile &tile);
 
-		World *getWorld() const;
-		Camera *getCamera() const;
+		void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 
 	private:
 
-		World *world;
-		Camera *camera;
-
+		World *_world;
+		Camera *_camera;
+		Selector *_selector;
 };

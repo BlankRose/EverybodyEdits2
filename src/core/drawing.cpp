@@ -49,6 +49,6 @@ void draws_unit(Context *&ctx)
 	sf::RenderWindow	&win = ctx->fw->get_window();
 
 	win.clear();
-	ctx->game->render(ctx->fw);
+	win.draw(*ctx->game);
 	win.display();
 }

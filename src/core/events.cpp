@@ -22,25 +22,35 @@
  * */
 void key_press(const sf::Event &event, Context *&ctx)
 {
-	switch (event.key.code)
-	{
-		case sf::Keyboard::Left:
-			ctx->left = true;
-			break;
-		case sf::Keyboard::Right:
-			ctx->right = true;
-			break;
-		case sf::Keyboard::Up:
-			ctx->up = true;
-			break;
-		case sf::Keyboard::Down:
-			ctx->down = true;
-			break;
-		case sf::Keyboard::Escape:
-			ctx->fw->get_window().close();
-			break;
-		default: break;
-	}
+	Tile::id_type id = ctx->game->getSelected().get_id();
+	if (event.key.code >= sf::Keyboard::Num0 && event.key.code <= sf::Keyboard::Num9 && id)
+		ctx->game->setSelected(Tile((id - 1) / 10 * 10 + (event.key.code - sf::Keyboard::Num0) + 1));
+	else if (event.key.code >= sf::Keyboard::Numpad1 && event.key.code <= sf::Keyboard::Numpad4)
+		ctx->game->setSelected(Tile(id % 10 + (event.key.code - sf::Keyboard::Numpad1 + (id % 10 ? 0 : 1)) * 10));
+
+	else
+		switch (event.key.code)
+		{
+			case sf::Keyboard::Left:
+				ctx->left = true;
+				break;
+			case sf::Keyboard::Right:
+				ctx->right = true;
+				break;
+			case sf::Keyboard::Up:
+				ctx->up = true;
+				break;
+			case sf::Keyboard::Down:
+				ctx->down = true;
+				break;
+			case sf::Keyboard::Escape:
+				ctx->fw->get_window().close();
+				break;
+			case sf::Keyboard::Numpad0:
+				ctx->game->setSelected(Tile());
+				break;
+			default: break;
+		}
 }
 
 /**

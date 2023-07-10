@@ -47,49 +47,23 @@ bool	logic_unit(Context *&ctx)
 		ctx->game->moveCamera(view);
 	}
 
-	if (ctx->mouse_L)
-	{
-		sf::Vector2f	pos = win.mapPixelToCoords(sf::Mouse::getPosition(win));
-		sf::Vector2u	tile_pos(pos.x / TILE_WIDTH, pos.y / TILE_HEIGHT);
-
-		if (world->has_tile(tile_pos.x, tile_pos.y))
-			world->set_fg_tile(tile_pos.x, tile_pos.y, Tile(2));
-	}
-
-	if (ctx->mouse_R)
-	{
-		sf::Vector2f	pos = win.mapPixelToCoords(sf::Mouse::getPosition(win));
-		sf::Vector2u	tile_pos(pos.x / TILE_WIDTH, pos.y / TILE_HEIGHT);
-
-		if (world->has_tile(tile_pos.x, tile_pos.y))
-			world->set_fg_tile(tile_pos.x, tile_pos.y, Tile());
-	}
-
-/*
 	if (ctx->mouse_L || ctx->mouse_R)
 	{
 		sf::Vector2f	pos = win.mapPixelToCoords(sf::Mouse::getPosition(win));
-		sf::Vector2u	tile_pos(pos.x / MapChunk::get_tilesize(), pos.y / MapChunk::get_tilesize());
+		sf::Vector2u	tile_pos(pos.x / TILE_WIDTH, pos.y / TILE_HEIGHT);
 
-		if (ctx->map->has_tile(tile_pos))
-		{
-			Tile			tile = ctx->ui->get_selected();
-			tile.set_position(ctx->map->get_tile_at(tile_pos).get_position());
-			ctx->map->get_chunk_at(tile_pos).update_tile(tile);
-		}
+		if (world->has_tile(tile_pos.x, tile_pos.y))
+			world->set_fg_tile(tile_pos.x, tile_pos.y, ctx->game->getSelected());
 	}
 
 	else if (ctx->mouse_M)
 	{
 		sf::Vector2f	pos = win.mapPixelToCoords(sf::Mouse::getPosition(win));
-		sf::Vector2u	tile_pos(pos.x / MapChunk::get_tilesize(), pos.y / MapChunk::get_tilesize());
+		sf::Vector2u	tile_pos(pos.x / TILE_WIDTH, pos.y / TILE_HEIGHT);
 
-		if (ctx->map->has_tile(tile_pos))
-		{
-			Tile		target = ctx->map->get_tile_at(tile_pos);
-			ctx->ui->set_selected(target.get_id(), target.get_group());
-		}
+		if (world->has_tile(tile_pos.x, tile_pos.y))
+			ctx->game->setSelected(world->get_fg_tile(tile_pos.x, tile_pos.y));
 	}
-*/
+
 	return true;
 }

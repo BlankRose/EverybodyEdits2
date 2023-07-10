@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Sunday, July 9, 2023 7:51 PM           */
+/*       //\   /         Last Updated: Monday, July 10, 2023 2:51 PM          */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "base/Logging.hpp"
 #include "game/World.hpp"
 #include "game/Camera.hpp"
-#include "base/Framework.hpp"
+#include "game/Selector.hpp"
 
 	/** ---------------------- **/
 	/*       CONSTRUCTORS       */
@@ -25,7 +25,8 @@
  * Default Constructor: Initializes the world and camera to nullptr
  * */
 GameController::GameController():
-	world(nullptr), camera(nullptr) {}
+	_world(nullptr), _camera(nullptr)
+	{ _selector = new Selector(2); }
 
 /**
  * Defined Constructor: Initializes the world and camera to the given ones
@@ -34,38 +35,25 @@ GameController::GameController():
  * @param	camera: The camera to use
  * */
 GameController::GameController(World *world, Camera *camera):
-	world(world), camera(camera) {}
+	_world(world), _camera(camera)
+	{ _selector = new Selector(2); }
 
 /**
  * Destructor: Destroys the world and camera along with the controller
  * */
 GameController::~GameController()
 {
-	if (world)
-		delete world;
-	if (camera)
-		delete camera;
+	if (_world)
+		delete _world;
+	if (_camera)
+		delete _camera;
+	if (_selector)
+		delete _selector;
 }
 
 	/** ---------------------- **/
-	/*         OVERLOADS        */
+	/*       CONDITIONALS       */
 	/** ---------------------- **/
-
-/**
- * Returns wether or not a world exists and is loaded
- * 
- * @return	True or False upon existing or not
- * */
-inline bool GameController::hasWorld() const
-	{ return world; }
-
-/**
- * Returns wether or not a camera exists and is loaded
- * 
- * @return	True or False upon existing or not
- * */
-inline bool GameController::hasCamera() const
-	{ return camera; }
 
 /**
  * Returns the state of the controller as a boolean, indicating if it is ready
@@ -74,7 +62,7 @@ inline bool GameController::hasCamera() const
  * @return	True or False upon ready or not
  * */
 inline bool GameController::isReady() const
-	{ return (world && camera); }
+	{ return (_world && _camera && _selector); }
 
 /**
  * Casts the controller to a boolean, indicating if it is ready or not to be
@@ -106,12 +94,12 @@ inline bool GameController::operator!() const
  * */
 bool GameController::newWorld(const uint32_t &width, const uint32_t &height)
 {
-	if (world)
-		delete world;
+	if (_world)
+		delete _world;
 	Logging::info("Generating new world... Size: " + std::to_string(width) + "x" + std::to_string(height) + "!");
-	world = new World(width, height);
+	_world = new World(width, height);
 
-	if (!world)
+	if (!_world)
 		return (Logging::fatal("Couldn't generate a new World!"), false);
 	Logging::info("Generated new world!");
 	return true;
@@ -126,8 +114,8 @@ bool GameController::newWorld(const uint32_t &width, const uint32_t &height)
  * */
 bool GameController::loadWorld(const std::string &path)
 {
-	if (world)
-		delete world;
+	if (_world)
+		delete _world;
 	if (path.empty() || path.find_first_not_of("\t\n\v\f\r ") == path.npos)
 		return (Logging::error("Tried to load the world but the provided path is empty!"), false);
 
@@ -136,10 +124,10 @@ bool GameController::loadWorld(const std::string &path)
 		return (Logging::error("Cannot open the target file: " + path + "!"), false);
 	Logging::info("Loading data save...");
 
-	world = new World(ifile);
+	_world = new World(ifile);
 	ifile.close();
 
-	if (!world)
+	if (!_world)
 		return (Logging::fatal("Couldn't allocate the sufficient memory for the world to load in!"), false);
 	Logging::info("Map loaded!");
 	return true;
@@ -154,7 +142,7 @@ bool GameController::loadWorld(const std::string &path)
  * */
 bool GameController::saveWorld(const std::string &path)
 {
-	if (!world)
+	if (!_world)
 		return (Logging::error("Tried to save the world but the provided world is not defined!"), false);
 	if (path.empty() || path.find_first_not_of("\t\n\v\f\r ") == path.npos)
 		return (Logging::error("Tried to save the world but the provided path is empty!"), false);
@@ -165,7 +153,7 @@ bool GameController::saveWorld(const std::string &path)
 
 	// Closing and Saving takes about same time
 	// (3.5s each for 10k x 10k or 7s for both)
-	world->save(ofile);
+	_world->save(ofile);
 	ofile.close();
 	return true;
 }
@@ -177,14 +165,22 @@ bool GameController::saveWorld(const std::string &path)
  * */
 bool GameController::destroyWorld()
 {
-	if (!world)
+	if (!_world)
 		return (Logging::error("Tried to destroy the world but the internal world is not defined!"), false);
 
-	delete world;
-	world = nullptr;
+	delete _world;
+	_world = nullptr;
 
 	return true;
 }
+
+/**
+ * Retrieves the internal world
+ * 
+ * @return	Internal world
+ * */
+World *GameController::getWorld() const
+	{ return _world; }
 
 	/** ---------------------- **/
 	/*      CAMERA HANDLING     */
@@ -200,13 +196,13 @@ bool GameController::destroyWorld()
  * */
 bool GameController::newCamera(const sf::View &view)
 {
-	if (camera)
-		delete camera;
+	if (_camera)
+		delete _camera;
 
 	Logging::info("Generating new camera...");
-	camera = new Camera(view);
+	_camera = new Camera(view);
 
-	if (!camera)
+	if (!_camera)
 		return (Logging::fatal("Couldn't allocate the sufficient memory for the camera to load in!"), false);
 	Logging::info("Generated new camera!");
 	return true;
@@ -221,10 +217,10 @@ bool GameController::newCamera(const sf::View &view)
  * */
 bool GameController::moveCamera(const sf::View &view)
 {
-	if (!camera)
+	if (!_camera)
 		return (Logging::error("Tried to move the camera but the internal camera is not defined!"), false);
 
-	camera->move(view);
+	_camera->move(view);
 	return true;
 }
 
@@ -237,10 +233,10 @@ bool GameController::moveCamera(const sf::View &view)
  * */
 bool GameController::resetCamera(const sf::View &view)
 {
-	if (!camera)
+	if (!_camera)
 		return (Logging::error("Tried to reset the camera but the internal camera is not defined!"), false);
 
-	camera->redefine(view);
+	_camera->redefine(view);
 	return true;
 }
 
@@ -251,13 +247,37 @@ bool GameController::resetCamera(const sf::View &view)
  * */
 bool GameController::destroyCamera()
 {
-	if (!camera)
+	if (!_camera)
 		return (Logging::error("Tried to destroy the camera but the internal camera is not defined!"), false);
 
-	delete camera;
-	camera = nullptr;
+	delete _camera;
+	_camera = nullptr;
 	return true;
 }
+
+	/** ---------------------- **/
+	/*     SELECTOR HANDLING    */
+	/** ---------------------- **/
+
+/**
+ * Retrieves the player's tile selection
+ * 
+ * @return	Player's tile selection
+ * */
+const Tile &GameController::getSelected() const
+	{ return _selector->getTile(); }
+
+/**
+ * Changes the player's tile selection
+ * 
+ * @param	tile: New tile selection
+ * */
+void GameController::setSelected(const Tile &tile)
+	{ *_selector = tile; }
+
+	/** ---------------------- **/
+	/*         RENDERING        */
+	/** ---------------------- **/
 
 /**
  * Draws the world and its entities on the screen, using the camera which is
@@ -265,27 +285,12 @@ bool GameController::destroyCamera()
  * 
  * @param	framework: Framework to use for rendering
  * */
-void GameController::render(Framework *framework)
+void GameController::draw(sf::RenderTarget &target, sf::RenderStates) const
 {
-	if (!world || !camera)
+	if (!_world || !_camera)
 		return;
 
-	camera->setReference(world);
-	framework->get_window().draw(*camera);
+	_camera->setReference(_world);
+	target.draw(*_camera);
+	target.draw(*_selector);
 }
-
-/**
- * Retrieves the internal world
- * 
- * @return	Internal world
- * */
-World *GameController::getWorld() const
-	{ return world; }
-
-/**
- * Retrieves the internal camera
- * 
- * @return	Internal camera
- * */
-Camera *GameController::getCamera() const
-	{ return camera; }
