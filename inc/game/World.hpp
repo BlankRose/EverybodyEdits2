@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Sunday, July 9, 2023 10:32 PM          */
+/*       //\   /         Last Updated: Wednesday, July 12, 2023 10:50 PM      */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -82,6 +82,10 @@ class World:
 
 		bool		has_tile(const int32_t &x, const int32_t &y) const;
 
+		void		add_spawn(const scale_type &spawn);
+		void		remove_spawn(const scale_type &spawn);
+		scale_type	get_spawn() const;
+
 		std::string	raw_data() const;
 		void		save(std::ofstream &file) const;
 
@@ -91,7 +95,8 @@ class World:
 			/*           FIELDS         */
 			/** ---------------------- **/
 
-		scale_type			_size;
-		std::vector<Tile>	_fg_tiles;
-		std::vector<Tile>	_bg_tiles;
+		scale_type					_size;
+		std::vector<Tile>			_fg_tiles;
+		std::vector<Tile>			_bg_tiles;
+		std::vector<scale_type>		_spawns;
 };

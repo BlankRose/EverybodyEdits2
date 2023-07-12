@@ -5,14 +5,13 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Monday, July 10, 2023 8:41 PM          */
+/*       //\   /         Last Updated: Wednesday, July 12, 2023 8:53 PM       */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include <map>
 
 namespace Assets
 {
@@ -25,8 +24,23 @@ namespace Assets
 		typedef uint16_t						id_type;
 		typedef sf::Vector2u					size_type;
 		typedef sf::Texture						texture_type;
-		typedef std::map<id_type, sf::Texture>	texture_map;
 		typedef sf::Font						font_type;
+
+			/** ---------------------- **/
+			/*     PACKS DEFINTIONS     */
+			/** ---------------------- **/
+
+		struct AssetsPack
+		{
+			AssetsPack() = delete;
+			AssetsPack(const id_type &begin, const id_type &range, const char *path):
+				begin(begin), range(range), path(path) {}
+			~AssetsPack() {}
+
+			id_type begin;
+			id_type range;
+			const char *path;
+		};
 
 			/** ---------------------- **/
 			/*          LOADERS         */

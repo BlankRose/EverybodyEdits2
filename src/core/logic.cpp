@@ -52,8 +52,19 @@ bool	logic_unit(Context *&ctx)
 		sf::Vector2f	pos = win.mapPixelToCoords(sf::Mouse::getPosition(win));
 		sf::Vector2u	tile_pos(pos.x / TILE_WIDTH, pos.y / TILE_HEIGHT);
 
-		if (world->has_tile(tile_pos.x, tile_pos.y))
-			world->set_fg_tile(tile_pos.x, tile_pos.y, ctx->game->getSelected());
+		if (!world->has_tile(tile_pos.x, tile_pos.y))
+			return true;
+		const Tile &tile = world->get_fg_tile(tile_pos.x, tile_pos.y);
+		const Tile &selected = ctx->game->getSelected();
+		if (tile == selected)
+			return true;
+
+		if (tile.get_id() == _TILEID_SPAWN)
+			world->remove_spawn({(World::size_type) tile_pos.x, (World::size_type) tile_pos.y});
+		if (selected.get_id() == _TILEID_SPAWN)
+			world->add_spawn({(World::size_type) tile_pos.x, (World::size_type) tile_pos.y});
+
+		world->set_fg_tile(tile_pos.x, tile_pos.y, selected);
 	}
 
 	else if (ctx->mouse_M)

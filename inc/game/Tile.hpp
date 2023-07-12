@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Thursday, June 29, 2023 1:47 PM        */
+/*       //\   /         Last Updated: Wednesday, July 12, 2023 10:58 PM      */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -56,6 +56,9 @@ class Tile
 
 		Tile				&operator=(const Tile &tile);
 		Tile				&operator=(Tile &&tile);
+
+		bool				operator==(const Tile &tile) const;
+		bool				operator!=(const Tile &tile) const;
 
 			/** ---------------------- **/
 			/*          METHODS         */

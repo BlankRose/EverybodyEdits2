@@ -5,14 +5,16 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Sunday, July 9, 2023 10:33 PM          */
+/*       //\   /         Last Updated: Wednesday, July 12, 2023 11:15 PM      */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
 #include "game/World.hpp"
+
+#include "utils/CommonTiles.hpp"
 #include "utils/Settings.hpp"
+
 #include <fstream>
-#include <cstring>
 
 	/** ---------------------- **/
 	/*        ATTRIBUTES        */
@@ -23,7 +25,6 @@ using scale_type = World::scale_type;
 
 #define TILES_BASE_SIZE sizeof(Tile::raw_type) * 2
 #define BUFFER_SIZE TILES_BASE_SIZE * TILES_PER_BUFFER
-#define DEFAULT_ID 2
 
 	/** ---------------------- **/
 	/*       CONSTRUCTORS       */
@@ -40,15 +41,15 @@ World::World(const size_type &width, const size_type &height):
 	// Set top and bottom rows
 	for (size_type x = 0; x < width; ++x)
 	{
-		_fg_tiles[x] = Tile(DEFAULT_ID);
-		_fg_tiles[x + limit_y * width] = Tile(DEFAULT_ID);
+		_fg_tiles[x] = Tile(_TILEID_DEFAULT);
+		_fg_tiles[x + limit_y * width] = Tile(_TILEID_DEFAULT);
 	}
 
 	// Set left and right columns (corner tiles already set)
 	for (size_type y = 1; y < limit_y; ++y)
 	{
-		_fg_tiles[y * width] = Tile(DEFAULT_ID);
-		_fg_tiles[limit_x + y * width] = Tile(DEFAULT_ID);
+		_fg_tiles[y * width] = Tile(_TILEID_DEFAULT);
+		_fg_tiles[limit_x + y * width] = Tile(_TILEID_DEFAULT);
 	}
 }
 
@@ -70,6 +71,12 @@ World::World(const char *data):
 		*fg = Tile(data);
 		*bg = Tile(&data[sizeof(Tile::raw_type)]);
 		data += sizeof(Tile::raw_type) * 2;
+
+		if (fg->get_id() == _TILEID_SPAWN)
+		{
+			size_type pos = fg - _fg_tiles.begin();
+			_spawns.push_back(scale_type(pos % _size.x, pos / _size.x));
+		}
 	}
 }
 
@@ -106,6 +113,12 @@ World::World(std::ifstream &file)
 		{
 			*fg = Tile(&buffer[i]);
 			*bg = Tile(&buffer[i + sizeof(Tile::raw_type)]);
+
+			if (fg->get_id() == _TILEID_SPAWN)
+			{
+				size_type pos = fg - _fg_tiles.begin();
+				_spawns.push_back(scale_type(pos % _size.x, pos / _size.x));
+			}
 		}
 	}
 }
@@ -167,6 +180,28 @@ bool World::has_tile(const int32_t &x, const int32_t &y) const
 {
 	return x >= 0 && x < _size.x
 		&& y >= 0 && y < _size.y;
+}
+
+// Adds a new spawn point to the world
+void	World::add_spawn(const scale_type &pos)
+	{ _spawns.push_back(pos); }
+
+// Deletes a spawn point from the world
+void	World::remove_spawn(const scale_type &pos)
+{
+	// Find spawn point
+	std::vector<scale_type>::iterator it = std::find(_spawns.begin(), _spawns.end(), pos);
+	if (it != _spawns.end())
+		_spawns.erase(it);
+}
+
+// Retrieves the spawn point. If multiple are present, a random one is returned,
+// or if none are present, the default spawn point (at 1;1) is returned
+scale_type	World::get_spawn() const
+{
+	if (_spawns.size() == 0)
+		return scale_type(1, 1);
+	return _spawns[rand() % _spawns.size()];
 }
 
 // Retrieves world's data in binary format, as a string

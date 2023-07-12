@@ -23,10 +23,11 @@
 void key_press(const sf::Event &event, Context *&ctx)
 {
 	Tile::id_type id = ctx->game->getSelected().get_id();
-	if (event.key.code >= sf::Keyboard::Num0 && event.key.code <= sf::Keyboard::Num9 && id)
-		ctx->game->setSelected(Tile((id - 1) / 10 * 10 + (event.key.code - sf::Keyboard::Num0) + 1));
+	if (event.key.code >= sf::Keyboard::Num0 && event.key.code <= sf::Keyboard::Num9
+		&& id != _TILEID_EMPTY && id != _TILEID_SPAWN)
+		ctx->game->setSelected(Tile(id / 10 * 10 + (event.key.code - sf::Keyboard::Num0)));
 	else if (event.key.code >= sf::Keyboard::Numpad1 && event.key.code <= sf::Keyboard::Numpad4)
-		ctx->game->setSelected(Tile(id % 10 + (event.key.code - sf::Keyboard::Numpad1 + (id % 10 ? 0 : 1)) * 10));
+		ctx->game->setSelected(Tile(id % 10 + (event.key.code - sf::Keyboard::Numpad0) * 10));
 
 	else
 		switch (event.key.code)
@@ -47,7 +48,10 @@ void key_press(const sf::Event &event, Context *&ctx)
 				ctx->fw->get_window().close();
 				break;
 			case sf::Keyboard::Numpad0:
-				ctx->game->setSelected(Tile());
+				ctx->game->setSelected(Tile(_TILEID_EMPTY));
+				break;
+			case sf::Keyboard::Numpad5:
+				ctx->game->setSelected(Tile(_TILEID_SPAWN));
 				break;
 			default: break;
 		}

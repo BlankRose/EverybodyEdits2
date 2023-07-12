@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Wednesday, June 28, 2023 7:38 PM       */
+/*       //\   /         Last Updated: Wednesday, July 12, 2023 10:59 PM      */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -60,6 +60,14 @@ Tile			&Tile::operator=(Tile &&tile)
 	_raw = std::move(tile._raw);
 	return *this;
 }
+
+// Compare the target tile with another tile
+bool			Tile::operator==(const Tile &tile) const
+	{ return _raw == tile._raw; }
+
+// Compare the target tile with another tile (not equal)
+bool			Tile::operator!=(const Tile &tile) const
+	{ return _raw != tile._raw; }
 
 	/** ---------------------- **/
 	/*          METHODS         */

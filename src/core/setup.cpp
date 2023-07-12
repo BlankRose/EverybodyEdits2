@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Sunday, July 9, 2023 8:33 PM           */
+/*       //\   /         Last Updated: Wednesday, July 12, 2023 11:15 PM      */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ bool		configure(const std::string &path)
 		/*  SETTING CONFIGURATIONS  */
 		/** ---------------------- **/
 
+	srand(time(NULL));
 	if (!Configs::load_configs(path))
 	{
 		std::cout << "Failed to load the configuration file: " << path << std::endl;

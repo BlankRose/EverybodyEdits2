@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Monday, July 10, 2023 8:45 PM          */
+/*       //\   /         Last Updated: Wednesday, July 12, 2023 11:11 PM      */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -32,8 +32,9 @@ bool prepareGame(Context *ctx)
 		std::cout << "Tile at 1:1 is " << world->get_fg_tile(1, 1).get_id() << " | " << world->get_bg_tile(1, 1).get_id() << std::endl;
 	)
 
+	World::scale_type pos = ctx->game->getWorld()->get_spawn();
 	sf::View view = ctx->fw->get_window().getView();
-	view.setCenter(TILE_WIDTH + TILE_WIDTH / 2, TILE_HEIGHT + TILE_HEIGHT / 2);
+	view.setCenter(pos.x * TILE_WIDTH + TILE_WIDTH / 2, pos.y * TILE_HEIGHT + TILE_HEIGHT / 2);
 	ctx->fw->get_window().setView(view);
 
 	__TIME_TEST("Initializing the camera",
