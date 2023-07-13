@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Tuesday, July 4, 2023 8:51 PM          */
+/*       //\   /         Last Updated: Thursday, July 13, 2023 12:09 AM       */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -22,14 +22,44 @@ class Context
 			WORLD = 1
 		};
 
+		// Enums of flags, each reprensenting their corresponding
+		// position within the flags variable
+		enum Flags
+		{
+			BG = 0, GOD,
+			UP, DOWN, RIGHT, LEFT,
+			MOUSE_L, MOUSE_R, MOUSE_M
+		};
+
 		Context();
 		Context(const Context &other);
+		Context(Context &&other);
 		~Context();
 
 		Context			&operator=(const Context &other);
+		Context			&operator=(Context &&other);
 
-		bool			up, down, right, left;
-		bool			mouse_L, mouse_R, mouse_M;
+		// Enables a given flag (within flags variable)
+		inline void		enableFlag(const Flags &target)
+			{ flags |= (1UL << target); }
+
+		// Disables a given flag (within flags variable)
+		inline void		disableFlag(const Flags &target)
+			{ flags &= ~(1UL << target); }
+
+		// Flips a given flag (within flags variable)
+		inline void		toggleFlag(const Flags &target)
+			{ flags ^= (1UL << target); }
+
+		// Toggles a given flag (within flags variable)
+		inline void		setFlag(const Flags &target, const bool &value)
+			{ value ? enableFlag(target) : disableFlag(target); }
+
+		// Retrieves a given flag (within flags variable)
+		inline bool		getFlag(const Flags &target) const
+			{ return (flags >> target) & 1U; }
+
+		int				flags;
 		Displays		display;
 
 		Framework		*fw;

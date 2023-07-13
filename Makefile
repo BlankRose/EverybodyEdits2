@@ -57,7 +57,7 @@ SUCCESS     = $(BREAK)$(ESCAPE)[32m
 PENDING     = $(BREAK)$(ESCAPE)[33m
 
 # Final compositions
-DEFINES     = VERSION=\"$(VERSION)\" NAME=\"$(NAME)\" DEBUG_MODE
+DEFINES     = VERSION=\"$(VERSION)\" NAME=\"$(NAME)\" #DEBUG_MODE
 FINAL_LINK  = $(foreach dir, $(LIB_FOLDERS), -L$(dir)) $(foreach lib, $(LIBRARIES), -l$(lib)) $(LINKER) $(CFLAGS)
 FINAL_OBJ   = $(foreach dir, $(INCLUDES), -I$(dir)) $(foreach def, $(DEFINES), -D$(def)) $(CFLAGS)
 LD_EXPORT   = export LD_LIBRARY_PATH=$(LD_LIBRARY_PATH)$(foreach dir, $(LIB_FOLDERS),:$(dir))

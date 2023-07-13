@@ -33,16 +33,23 @@ void key_press(const sf::Event &event, Context *&ctx)
 		switch (event.key.code)
 		{
 			case sf::Keyboard::Left:
-				ctx->left = true;
+			case sf::Keyboard::A:
+				ctx->enableFlag(Context::LEFT);
 				break;
 			case sf::Keyboard::Right:
-				ctx->right = true;
+			case sf::Keyboard::D:
+				ctx->enableFlag(Context::RIGHT);
 				break;
 			case sf::Keyboard::Up:
-				ctx->up = true;
+			case sf::Keyboard::W:
+				ctx->enableFlag(Context::UP);
 				break;
 			case sf::Keyboard::Down:
-				ctx->down = true;
+			case sf::Keyboard::S:
+				ctx->enableFlag(Context::DOWN);
+				break;
+			case sf::Keyboard::G:
+				ctx->toggleFlag(Context::GOD);
 				break;
 			case sf::Keyboard::Escape:
 				ctx->fw->get_window().close();
@@ -71,16 +78,20 @@ void key_release(const sf::Event &event, Context *&ctx)
 	switch(event.key.code)
 	{
 		case sf::Keyboard::Left:
-			ctx->left = false;
+		case sf::Keyboard::A:
+			ctx->disableFlag(Context::LEFT);
 			break;
 		case sf::Keyboard::Right:
-			ctx->right = false;
+		case sf::Keyboard::D:
+			ctx->disableFlag(Context::RIGHT);
 			break;
 		case sf::Keyboard::Up:
-			ctx->up = false;
+		case sf::Keyboard::W:
+			ctx->disableFlag(Context::UP);
 			break;
 		case sf::Keyboard::Down:
-			ctx->down = false;
+		case sf::Keyboard::S:
+			ctx->disableFlag(Context::DOWN);
 			break;
 		default: break;
 	}
@@ -95,11 +106,11 @@ void key_release(const sf::Event &event, Context *&ctx)
 void mouse_press(const sf::Event &event, Context *&ctx)
 {
 	if (event.mouseButton.button == sf::Mouse::Left)
-		ctx->mouse_L = true;
+		ctx->enableFlag(Context::MOUSE_L);
 	else if (event.mouseButton.button == sf::Mouse::Middle)
-		ctx->mouse_M = true;
+		ctx->enableFlag(Context::MOUSE_M);
 	else if (event.mouseButton.button == sf::Mouse::Right)
-		ctx->mouse_R = true;
+		ctx->enableFlag(Context::MOUSE_R);
 }
 
 /**
@@ -111,11 +122,11 @@ void mouse_press(const sf::Event &event, Context *&ctx)
 void mouse_release(const sf::Event &event, Context *&ctx)
 {
 	if (event.mouseButton.button == sf::Mouse::Left)
-		ctx->mouse_L = false;
+		ctx->disableFlag(Context::MOUSE_L);
 	else if (event.mouseButton.button == sf::Mouse::Middle)
-		ctx->mouse_M = false;
+		ctx->disableFlag(Context::MOUSE_M);	
 	else if (event.mouseButton.button == sf::Mouse::Right)
-		ctx->mouse_R = false;
+		ctx->disableFlag(Context::MOUSE_R);
 }
 
 /**
