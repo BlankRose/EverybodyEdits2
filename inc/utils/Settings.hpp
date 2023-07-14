@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Sunday, July 9, 2023 9:26 PM           */
+/*       //\   /         Last Updated: Thursday, July 13, 2023 4:20 PM        */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -57,4 +57,46 @@
 #ifndef TILE_HEIGHT
 // Defines the height of a tile in pixels
 # define TILE_HEIGHT 32.f
+#endif
+
+// Player Settings
+//////////////////////////////
+
+#ifndef MOVE_SPD_GOD
+// Defines the amount of tiles the player moves per frame (while in god mode)
+# define MOVE_SPD_GOD .7f
+#endif
+
+#ifndef MOVE_SPD_NORMAL
+// Defines the amount of tiles the player moves per frame (while walking)
+# define MOVE_SPD_NORMAL .5f
+#endif
+
+#ifndef MOVE_SPD_FALL
+// Defines the amount of tiles the player moves per frame (while falling)
+# define MOVE_SPD_FALL 1.f
+#endif
+
+// COMPLEX SETTINGS
+// (Constructed from other settings)
+//////////////////////////////
+
+#ifndef _MOVE_SPD_GOD_WIDTH
+// Defines the amount of pixels the player moves per frame (while in god mode)
+# define _MOVE_SPD_GOD_WIDTH (MOVE_SPD_GOD * TILE_WIDTH)
+#endif
+
+#ifndef _MOVE_SPD_NORMAL_WIDTH
+// Defines the amount of pixels the player moves per frame (while walking)
+# define _MOVE_SPD_NORMAL_WIDTH (MOVE_SPD_NORMAL * TILE_WIDTH)
+#endif
+
+#ifndef _MOVE_SPD_FALL_WIDTH
+// Defines the amount of pixels the player moves per frame (while falling)
+# define _MOVE_SPD_FALL_WIDTH (MOVE_SPD_FALL * TILE_WIDTH)
+#endif
+
+#ifndef _MOVE_SPD_GOD_HEIGHT
+// Defines the amount of pixels the player moves per frame (while in god mode)
+# define _MOVE_SPD_GOD_HEIGHT (MOVE_SPD_GOD * TILE_HEIGHT)
 #endif

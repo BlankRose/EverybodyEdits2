@@ -12,10 +12,10 @@
 #include "EverybodyEdits2.hpp"
 
 /**
- * Applies the player's movement on the map. If the player is in god mode,
- * they can move freely in all directions. Otherwise, they can only move
- * horizontally, as long as there's no tiles in the way (tiles before id 10
- * are not collidable)
+ * Convert player's inputs into movements, and apply them to the player.
+ * While in god mode, players can freely move in all directions, without
+ * any restriction. Otherwise, they can only move according to the gravity
+ * they were given, and with the restriction of collidable tiles.
  * 
  * @param	ctx: Context of the target process
  * */
@@ -24,6 +24,7 @@ static void move_player(Context *&ctx)
 	sf::RenderWindow &win = ctx->fw->get_window();
 	World *world = ctx->game->getWorld();
 	sf::View view = win.getView();
+	sf::Vector2f pos = view.getCenter();
 
 	// While in god mode, players can freely move in all directions
 	if (ctx->getFlag(Context::GOD))
@@ -34,61 +35,78 @@ static void move_player(Context *&ctx)
 
 	// While others, they can only move in the horizontal axis as long as
 	// there's no tiles in the way (tiles before id 10 are not collidable)
+	// (Sideways gravity version)
+	else if (ctx->getFlag(Context::GRAVITY_SIDE))
+	{
+		float move = (-ctx->getFlag(Context::UP) + ctx->getFlag(Context::DOWN)) * 7.f;
+		World::size_type x = pos.x / TILE_WIDTH, y = pos.y / TILE_HEIGHT;
+
+		// Checks if there's a tile in the way
+		// (and set move to the closest position to colliding tile)
+		if ((move < 0 &&
+					((world->has_tile(x, y - 1)
+					&& world->get_fg_tile(x, y - 1).get_id() >= 10)
+				|| (pos.x > x * TILE_WIDTH + (TILE_WIDTH - .5f)
+					&& world->has_tile(x + 1, y - 1)
+					&& world->get_fg_tile(x + 1, y - 1).get_id() >= 10)
+				|| (pos.x < x * TILE_WIDTH + (.5f)
+					&& world->has_tile(x - 1, y - 1)
+					&& world->get_fg_tile(x - 1, y - 1).get_id() >= 10)))
+			|| (move > 0 &&
+					((world->has_tile(x, y + 1)
+					&& world->get_fg_tile(x, y + 1).get_id() >= 10)
+				|| (pos.x > x * TILE_WIDTH + (TILE_WIDTH - .5f)
+					&& world->has_tile(x + 1, y + 1)
+					&& world->get_fg_tile(x + 1, y + 1).get_id() >= 10)
+				|| (pos.x < x * TILE_WIDTH + (.5f)
+					&& world->has_tile(x - 1, y + 1)
+					&& world->get_fg_tile(x - 1, y + 1).get_id() >= 10))))
+			move = y * TILE_HEIGHT - pos.y + (TILE_HEIGHT / 2);
+		view.move(0, move);
+	}
+
+	// Same as above, but for the vertical axis
+	// (Regular gravity version)
 	else
 	{
 		float move = (-ctx->getFlag(Context::LEFT) + ctx->getFlag(Context::RIGHT)) * 7.f;
-		const sf::Vector2f &pos = view.getCenter();
 		World::size_type x = pos.x / TILE_WIDTH, y = pos.y / TILE_HEIGHT;
 
-		// Checks if there's a tile in the way (and set move to the closest position to colliding tile)
-		if (move < 0)
-		{
-			// Check straight left
-			if (world->has_tile(x - 1, y)
-				&& world->get_fg_tile(x - 1, y).get_id() >= 10)
-				move = x * TILE_WIDTH - pos.x + (TILE_WIDTH / 2);
-			// If slightly down, also check lower left
-			else if (pos.y > y * TILE_HEIGHT + (TILE_HEIGHT / 10 * 9)
-				&& world->has_tile(x - 1, y + 1)
-				&& world->get_fg_tile(x - 1, y + 1).get_id() >= 10)
-				move = x * TILE_WIDTH - pos.x + (TILE_WIDTH / 2);
-			// If slightly up, also check upper left
-			else if (pos.y < y * TILE_HEIGHT + (TILE_HEIGHT / 10)
-				&& world->has_tile(x - 1, y - 1)
-				&& world->get_fg_tile(x - 1, y - 1).get_id() >= 10)
-				move = x * TILE_WIDTH - pos.x + (TILE_WIDTH / 2);
-		}
-		else if (move > 0)
-		{
-			// Check straight right
-			if (world->has_tile(x + 1, y)
-				&& world->get_fg_tile(x + 1, y).get_id() >= 10)
-				move = x * TILE_WIDTH - pos.x + (TILE_WIDTH / 2);
-			// If slightly down, also check lower right
-			else if (pos.y > y * TILE_HEIGHT + (TILE_HEIGHT / 10 * 9)
-				&& world->has_tile(x + 1, y + 1)
-				&& world->get_fg_tile(x + 1, y + 1).get_id() >= 10)
-				move = x * TILE_WIDTH - pos.x + (TILE_WIDTH / 2);
-			// If slightly up, also check upper right
-			else if (pos.y < y * TILE_HEIGHT + (TILE_HEIGHT / 10)
-				&& world->has_tile(x + 1, y - 1)
-				&& world->get_fg_tile(x + 1, y - 1).get_id() >= 10)
-				move = x * TILE_WIDTH - pos.x + (TILE_WIDTH / 2);
-		}
+		// Checks if there's a tile in the way
+		// (and set move to the closest position to colliding tile)
+		if ((move < 0 &&
+					((world->has_tile(x - 1, y)
+					&& world->get_fg_tile(x - 1, y).get_id() >= 10)
+				|| (pos.y > y * TILE_HEIGHT + (TILE_HEIGHT - .5f)
+					&& world->has_tile(x - 1, y + 1)
+					&& world->get_fg_tile(x - 1, y + 1).get_id() >= 10)
+				|| (pos.y < y * TILE_HEIGHT + (.5f)
+					&& world->has_tile(x - 1, y - 1)
+					&& world->get_fg_tile(x - 1, y - 1).get_id() >= 10)))
+			|| (move > 0 &&
+					((world->has_tile(x + 1, y)
+					&& world->get_fg_tile(x + 1, y).get_id() >= 10)
+				|| (pos.y > y * TILE_HEIGHT + (TILE_HEIGHT - .5f)
+					&& world->has_tile(x + 1, y + 1)
+					&& world->get_fg_tile(x + 1, y + 1).get_id() >= 10)
+				|| (pos.y < y * TILE_HEIGHT + (.5f)
+					&& world->has_tile(x + 1, y - 1)
+					&& world->get_fg_tile(x + 1, y - 1).get_id() >= 10))))
+			move = x * TILE_WIDTH - pos.x + (TILE_WIDTH / 2);
 		view.move(move, 0);
 	}
 
 	// Make sure the view doesn't go out of bounds
-	sf::Vector2f center = view.getCenter();
-	if (center.x < (TILE_WIDTH / 2))
-		center.x = (TILE_WIDTH / 2);
-	else if (center.x > world->get_width() * TILE_WIDTH - (TILE_WIDTH / 2))
-		center.x = world->get_width() * TILE_WIDTH - (TILE_WIDTH / 2);
-	if (center.y < (TILE_HEIGHT / 2))
-		center.y = (TILE_HEIGHT / 2);
-	else if (center.y > world->get_height() * TILE_HEIGHT - (TILE_HEIGHT / 2))
-		center.y = world->get_height() * TILE_HEIGHT - (TILE_HEIGHT / 2);
-	view.setCenter(center);
+	pos = view.getCenter();
+	if (pos.x < (TILE_WIDTH / 2))
+		pos.x = (TILE_WIDTH / 2);
+	else if (pos.x > world->get_width() * TILE_WIDTH - (TILE_WIDTH / 2))
+		pos.x = world->get_width() * TILE_WIDTH - (TILE_WIDTH / 2);
+	if (pos.y < (TILE_HEIGHT / 2))
+		pos.y = (TILE_HEIGHT / 2);
+	else if (pos.y > world->get_height() * TILE_HEIGHT - (TILE_HEIGHT / 2))
+		pos.y = world->get_height() * TILE_HEIGHT - (TILE_HEIGHT / 2);
+	view.setCenter(pos);
 
 	// Apply the final view
 	win.setView(view);
@@ -112,20 +130,73 @@ static void apply_gravity(Context *&ctx)
 	const sf::Vector2f &pos = view.getCenter();
 	World::size_type x = pos.x / TILE_WIDTH, y = pos.y / TILE_HEIGHT;
 
+	int flip = ctx->getFlag(Context::GRAVITY_FLIP) ? -1 : 1;
+	float fall = 12.f * flip;
+
 	// If the player is not on the ground, move them down (unless out of bounds))
 	// (Checks to prevent player going in half-tiles on edges)
-	if ((!world->has_tile(x, y + 1) || world->get_fg_tile(x, y + 1).get_id() < 10)
-		&& (!world->has_tile(x + 1, y + 1) || world->get_fg_tile(x + 1, y + 1).get_id() < 10 || pos.x < x * TILE_WIDTH + (TILE_WIDTH / 10 * 9))
-		&& (!world->has_tile(x - 1, y + 1) || world->get_fg_tile(x - 1, y + 1).get_id() < 10 || pos.x > x * TILE_WIDTH + (TILE_WIDTH / 10)))
+	if (!ctx->getFlag(Context::GRAVITY_SIDE))
 	{
-		if (y + 1 >= world->get_height())
-			view.setCenter(sf::Vector2f(pos.x, world->get_height() * TILE_HEIGHT - (TILE_HEIGHT / 2)));
+		if ((!world->has_tile(x, y + flip)
+				|| world->get_fg_tile(x, y + flip).get_id() < 10)
+			&& (!world->has_tile(x + 1, y + flip)
+				|| world->get_fg_tile(x + 1, y + flip).get_id() < 10
+				|| pos.x < x * TILE_WIDTH + (TILE_WIDTH - .5f))
+			&& (!world->has_tile(x - 1, y + flip)
+				|| world->get_fg_tile(x - 1, y + flip).get_id() < 10
+				|| pos.x > x * TILE_WIDTH + (.5f)))
+		{
+			if (y + flip >= world->get_height() && y + flip < 0)
+				view.setCenter(sf::Vector2f(pos.x, world->get_height() * TILE_HEIGHT - (TILE_HEIGHT / 2)));
+			else
+			{
+				// Checks if the player is slightly within a tile, if so, move it out
+				if ((pos.x - x * TILE_WIDTH > (TILE_WIDTH / 2)
+						&& world->has_tile(x + 1, y + flip)
+						&& world->get_fg_tile(x + 1, y + flip).get_id() >= 10)
+					|| (pos.x - x * TILE_WIDTH < (TILE_WIDTH / 2)
+						&& world->has_tile(x - 1, y + flip)
+						&& world->get_fg_tile(x - 1, y + flip).get_id() >= 10))
+					view.move(x * TILE_WIDTH - pos.x + (TILE_WIDTH / 2), fall);
+				else
+					view.move(0, fall);
+			}
+		}
+		// If the player is on the ground, clip them to the top of the tile
 		else
-			view.move(0, 8.f);
+			view.setCenter(sf::Vector2f(pos.x, (y + 1) * TILE_HEIGHT - (TILE_HEIGHT / 2)));
 	}
-	// If the player is on the ground, clip them to the top of the tile
-	else
-		view.setCenter(sf::Vector2f(pos.x, (y + 1) * TILE_HEIGHT - (TILE_HEIGHT / 2)));
+	else if (ctx->getFlag(Context::GRAVITY_SIDE))
+	{
+		if ((!world->has_tile(x + flip, y)
+				|| world->get_fg_tile(x + flip, y).get_id() < 10)
+			&& (!world->has_tile(x + flip, y + 1)
+				|| world->get_fg_tile(x + flip, y + 1).get_id() < 10
+				|| pos.y < y * TILE_HEIGHT + (TILE_HEIGHT - .5f))
+			&& (!world->has_tile(x + flip, y - 1)
+				|| world->get_fg_tile(x + flip, y - 1).get_id() < 10
+				|| pos.y > y * TILE_HEIGHT + (.5f)))
+		{
+			if (x + flip >= world->get_width() && x + flip < 0)
+				view.setCenter(sf::Vector2f(world->get_width() * TILE_WIDTH - (TILE_WIDTH / 2), pos.y));
+			else
+			{
+				// Checks if the player is slightly within a tile, if so, move it out
+				if ((pos.y - y * TILE_HEIGHT > (TILE_HEIGHT / 2)
+						&& world->has_tile(x + flip, y + 1)
+						&& world->get_fg_tile(x + flip, y + 1).get_id() >= 10)
+					|| (pos.y - y * TILE_HEIGHT < (TILE_HEIGHT / 2)
+						&& world->has_tile(x + flip, y - 1)
+						&& world->get_fg_tile(x + flip, y - 1).get_id() >= 10))
+					view.move(fall, y * TILE_HEIGHT - pos.y + (TILE_HEIGHT / 2));
+				else
+					view.move(fall, 0);
+			}
+		}
+		// If the player is on the ground, clip them to the top of the tile
+		else
+			view.setCenter(sf::Vector2f((x + 1) * TILE_WIDTH - (TILE_WIDTH / 2), pos.y));
+	}
 
 	// Apply the final view
 	win.setView(view);
@@ -150,9 +221,9 @@ static void place_tile(Context *&ctx)
 		return;
 	const Tile &tile = world->get_fg_tile(tile_pos.x, tile_pos.y);
 	const Tile &selected = ctx->game->getSelected();
+
 	if (tile == selected)
 		return;
-
 	if (tile.get_id() == _TILEID_SPAWN)
 		world->remove_spawn({(World::size_type) tile_pos.x, (World::size_type) tile_pos.y});
 	if (selected.get_id() == _TILEID_SPAWN)

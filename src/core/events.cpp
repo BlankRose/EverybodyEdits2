@@ -32,6 +32,9 @@ void key_press(const sf::Event &event, Context *&ctx)
 	else
 		switch (event.key.code)
 		{
+			// Movements Keybinds
+			//////////////////////
+
 			case sf::Keyboard::Left:
 			case sf::Keyboard::A:
 				ctx->enableFlag(Context::LEFT);
@@ -48,17 +51,41 @@ void key_press(const sf::Event &event, Context *&ctx)
 			case sf::Keyboard::S:
 				ctx->enableFlag(Context::DOWN);
 				break;
+			case sf::Keyboard::Space:
+				ctx->enableFlag(Context::SPACE);
+				break;
+
+			// Gravity Keybinds
+			// (Requires: Gravity Status)
+			////////////////////
+
+			case sf::Keyboard::I:
+				ctx->setGravityUp();
+				break;
+			case sf::Keyboard::K:
+				ctx->setGravityDown();
+				break;
+			case sf::Keyboard::J:
+				ctx->setGravityLeft();
+				break;
+			case sf::Keyboard::L:
+				ctx->setGravityRight();
+				break;
+
+			// Modifiers Keybinds
+			//////////////////////
+
 			case sf::Keyboard::G:
 				ctx->toggleFlag(Context::GOD);
-				break;
-			case sf::Keyboard::Escape:
-				ctx->fw->get_window().close();
 				break;
 			case sf::Keyboard::Numpad0:
 				ctx->game->setSelected(Tile(_TILEID_EMPTY));
 				break;
 			case sf::Keyboard::Numpad5:
 				ctx->game->setSelected(Tile(_TILEID_SPAWN));
+				break;
+			case sf::Keyboard::Escape:
+				ctx->fw->get_window().close();
 				break;
 			default: break;
 		}
@@ -92,6 +119,9 @@ void key_release(const sf::Event &event, Context *&ctx)
 		case sf::Keyboard::Down:
 		case sf::Keyboard::S:
 			ctx->disableFlag(Context::DOWN);
+			break;
+		case sf::Keyboard::Space:
+			ctx->disableFlag(Context::SPACE);
 			break;
 		default: break;
 	}
