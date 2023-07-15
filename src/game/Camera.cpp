@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Monday, July 10, 2023 8:45 PM          */
+/*       //\   /         Last Updated: Saturday, July 15, 2023 7:23 PM        */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -22,24 +22,8 @@
  * 
  * @param	view: The view to use
  * */
-Camera::Camera(const sf::View &view):
-	_player(sf::Quads, 4)
-{
-	redefine(view);
-
-	// Initialize the player's vertices
-	_player[0].position = sf::Vector2f(-TILE_WIDTH / 2, -TILE_HEIGHT / 2);
-	_player[1].position = sf::Vector2f(TILE_WIDTH / 2, -TILE_HEIGHT / 2);
-	_player[2].position = sf::Vector2f(TILE_WIDTH / 2, TILE_HEIGHT / 2);
-	_player[3].position = sf::Vector2f(-TILE_WIDTH / 2, TILE_HEIGHT / 2);
-
-	// Initialize the player's texture
-	Assets::size_type texSize = Assets::get_size();
-	_player[0].texCoords = sf::Vector2f(0, 0);
-	_player[1].texCoords = sf::Vector2f(texSize.x, 0);
-	_player[2].texCoords = sf::Vector2f(texSize.x, texSize.y);
-	_player[3].texCoords = sf::Vector2f(0, texSize.y);
-}
+Camera::Camera(const sf::View &view)
+	{ redefine(view); }
 
 /**
  * Destructor: Destroys the camera
@@ -314,9 +298,4 @@ void Camera::draw(sf::RenderTarget &target, sf::RenderStates states) const
 			target.draw(*ity, states);
 		}
 	}
-
-	// Draw the player and align to center
-	states.texture = &Assets::get_player();
-	states.transform.translate(target.getView().getCenter());
-	target.draw(_player, states);
 }

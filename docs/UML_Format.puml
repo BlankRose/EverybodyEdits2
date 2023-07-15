@@ -1,0 +1,184 @@
+@startuml
+!theme aws-orange
+
+skinparam classAttributeIconSize 10
+hide empty members
+
+package Core
+{
+  class Framework
+  {
+    - window
+    + Window getWindow()
+    + View getView()
+  }
+
+  class Assets
+  {
+    - textures: map<int, Textures>
+  }
+
+  class Configs
+  {
+    + loadConfigs(string)
+    + saveConfigs(string)
+    + T getConfig<T>(string)
+  }
+}
+
+package Game
+{
+  class Tile
+  {
+    - raw_data: int
+    + int getID()
+    + int getMeta()
+    + int getRaw()
+  }
+
+  class World
+  {
+    - tiles: vector<Tile>
+    + Tile get_fg_tile(int, int)
+    + Tile get_bg_tile(int, int)
+    + bool has_tile(int, int)
+  }
+
+  class Camera
+  {
+    - tiles: deque<deque<QuadVertice>>
+    + move(View)
+    + reset(View)
+    + draw()
+  }
+
+  class TileSelector
+  {
+    - selected: Tile
+    + Tile getSelected()
+    + setSelected(Tile)
+    + draw()
+  }
+
+  class GameController
+  {
+    - World
+    - Camera
+    - TileSelector
+    + setTile(int, int, Tile)
+    + Tile getTile(int, int, bool)
+    + bool hasTile(int, int)
+    + moveCamera(View)
+    + resetCamera(View)
+    + draw()
+  }
+}
+
+enum Flag
+{
+  UP
+  DOWN
+  RIGHT
+  LEFT
+  GRAVITY_SIDE
+  GRAVITY_FLIP
+  MOUSE_L
+  MOUSE_R
+  MOUSE_M
+  GOD
+}
+
+class Context
+{
+  + enum Flag
+  + GameController
+  + Framework
+  + flags: int
+  + enableFlag(Flag)
+  + disableFlag(Flag)
+  + toggleFlag(Flag)
+  + setFlag(Flag, bool)
+  + bool getFlag(Flag)
+}
+
+package Menu
+{
+  class WorldSelector
+  {
+    - availables
+    + refresh()
+    + getAvailables()
+    + select(string)
+    + draw()
+  }
+
+  class Account
+  {
+    - account_details
+    + string getUserName()
+    + string getInfo()
+  }
+
+  class MenuUI
+  {
+    + draw()
+  }
+
+  class MenuController
+  {
+    + selectWorld(string)
+    + draw()
+  }
+}
+
+package Runtime
+{
+  object events {
+    "Catches all events and
+    handles them accordingly"
+  }
+  object logic {
+    "Calculates and defines the
+    game's logics such as applying
+    gravity or move the player"
+  }
+  object drawing {
+    "Handles drawing of the game"
+  }
+}
+
+object loader {
+  "Help swaps between menu, and in-game"
+}
+object Main {
+  "Entrypoint of the game"
+}
+
+Assets --> MenuUI
+MenuUI --> MenuController
+WorldSelector --> MenuController
+Account --> MenuController
+
+Assets --> Camera
+Tile --> World
+Tile --> TileSelector
+World --> GameController
+TileSelector --> GameController
+Camera --> GameController
+
+Flag -- Context
+MenuController --> Context
+GameController --> Context
+Framework --> Context
+
+events --> logic
+logic --> drawing
+drawing --> events
+Context --> Runtime
+Configs --> Main
+Main --> loader
+loader --> Runtime
+
+Configs -[hidden]- Flag
+
+@enduml

@@ -12,6 +12,27 @@
 #include "EverybodyEdits2.hpp"
 
 /**
+ * Defines wether or not the player's gravity has been enforced by a tile.
+ * If so, it will set the gravity's direction according to the tile's id.
+ * 
+ * @param	ctx: Context of the target process
+ * */
+static void set_forced_gravity(Context *&ctx)
+{
+	const sf::Vector2f &pos = ctx->fw->get_window().getView().getCenter();
+	Tile::id_type id = ctx->game->getWorld()->get_fg_tile(pos.x / TILE_WIDTH, pos.y / TILE_HEIGHT).get_id();
+
+	if (id == _TILEID_UP || id == _TILEID_DOWN || id == _TILEID_LEFT || id == _TILEID_RIGHT)
+	{
+		ctx->setFlag(Context::FORCED_GRAVITY_FLIP, id == _TILEID_UP || id == _TILEID_LEFT);
+		ctx->setFlag(Context::FORCED_GRAVITY_SIDE, id == _TILEID_LEFT || id == _TILEID_RIGHT);
+		ctx->enableFlag(Context::FORCED_GRAVITY);
+	}
+	else
+		ctx->disableFlag(Context::FORCED_GRAVITY);
+}
+
+/**
  * Convert player's inputs into movements, and apply them to the player.
  * While in god mode, players can freely move in all directions, without
  * any restriction. Otherwise, they can only move according to the gravity
@@ -36,7 +57,9 @@ static void move_player(Context *&ctx)
 	// While others, they can only move in the horizontal axis as long as
 	// there's no tiles in the way (tiles before id 10 are not collidable)
 	// (Sideways gravity version)
-	else if (ctx->getFlag(Context::GRAVITY_SIDE))
+	else if (ctx->getFlag(Context::FORCED_GRAVITY)
+		? ctx->getFlag(Context::FORCED_GRAVITY_SIDE)
+		: ctx->getFlag(Context::GRAVITY_SIDE))
 	{
 		float move = (-ctx->getFlag(Context::UP) + ctx->getFlag(Context::DOWN)) * 7.f;
 		World::size_type x = pos.x / TILE_WIDTH, y = pos.y / TILE_HEIGHT;
@@ -130,12 +153,18 @@ static void apply_gravity(Context *&ctx)
 	const sf::Vector2f &pos = view.getCenter();
 	World::size_type x = pos.x / TILE_WIDTH, y = pos.y / TILE_HEIGHT;
 
-	int flip = ctx->getFlag(Context::GRAVITY_FLIP) ? -1 : 1;
+	bool gravity_flip = ctx->getFlag(Context::FORCED_GRAVITY)
+		? ctx->getFlag(Context::FORCED_GRAVITY_FLIP)
+		: ctx->getFlag(Context::GRAVITY_FLIP);
+	bool gravity_side = ctx->getFlag(Context::FORCED_GRAVITY)
+		? ctx->getFlag(Context::FORCED_GRAVITY_SIDE)
+		: ctx->getFlag(Context::GRAVITY_SIDE);
+	int flip = gravity_flip ? -1 : 1;
 	float fall = 12.f * flip;
 
 	// If the player is not on the ground, move them down (unless out of bounds))
 	// (Checks to prevent player going in half-tiles on edges)
-	if (!ctx->getFlag(Context::GRAVITY_SIDE))
+	if (!gravity_side)
 	{
 		if ((!world->has_tile(x, y + flip)
 				|| world->get_fg_tile(x, y + flip).get_id() < 10)
@@ -166,7 +195,7 @@ static void apply_gravity(Context *&ctx)
 		else
 			view.setCenter(sf::Vector2f(pos.x, (y + 1) * TILE_HEIGHT - (TILE_HEIGHT / 2)));
 	}
-	else if (ctx->getFlag(Context::GRAVITY_SIDE))
+	else
 	{
 		if ((!world->has_tile(x + flip, y)
 				|| world->get_fg_tile(x + flip, y).get_id() < 10)
@@ -259,6 +288,7 @@ static void pick_tile(Context *&ctx)
  * */
 bool logic_unit(Context *&ctx)
 {
+	set_forced_gravity(ctx);
 	if (ctx->getFlag(Context::UP) || ctx->getFlag(Context::DOWN)
 		|| ctx->getFlag(Context::RIGHT) || ctx->getFlag(Context::LEFT))
 		move_player(ctx);

@@ -77,12 +77,25 @@ void key_press(const sf::Event &event, Context *&ctx)
 
 			case sf::Keyboard::G:
 				ctx->toggleFlag(Context::GOD);
+				ctx->game->getPlayer()->toggle_godmode();
 				break;
 			case sf::Keyboard::Numpad0:
 				ctx->game->setSelected(Tile(_TILEID_EMPTY));
 				break;
 			case sf::Keyboard::Numpad5:
 				ctx->game->setSelected(Tile(_TILEID_SPAWN));
+				break;
+			case sf::Keyboard::Numpad6:
+				ctx->game->setSelected(Tile(_TILEID_UP));
+				break;
+			case sf::Keyboard::Numpad7:
+				ctx->game->setSelected(Tile(_TILEID_LEFT));
+				break;
+			case sf::Keyboard::Numpad8:
+				ctx->game->setSelected(Tile(_TILEID_RIGHT));
+				break;
+			case sf::Keyboard::Numpad9:
+				ctx->game->setSelected(Tile(_TILEID_DOWN));
 				break;
 			case sf::Keyboard::Escape:
 				ctx->fw->get_window().close();

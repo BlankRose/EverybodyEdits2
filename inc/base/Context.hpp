@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Friday, July 14, 2023 9:40 PM          */
+/*       //\   /         Last Updated: Saturday, July 15, 2023 11:28 PM       */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ class Context
 			BG = 0, GOD,
 			UP, DOWN, RIGHT, LEFT, SPACE,
 			MOUSE_L, MOUSE_R, MOUSE_M,
-			GRAVITY_SIDE, GRAVITY_FLIP
+			GRAVITY_SIDE, GRAVITY_FLIP, FORCED_GRAVITY,
+			FORCED_GRAVITY_SIDE, FORCED_GRAVITY_FLIP,
 		};
 
 		Context();

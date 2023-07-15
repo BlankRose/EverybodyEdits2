@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Monday, July 10, 2023 7:40 PM          */
+/*       //\   /         Last Updated: Saturday, July 15, 2023 7:19 PM        */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 class World;
 class Camera;
 class TileSelector;
+class Player;
 
 /**
  * GameController
@@ -52,6 +53,8 @@ class GameController:
 		bool resetCamera(const sf::View &view);
 		bool destroyCamera();
 
+		Player *getPlayer() const;
+
 		const Tile &getSelected() const;
 		void setSelected(const Tile &tile);
 
@@ -62,4 +65,5 @@ class GameController:
 		World *_world;
 		Camera *_camera;
 		TileSelector *_selector;
+		Player *_player;
 };

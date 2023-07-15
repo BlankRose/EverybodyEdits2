@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Wednesday, July 12, 2023 10:27 PM      */
+/*       //\   /         Last Updated: Sunday, July 16, 2023 12:03 AM         */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -37,13 +37,14 @@ texture_map		_bg_texmap;
 font_type		_font;
 texture_type	_loadscreen;
 texture_type	_player;
+texture_type	_aura;
 
 	/** ---------------------- **/
 	/*     PACKS DEFINTIONS     */
 	/** ---------------------- **/
 
 packs_type fg_packs = {
-	AssetsPack(0, 2, "special/"),
+	AssetsPack(0, 6, "special/"),
 	AssetsPack(10, 10, "basic/"),
 	AssetsPack(20, 10, "bricks/"),
 	AssetsPack(30, 10, "beta/"),
@@ -106,6 +107,8 @@ bool Assets::load_ressources(const path_type &base_dir)
 	// Load player texture and font
 	if (!_player.loadFromFile(dir + "player.png"))
 		return false;
+	if (!_aura.loadFromFile(dir + "aura.png"))
+		return false;
 	if (!_font.loadFromFile(dir + "font.ttf"))
 		return false;
 	return true;
@@ -130,6 +133,9 @@ texture_type &Assets::get_loadscreen()
 texture_type &Assets::get_player()
 	{ return _player; }
 
+texture_type &Assets::get_aura()
+	{ return _aura; }
+
 texture_type &Assets::get_texture(const id_type &id, const bool &bg)
 {
 	if (bg)
@@ -146,3 +152,6 @@ texture_type &Assets::get_texture(const id_type &id, const bool &bg)
 
 size_type Assets::get_size()
 	{ return _tilesize; }
+
+size_type Assets::get_aurasize()
+	{ return _aura.getSize(); }

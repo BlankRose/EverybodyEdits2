@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Wednesday, July 12, 2023 11:05 PM      */
+/*       //\   /         Last Updated: Saturday, July 15, 2023 7:21 PM        */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "game/World.hpp"
 #include "game/Camera.hpp"
 #include "game/TileSelector.hpp"
+#include "game/Player.hpp"
 
 #include "utils/CommonTiles.hpp"
 #include "base/Logging.hpp"
@@ -28,7 +29,10 @@
  * */
 GameController::GameController():
 	_world(nullptr), _camera(nullptr)
-	{ _selector = new TileSelector(_TILEID_DEFAULT); }
+{
+	_selector = new TileSelector(_TILEID_DEFAULT);
+	_player = new Player();
+}
 
 /**
  * Defined Constructor: Initializes the world and camera to the given ones
@@ -38,7 +42,10 @@ GameController::GameController():
  * */
 GameController::GameController(World *world, Camera *camera):
 	_world(world), _camera(camera)
-	{ _selector = new TileSelector(_TILEID_DEFAULT); }
+{
+	_selector = new TileSelector(_TILEID_DEFAULT);
+	_player = new Player();
+}
 
 /**
  * Destructor: Destroys the world and camera along with the controller
@@ -51,6 +58,8 @@ GameController::~GameController()
 		delete _camera;
 	if (_selector)
 		delete _selector;
+	if (_player)
+		delete _player;
 }
 
 	/** ---------------------- **/
@@ -64,7 +73,7 @@ GameController::~GameController()
  * @return	True or False upon ready or not
  * */
 inline bool GameController::isReady() const
-	{ return (_world && _camera && _selector); }
+	{ return (_world && _camera && _selector && _player); }
 
 /**
  * Casts the controller to a boolean, indicating if it is ready or not to be
@@ -262,6 +271,14 @@ bool GameController::destroyCamera()
 	/** ---------------------- **/
 
 /**
+ * Retrieve the player entity
+ * 
+ * @return	Player entity
+ * */
+Player *GameController::getPlayer() const
+	{ return _player; }
+
+/**
  * Retrieves the player's tile selection
  * 
  * @return	Player's tile selection
@@ -294,5 +311,6 @@ void GameController::draw(sf::RenderTarget &target, sf::RenderStates) const
 
 	_camera->setReference(_world);
 	target.draw(*_camera);
+	target.draw(*_player);
 	target.draw(*_selector);
 }
