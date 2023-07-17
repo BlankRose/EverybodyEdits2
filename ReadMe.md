@@ -3,7 +3,7 @@
 
 <p align="center">
 	<img alt="Top Language" src="https://img.shields.io/static/v1?label=Language&message=CPP&color=orange&style=plastic"/>
-	<img alt="Supported" src="https://img.shields.io/static/v1?label=Supported+OS&message=Windows+/+Linux+/+OSX&color=yellow&style=plastic"/>
+	<img alt="Supported" src="https://img.shields.io/static/v1?label=Supported+OS&message=Linux&color=yellow&style=plastic"/>
 	<img alt="Code Size" src="https://img.shields.io/github/languages/code-size/BlankRose/everybodyedits2?label=Code+Size&color=informational&style=plastic"/>
 	<img alt="Last Commit" src="https://img.shields.io/github/last-commit/BlankRose/everybodyedits2?label=Last+Commit&color=critical&style=plastic"/>
 </p>
@@ -62,13 +62,12 @@ Here's a list of all available controls:
 - `[Right]` or `[D]`: Move to right
 
 ### Construction :
-- `[Numpad 0]`: Select empty tile (Destroys)
-- `[Numpad 1]` to `[Numpad 4]`: Select tile style
-- `[0]` to `[9]`: Select tile color
-- `[Numpad 5]`: Select spawn point
-- `[Numpad 6]` to `[Numpad 9]`: Select gravity tile
+- `[Numpad 0]` to `[Numpad 4]`: Quick select a tile pack
+- `[0]` to `[9]`: Quick pick tile from toolbar
 - `[Left Click]` or `[Right Click]`: Place selected tile
 - `[Middle Click]`: Copy hovered tile to selection
+- `[B]`: Toggle background mode
+- `[Shift + B]`: Switch background and foreground on whole toolbar
 
 ### Developper :
 - `[G]`: Godmode (Freely move around)

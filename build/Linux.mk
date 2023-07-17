@@ -1,3 +1,14 @@
+# ############################################################################ #
+#          .-.                                                                 #
+#    __   /   \   __                                                           #
+#   (  `'.\   /.'`  )   EverybodyEdits2 - Linux.mk                             #
+#    '-._.(;;;)._.-'                                                           #
+#    .-'  ,`"`,  '-.                                                           #
+#   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)               #
+#       //\   /         Last Updated: Monday, July 17, 2023 7:05 PM            #
+#      ||  '-'                                                                 #
+# ############################################################################ #
+
 #############################
 # -- PROJECT PREPARATION -- #
 #############################
@@ -12,9 +23,3 @@ PWD         = $(shell pwd)
 INCLUDES    = $(shell find . $(SEARCHDIR) -type d -iregex '.*/inc\(lude\)?[s]?' 2>/dev/null)
 POSSIBLELIB = $(foreach lib, $(LIBRARIES), $(shell find . $(SEARCHDIR) -iregex '.*/lib\($(lib)\).*' 2>/dev/null))
 LIB_FOLDERS = $(shell dirname $(POSSIBLELIB) | uniq)
-
-# Final compositions
-DEFINES     = VERSION=\"$(VERSION)\" NAME=\"$(NAME)\" #DEBUG_MODE
-FINAL_LINK  = $(foreach dir, $(LIB_FOLDERS), -L$(dir)) $(foreach lib, $(LIBRARIES), -l$(lib)) $(LINKER) $(CFLAGS)
-FINAL_OBJ   = $(foreach dir, $(INCLUDES), -I$(dir)) $(foreach def, $(DEFINES), -D$(def)) $(CFLAGS)
-LD_EXPORT   = export LD_LIBRARY_PATH=$(LD_LIBRARY_PATH)$(foreach dir, $(LIB_FOLDERS),:$(dir))

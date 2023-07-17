@@ -5,13 +5,15 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Saturday, July 15, 2023 7:23 PM        */
+/*       //\   /         Last Updated: Monday, July 17, 2023 4:00 PM          */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
 #include "game/Camera.hpp"
 #include "utils/Settings.hpp"
 #include "base/Assets.hpp"
+
+#include <iostream>
 
 	/** ---------------------- **/
 	/*       CONSTRUCTORS       */
@@ -290,7 +292,7 @@ void Camera::draw(sf::RenderTarget &target, sf::RenderStates states) const
 		for (uint32_t y = sy ; y < ey; ++y, ++ity)
 		{
 			states.texture = &Assets::get_texture(
-				_reference->get_bg_tile(sx, sy).get_id(), true);
+				_reference->get_bg_tile(x, y).get_id(), true);
 			target.draw(*ity, states);
 
 			states.texture = &Assets::get_texture(

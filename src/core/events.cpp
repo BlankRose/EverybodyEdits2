@@ -22,86 +22,89 @@
  * */
 void key_press(const sf::Event &event, Context *&ctx)
 {
-	Tile::id_type id = ctx->game->getSelected().get_id();
-	if (event.key.code >= sf::Keyboard::Num0 && event.key.code <= sf::Keyboard::Num9
-		&& id != _TILEID_EMPTY && id != _TILEID_SPAWN)
-		ctx->game->setSelected(Tile(id / 10 * 10 + (event.key.code - sf::Keyboard::Num0)));
-	else if (event.key.code >= sf::Keyboard::Numpad1 && event.key.code <= sf::Keyboard::Numpad4)
-		ctx->game->setSelected(Tile(id % 10 + (event.key.code - sf::Keyboard::Numpad0) * 10));
+		// Tile Selector Keybinds
+		/////////////////////////
 
-	else
-		switch (event.key.code)
-		{
-			// Movements Keybinds
-			//////////////////////
+	if (event.key.code >= sf::Keyboard::Num0 && event.key.code <= sf::Keyboard::Num9)
+		ctx->game->getSelector()->pickTile(event.key.code - sf::Keyboard::Num0 - 1);
 
-			case sf::Keyboard::Left:
-			case sf::Keyboard::A:
-				ctx->enableFlag(Context::LEFT);
-				break;
-			case sf::Keyboard::Right:
-			case sf::Keyboard::D:
-				ctx->enableFlag(Context::RIGHT);
-				break;
-			case sf::Keyboard::Up:
-			case sf::Keyboard::W:
-				ctx->enableFlag(Context::UP);
-				break;
-			case sf::Keyboard::Down:
-			case sf::Keyboard::S:
-				ctx->enableFlag(Context::DOWN);
-				break;
-			case sf::Keyboard::Space:
-				ctx->enableFlag(Context::SPACE);
-				break;
+	else switch (event.key.code)
+	{
+		case sf::Keyboard::B:
+			ctx->toggleFlag(Context::BACKGROUND);
+			if (event.key.shift)
+				ctx->game->getSelector()->shiftAll();
+			else
+				ctx->game->getSelector()->shiftTile();
+			break;
+		case sf::Keyboard::Numpad0:
+			ctx->game->getSelector()->quickPick(_PACKID_SPECIAL, ctx->getFlag(Context::BACKGROUND));
+			break;
+		case sf::Keyboard::Numpad1:
+			ctx->game->getSelector()->quickPick(_PACKID_BASIC, ctx->getFlag(Context::BACKGROUND));
+			break;
+		case sf::Keyboard::Numpad2:
+			ctx->game->getSelector()->quickPick(_PACKID_BRICKS, ctx->getFlag(Context::BACKGROUND));
+			break;
+		case sf::Keyboard::Numpad3:
+			ctx->game->getSelector()->quickPick(_PACKID_BETA, ctx->getFlag(Context::BACKGROUND));
+			break;
+		case sf::Keyboard::Numpad4:
+			ctx->game->getSelector()->quickPick(_PACKID_STATIC, ctx->getFlag(Context::BACKGROUND));
+			break;
 
-			// Gravity Keybinds
-			// (Requires: Gravity Status)
-			////////////////////
+		// Movements Keybinds
+		//////////////////////
 
-			case sf::Keyboard::I:
-				ctx->setGravityUp();
-				break;
-			case sf::Keyboard::K:
-				ctx->setGravityDown();
-				break;
-			case sf::Keyboard::J:
-				ctx->setGravityLeft();
-				break;
-			case sf::Keyboard::L:
-				ctx->setGravityRight();
-				break;
+		case sf::Keyboard::Left:
+		case sf::Keyboard::A:
+			ctx->enableFlag(Context::LEFT);
+			break;
+		case sf::Keyboard::Right:
+		case sf::Keyboard::D:
+			ctx->enableFlag(Context::RIGHT);
+			break;
+		case sf::Keyboard::Up:
+		case sf::Keyboard::W:
+			ctx->enableFlag(Context::UP);
+			break;
+		case sf::Keyboard::Down:
+		case sf::Keyboard::S:
+			ctx->enableFlag(Context::DOWN);
+			break;
+		case sf::Keyboard::Space:
+			ctx->enableFlag(Context::SPACE);
+			break;
 
-			// Modifiers Keybinds
-			//////////////////////
+		// Gravity Keybinds
+		// (Requires: Gravity Status)
+		////////////////////
 
-			case sf::Keyboard::G:
-				ctx->toggleFlag(Context::GOD);
-				ctx->game->getPlayer()->toggle_godmode();
-				break;
-			case sf::Keyboard::Numpad0:
-				ctx->game->setSelected(Tile(_TILEID_EMPTY));
-				break;
-			case sf::Keyboard::Numpad5:
-				ctx->game->setSelected(Tile(_TILEID_SPAWN));
-				break;
-			case sf::Keyboard::Numpad6:
-				ctx->game->setSelected(Tile(_TILEID_UP));
-				break;
-			case sf::Keyboard::Numpad7:
-				ctx->game->setSelected(Tile(_TILEID_LEFT));
-				break;
-			case sf::Keyboard::Numpad8:
-				ctx->game->setSelected(Tile(_TILEID_RIGHT));
-				break;
-			case sf::Keyboard::Numpad9:
-				ctx->game->setSelected(Tile(_TILEID_DOWN));
-				break;
-			case sf::Keyboard::Escape:
-				ctx->fw->get_window().close();
-				break;
-			default: break;
-		}
+		case sf::Keyboard::I:
+			ctx->setGravityUp();
+			break;
+		case sf::Keyboard::K:
+			ctx->setGravityDown();
+			break;
+		case sf::Keyboard::J:
+			ctx->setGravityLeft();
+			break;
+		case sf::Keyboard::L:
+			ctx->setGravityRight();
+			break;
+
+		// Modifiers Keybinds
+		//////////////////////
+
+		case sf::Keyboard::G:
+			ctx->toggleFlag(Context::GOD);
+			ctx->game->getPlayer()->toggle_godmode();
+			break;
+		case sf::Keyboard::Escape:
+			ctx->fw->get_window().close();
+			break;
+		default: break;
+	}
 }
 
 /**

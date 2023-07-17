@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Saturday, July 15, 2023 7:19 PM        */
+/*       //\   /         Last Updated: Monday, July 17, 2023 9:05 PM          */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -56,7 +56,9 @@ class GameController:
 		Player *getPlayer() const;
 
 		const Tile &getSelected() const;
-		void setSelected(const Tile &tile);
+		void setSelected(const Tile &tile, const bool &bg = false);
+		const bool &isSelectedBackground() const;
+		TileSelector *getSelector() const;
 
 		void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 

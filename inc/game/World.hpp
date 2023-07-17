@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Wednesday, July 12, 2023 10:50 PM      */
+/*       //\   /         Last Updated: Monday, July 17, 2023 4:04 PM          */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -79,6 +79,11 @@ class World:
 		void		set_bg_tile(const size_type &x, const size_type &y, const Tile &tile);
 		void 		set_fg_tile(const size_type &x, const size_type &y, Tile &&tile);
 		void		set_bg_tile(const size_type &x, const size_type &y, Tile &&tile);
+
+		Tile		&get_tile(const size_type &x, const size_type &y, const bool &bg = false);
+		const Tile	&get_tile(const size_type &x, const size_type &y, const bool &bg = false) const;
+		void		set_tile(const size_type &x, const size_type &y, const Tile &tile, const bool &bg = false);
+		void		set_tile(const size_type &x, const size_type &y, Tile &&tile, const bool &bg = false);
 
 		bool		has_tile(const int32_t &x, const int32_t &y) const;
 

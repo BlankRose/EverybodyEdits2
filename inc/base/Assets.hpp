@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Saturday, July 15, 2023 7:32 PM        */
+/*       //\   /         Last Updated: Monday, July 17, 2023 11:18 PM         */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -62,4 +62,7 @@ namespace Assets
 
 		texture_type	&get_aura();
 		size_type		get_aurasize();
+
+		const AssetsPack	&search_pack(const char *pack, const bool &bg = false);
+		bool				has_inverse(const id_type &id, const bool &bg = false);
 }

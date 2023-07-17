@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Saturday, July 15, 2023 11:28 PM       */
+/*       //\   /         Last Updated: Monday, July 17, 2023 3:38 PM          */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ class Context
 		// position within the flags variable
 		enum Flags
 		{
-			BG = 0, GOD,
+			BG = 0, GOD, BACKGROUND,
 			UP, DOWN, RIGHT, LEFT, SPACE,
 			MOUSE_L, MOUSE_R, MOUSE_M,
 			GRAVITY_SIDE, GRAVITY_FLIP, FORCED_GRAVITY,

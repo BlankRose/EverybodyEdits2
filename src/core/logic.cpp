@@ -69,19 +69,19 @@ static void move_player(Context *&ctx)
 		if ((move < 0 &&
 					((world->has_tile(x, y - 1)
 					&& world->get_fg_tile(x, y - 1).get_id() >= 10)
-				|| (pos.x > x * TILE_WIDTH + (TILE_WIDTH - .5f)
+				|| (pos.x > x * TILE_WIDTH + (TILE_WIDTH - 1.f)
 					&& world->has_tile(x + 1, y - 1)
 					&& world->get_fg_tile(x + 1, y - 1).get_id() >= 10)
-				|| (pos.x < x * TILE_WIDTH + (.5f)
+				|| (pos.x < x * TILE_WIDTH + (1.f)
 					&& world->has_tile(x - 1, y - 1)
 					&& world->get_fg_tile(x - 1, y - 1).get_id() >= 10)))
 			|| (move > 0 &&
 					((world->has_tile(x, y + 1)
 					&& world->get_fg_tile(x, y + 1).get_id() >= 10)
-				|| (pos.x > x * TILE_WIDTH + (TILE_WIDTH - .5f)
+				|| (pos.x > x * TILE_WIDTH + (TILE_WIDTH - 1.f)
 					&& world->has_tile(x + 1, y + 1)
 					&& world->get_fg_tile(x + 1, y + 1).get_id() >= 10)
-				|| (pos.x < x * TILE_WIDTH + (.5f)
+				|| (pos.x < x * TILE_WIDTH + (1.f)
 					&& world->has_tile(x - 1, y + 1)
 					&& world->get_fg_tile(x - 1, y + 1).get_id() >= 10))))
 			move = y * TILE_HEIGHT - pos.y + (TILE_HEIGHT / 2);
@@ -100,19 +100,19 @@ static void move_player(Context *&ctx)
 		if ((move < 0 &&
 					((world->has_tile(x - 1, y)
 					&& world->get_fg_tile(x - 1, y).get_id() >= 10)
-				|| (pos.y > y * TILE_HEIGHT + (TILE_HEIGHT - .5f)
+				|| (pos.y > y * TILE_HEIGHT + (TILE_HEIGHT - 1.f)
 					&& world->has_tile(x - 1, y + 1)
 					&& world->get_fg_tile(x - 1, y + 1).get_id() >= 10)
-				|| (pos.y < y * TILE_HEIGHT + (.5f)
+				|| (pos.y < y * TILE_HEIGHT + (1.f)
 					&& world->has_tile(x - 1, y - 1)
 					&& world->get_fg_tile(x - 1, y - 1).get_id() >= 10)))
 			|| (move > 0 &&
 					((world->has_tile(x + 1, y)
 					&& world->get_fg_tile(x + 1, y).get_id() >= 10)
-				|| (pos.y > y * TILE_HEIGHT + (TILE_HEIGHT - .5f)
+				|| (pos.y > y * TILE_HEIGHT + (TILE_HEIGHT - 1.f)
 					&& world->has_tile(x + 1, y + 1)
 					&& world->get_fg_tile(x + 1, y + 1).get_id() >= 10)
-				|| (pos.y < y * TILE_HEIGHT + (.5f)
+				|| (pos.y < y * TILE_HEIGHT + (1.f)
 					&& world->has_tile(x + 1, y - 1)
 					&& world->get_fg_tile(x + 1, y - 1).get_id() >= 10))))
 			move = x * TILE_WIDTH - pos.x + (TILE_WIDTH / 2);
@@ -166,14 +166,19 @@ static void apply_gravity(Context *&ctx)
 	// (Checks to prevent player going in half-tiles on edges)
 	if (!gravity_side)
 	{
-		if ((!world->has_tile(x, y + flip)
+		/*if ((!world->has_tile(x, y + flip)
 				|| world->get_fg_tile(x, y + flip).get_id() < 10)
 			&& (!world->has_tile(x + 1, y + flip)
 				|| world->get_fg_tile(x + 1, y + flip).get_id() < 10
 				|| pos.x < x * TILE_WIDTH + (TILE_WIDTH - .5f))
 			&& (!world->has_tile(x - 1, y + flip)
 				|| world->get_fg_tile(x - 1, y + flip).get_id() < 10
-				|| pos.x > x * TILE_WIDTH + (.5f)))
+				|| pos.x > x * TILE_WIDTH + (.5f)))*/
+
+		if (world->has_tile(x, y + flip)
+			&& world->get_fg_tile(x, y + flip).get_id() < 10
+			&& world->has_tile(x + 1, y + flip)
+			&& world->has_tile(x - 1, y + flip))
 		{
 			if (y + flip >= world->get_height() && y + flip < 0)
 				view.setCenter(sf::Vector2f(pos.x, world->get_height() * TILE_HEIGHT - (TILE_HEIGHT / 2)));
@@ -197,14 +202,19 @@ static void apply_gravity(Context *&ctx)
 	}
 	else
 	{
-		if ((!world->has_tile(x + flip, y)
+		/*if ((!world->has_tile(x + flip, y)
 				|| world->get_fg_tile(x + flip, y).get_id() < 10)
 			&& (!world->has_tile(x + flip, y + 1)
 				|| world->get_fg_tile(x + flip, y + 1).get_id() < 10
 				|| pos.y < y * TILE_HEIGHT + (TILE_HEIGHT - .5f))
 			&& (!world->has_tile(x + flip, y - 1)
 				|| world->get_fg_tile(x + flip, y - 1).get_id() < 10
-				|| pos.y > y * TILE_HEIGHT + (.5f)))
+				|| pos.y > y * TILE_HEIGHT + (.5f)))*/
+
+		if (world->has_tile(x + flip, y)
+			&& world->get_fg_tile(x + flip, y).get_id() < 10
+			&& world->has_tile(x + flip, y + 1)
+			&& world->has_tile(x + flip, y - 1))
 		{
 			if (x + flip >= world->get_width() && x + flip < 0)
 				view.setCenter(sf::Vector2f(world->get_width() * TILE_WIDTH - (TILE_WIDTH / 2), pos.y));
@@ -240,6 +250,9 @@ static void apply_gravity(Context *&ctx)
  * */
 static void place_tile(Context *&ctx)
 {
+	if (ctx->game->getSelector()->interact(ctx->fw->get_window()))
+		return;
+
 	sf::RenderWindow &win = ctx->fw->get_window();
 	World *world = ctx->game->getWorld();
 
@@ -248,17 +261,27 @@ static void place_tile(Context *&ctx)
 
 	if (!world->has_tile(tile_pos.x, tile_pos.y))
 		return;
-	const Tile &tile = world->get_fg_tile(tile_pos.x, tile_pos.y);
 	const Tile &selected = ctx->game->getSelected();
+	const bool &bg = ctx->game->isSelectedBackground();
 
-	if (tile == selected)
-		return;
-	if (tile.get_id() == _TILEID_SPAWN)
-		world->remove_spawn({(World::size_type) tile_pos.x, (World::size_type) tile_pos.y});
-	if (selected.get_id() == _TILEID_SPAWN)
-		world->add_spawn({(World::size_type) tile_pos.x, (World::size_type) tile_pos.y});
-
-	world->set_fg_tile(tile_pos.x, tile_pos.y, selected);
+	if (!bg)
+	{
+		const Tile &tile = world->get_fg_tile(tile_pos.x, tile_pos.y);
+		if (tile == selected)
+			return;
+		if (tile.get_id() == _TILEID_SPAWN)
+			world->remove_spawn({(World::size_type) tile_pos.x, (World::size_type) tile_pos.y});
+		if (selected.get_id() == _TILEID_SPAWN)
+			world->add_spawn({(World::size_type) tile_pos.x, (World::size_type) tile_pos.y});
+		world->set_fg_tile(tile_pos.x, tile_pos.y, selected);
+	}
+	else
+	{
+		const Tile &tile = world->get_bg_tile(tile_pos.x, tile_pos.y);
+		if (tile == selected)
+			return;
+		world->set_bg_tile(tile_pos.x, tile_pos.y, selected);
+	}
 }
 
 /**
@@ -275,7 +298,9 @@ static void pick_tile(Context *&ctx)
 	sf::Vector2u	tile_pos(pos.x / TILE_WIDTH, pos.y / TILE_HEIGHT);
 
 	if (world->has_tile(tile_pos.x, tile_pos.y))
-		ctx->game->setSelected(world->get_fg_tile(tile_pos.x, tile_pos.y));
+		ctx->game->setSelected(
+			world->get_tile(tile_pos.x, tile_pos.y, ctx->getFlag(Context::BACKGROUND)),
+			ctx->getFlag(Context::BACKGROUND));
 }
 
 /**

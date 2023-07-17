@@ -5,7 +5,7 @@
 #    '-._.(;;;)._.-'                                                           #
 #    .-'  ,`"`,  '-.                                                           #
 #   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)               #
-#       //\   /         Last Updated: Monday, July 10, 2023 10:29 PM           #
+#       //\   /         Last Updated: Monday, July 17, 2023 7:21 PM            #
 #      ||  '-'                                                                 #
 # ############################################################################ #
 
@@ -41,7 +41,7 @@ ifeq ($(OS), Windows_NT)
 include build/Windows.mk
 else ifeq ($(shell uname -s), Darwin)
 include build/OSX.mk
-else
+else # Linux Systems
 include build/Linux.mk
 endif
 
@@ -52,6 +52,12 @@ BREAK	    = $(ESCAPE)[2K\r
 FAILURE     = $(BREAK)$(ESCAPE)[31m
 SUCCESS     = $(BREAK)$(ESCAPE)[32m
 PENDING     = $(BREAK)$(ESCAPE)[33m
+
+# Final compositions
+DEFINES     = VERSION=\"$(VERSION)\" NAME=\"$(NAME)\" #DEBUG_MODE
+FINAL_LINK  = $(foreach dir, $(LIB_FOLDERS), -L$(dir)) $(foreach lib, $(LIBRARIES), -l$(lib)) $(LINKER) $(CFLAGS)
+FINAL_OBJ   = $(foreach dir, $(INCLUDES), -I$(dir)) $(foreach def, $(DEFINES), -D$(def)) $(CFLAGS)
+LD_EXPORT   = export LD_LIBRARY_PATH=$(LD_LIBRARY_PATH)$(foreach dir, $(LIB_FOLDERS),:$(dir))
 
 
 #############################
@@ -97,7 +103,7 @@ remake: fullclean all
 r: run
 run: all
 	@echo "$(PENDING)Running $(NAME)... OUTPUT:$(RESET)"
-	$(LD_EXPORT) && export ASAN_OPTIONS=detect_leaks=0 \
+	@$(LD_EXPORT) && export ASAN_OPTIONS=detect_leaks=0 \
 		&& ./$(NAME) $(ARGS)
 	@echo "$(SUCCESS)$(NAME) exited successfully!$(RESET)"
 

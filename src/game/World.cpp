@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Wednesday, July 12, 2023 11:43 PM      */
+/*       //\   /         Last Updated: Monday, July 17, 2023 4:12 PM          */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -166,6 +166,18 @@ void		World::set_fg_tile(const size_type &x, const size_type &y, Tile &&tile)
 
 void		World::set_bg_tile(const size_type &x, const size_type &y, Tile &&tile)
 	{ _bg_tiles[x + y * _size.x] = std::move(tile); }
+
+Tile		&World::get_tile(const size_type &x, const size_type &y, const bool &bg)
+	{ return bg ? _bg_tiles[x + y * _size.x] : _fg_tiles[x + y * _size.x]; }
+
+const Tile	&World::get_tile(const size_type &x, const size_type &y, const bool &bg) const
+	{ return bg ? _bg_tiles[x + y * _size.x] : _fg_tiles[x + y * _size.x]; }
+
+void		World::set_tile(const size_type &x, const size_type &y, const Tile &tile, const bool &bg)
+	{ (bg ? _bg_tiles[x + y * _size.x] : _fg_tiles[x + y * _size.x]) = tile; }	
+
+void		World::set_tile(const size_type &x, const size_type &y, Tile &&tile, const bool &bg)
+	{ (bg ? _bg_tiles[x + y * _size.x] : _fg_tiles[x + y * _size.x]) = std::move(tile); }
 
 /**
  * Indicates whether the world has a tile at the given position

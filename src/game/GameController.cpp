@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Saturday, July 15, 2023 7:21 PM        */
+/*       //\   /         Last Updated: Monday, July 17, 2023 9:05 PM          */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 GameController::GameController():
 	_world(nullptr), _camera(nullptr)
 {
-	_selector = new TileSelector(_TILEID_DEFAULT);
+	_selector = new TileSelector();
 	_player = new Player();
 }
 
@@ -43,7 +43,7 @@ GameController::GameController():
 GameController::GameController(World *world, Camera *camera):
 	_world(world), _camera(camera)
 {
-	_selector = new TileSelector(_TILEID_DEFAULT);
+	_selector = new TileSelector();
 	_player = new Player();
 }
 
@@ -291,8 +291,19 @@ const Tile &GameController::getSelected() const
  * 
  * @param	tile: New tile selection
  * */
-void GameController::setSelected(const Tile &tile)
-	{ *_selector = tile; }
+void GameController::setSelected(const Tile &tile, const bool &bg)
+	{ _selector->setTile(tile, bg); }
+
+TileSelector *GameController::getSelector() const
+	{ return _selector; }
+
+/**
+ * Retrieves if the player's tile selection is a background tile
+ * 
+ * @return	True or False whether the player's tile selection is a background tile
+ * */
+const bool &GameController::isSelectedBackground() const
+	{ return _selector->isBackground(); }
 
 	/** ---------------------- **/
 	/*         RENDERING        */

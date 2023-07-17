@@ -5,9 +5,12 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Saturday, July 15, 2023 11:52 PM       */
+/*       //\   /         Last Updated: Monday, July 17, 2023 11:34 PM         */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
+
+//  TILES
+////////////////
 
 // Empty tile ID, where no tile is present
 #define _TILEID_EMPTY Tile::id_type(0)
@@ -30,7 +33,17 @@
 
 // Selection tile ID, which is not a tile itself but rather a decorative box
 // around a tile, used to show which tile is selected
-#define _TILEID_SELECTION 65535
+#define _TILEID_SELECTION 60000
 
 // Default tile ID, used as first pick and new worlds borders
 #define _TILEID_DEFAULT 11
+
+//  PACKS
+//////////////
+
+#define _PACKID_SPECIAL "special/"
+#define _PACKID_BASIC "basic/"
+#define _PACKID_BRICKS "bricks/"
+#define _PACKID_BETA "beta/"
+#define _PACKID_STATIC "static/"
+#define _PACKID_EXTRA "extra_"

@@ -5,7 +5,7 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Thursday, July 13, 2023 4:20 PM        */
+/*       //\   /         Last Updated: Monday, July 17, 2023 8:36 PM          */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
@@ -57,6 +57,11 @@
 #ifndef TILE_HEIGHT
 // Defines the height of a tile in pixels
 # define TILE_HEIGHT 32.f
+#endif
+
+#ifndef SCALE_SELECTOR
+// Defines the scale of the tile selector
+# define SCALE_SELECTOR 1.5f
 #endif
 
 // Player Settings

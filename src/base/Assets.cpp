@@ -5,12 +5,14 @@
 /*    '-._.(;;;)._.-'                                                         */
 /*    .-'  ,`"`,  '-.                                                         */
 /*   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)             */
-/*       //\   /         Last Updated: Sunday, July 16, 2023 12:03 AM         */
+/*       //\   /         Last Updated: Monday, July 17, 2023 11:35 PM         */
 /*      ||  '-'                                                               */
 /* ************************************************************************** */
 
 #include "base/Configs.hpp"
 #include "base/Assets.hpp"
+
+#include "utils/CommonTiles.hpp"
 
 #include <map>
 #include <vector>
@@ -44,19 +46,20 @@ texture_type	_aura;
 	/** ---------------------- **/
 
 packs_type fg_packs = {
-	AssetsPack(0, 6, "special/"),
-	AssetsPack(10, 10, "basic/"),
-	AssetsPack(20, 10, "bricks/"),
-	AssetsPack(30, 10, "beta/"),
-	AssetsPack(40, 10, "static/"),
+	AssetsPack(0, 6, _PACKID_SPECIAL),
+	AssetsPack(10, 10, _PACKID_BASIC),
+	AssetsPack(20, 10, _PACKID_BRICKS),
+	AssetsPack(30, 10, _PACKID_BETA),
+	AssetsPack(40, 10, _PACKID_STATIC),
 };
 
 packs_type bg_packs = {
-	AssetsPack(0, 1, "special/"),
-	AssetsPack(10, 10, "basic/"),
-	AssetsPack(20, 10, "bricks/"),
-	AssetsPack(30, 10, "beta/"),
-	AssetsPack(50, 10, "static/"),
+	AssetsPack(0, 1, _PACKID_SPECIAL),
+	AssetsPack(10, 10, _PACKID_BASIC),
+	AssetsPack(20, 10, _PACKID_BRICKS),
+	AssetsPack(30, 10, _PACKID_BETA),
+	AssetsPack(40, 10, _PACKID_STATIC),
+	AssetsPack(60000, 1, _PACKID_EXTRA),
 };
 
 	/** ---------------------- **/
@@ -155,3 +158,33 @@ size_type Assets::get_size()
 
 size_type Assets::get_aurasize()
 	{ return _aura.getSize(); }
+
+/**
+ * Checks whetever a given id has a corresponding inverse tile (bg <-> fg)
+ * 
+ * @param	id: The id to check
+ * @param	bg: Whether it comes from the background or foreground
+ * */
+bool Assets::has_inverse(const id_type &id, const bool &bg)
+{
+	if (!bg)
+		return _bg_texmap.find(id) != _bg_texmap.end();
+	return _fg_texmap.find(id) != _fg_texmap.end();
+}
+
+/**
+ * Retrieve a pack of textures from the assets, given a pack name
+ * 
+ * @param	pack: The name of the pack to retrieve
+ * @param	bg: Whether it comes from the background or foreground
+ * 
+ * @return	The pack of textures
+ * */
+const AssetsPack &Assets::search_pack(const char *pack, const bool &bg)
+{
+	packs_type &packs = bg ? bg_packs : fg_packs;
+	for (auto &p : packs)
+		if (p.path == pack)
+			return p;
+	return packs[0];
+}
