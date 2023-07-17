@@ -21,7 +21,7 @@ ARGS      =
 
 # Directories of source files and where to put the object files
 SRC_DIR   = src
-OUT_DIR   = bin
+OUT_DIR   = build/bin
 
 # Target Compiler and options
 CC        = c++
@@ -30,23 +30,20 @@ LINKER    = -fsanitize=address
 
 # Libraries to link and where to find them
 LIBRARIES = sfml-graphics sfml-window sfml-system
-SEARCHDIR = $(HOME)/sgoinfre/libs
+SEARCHDIR = $(HOME)/sgoinfre/libs $(HOME)/Downloads
 
 
 #############################
 # -- PROJECT PREPARATION -- #
 #############################
 
-# Get all source files
-HEADERS     = $(shell find $(SRC_DIR) . -type f -iregex '.*\.h\(pp\)?')
-SOURCES     = $(shell find $(SRC_DIR) -type f -iregex '.*\.c\(pp\)?')
-OBJECTS     = $(SOURCES:$(SRC_DIR)/%.cpp=$(OUT_DIR)/%.o)
-
-# Get all directories (uses find with regex)
-PWD         = $(shell pwd)
-INCLUDES    = $(shell find . $(SEARCHDIR) -type d -iregex '.*/inc\(lude\)?[s]?' 2>/dev/null)
-POSSIBLELIB = $(foreach lib, $(LIBRARIES), $(shell find . $(SEARCHDIR) -iregex '.*/lib\($(lib)\).*' 2>/dev/null))
-LIB_FOLDERS = $(shell dirname $(POSSIBLELIB) | uniq)
+ifeq ($(OS), Windows_NT)
+include build/Windows.mk
+else ifeq ($(shell uname -s), Darwin)
+include build/OSX.mk
+else
+include build/Linux.mk
+endif
 
 # Special sequences
 ESCAPE      = 
@@ -55,12 +52,6 @@ BREAK	    = $(ESCAPE)[2K\r
 FAILURE     = $(BREAK)$(ESCAPE)[31m
 SUCCESS     = $(BREAK)$(ESCAPE)[32m
 PENDING     = $(BREAK)$(ESCAPE)[33m
-
-# Final compositions
-DEFINES     = VERSION=\"$(VERSION)\" NAME=\"$(NAME)\" #DEBUG_MODE
-FINAL_LINK  = $(foreach dir, $(LIB_FOLDERS), -L$(dir)) $(foreach lib, $(LIBRARIES), -l$(lib)) $(LINKER) $(CFLAGS)
-FINAL_OBJ   = $(foreach dir, $(INCLUDES), -I$(dir)) $(foreach def, $(DEFINES), -D$(def)) $(CFLAGS)
-LD_EXPORT   = export LD_LIBRARY_PATH=$(LD_LIBRARY_PATH)$(foreach dir, $(LIB_FOLDERS),:$(dir))
 
 
 #############################
@@ -106,7 +97,7 @@ remake: fullclean all
 r: run
 run: all
 	@echo "$(PENDING)Running $(NAME)... OUTPUT:$(RESET)"
-	@$(LD_EXPORT) && export ASAN_OPTIONS=detect_leaks=0 \
+	$(LD_EXPORT) && export ASAN_OPTIONS=detect_leaks=0 \
 		&& ./$(NAME) $(ARGS)
 	@echo "$(SUCCESS)$(NAME) exited successfully!$(RESET)"
 
