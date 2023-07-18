@@ -125,7 +125,7 @@ fi
 echo 'Building EverybodyEdits2...'
 make pkg -C $game_target
 mkdir -p $install_dir
-mv $build_dir/$game_target/build/pkg/** $install_dir
+mv $build_dir/$game_target/build/pkg/* $install_dir
 
 # Remove the build directory if requested
 if [[ $remove_build_dir =~ ^[YyOo]$ ]]; then
