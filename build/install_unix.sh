@@ -121,9 +121,15 @@ else
 	git clone -b dev $repository $game_target
 fi
 
-# Build the project and move the package to the install directory
+# Build the project and package
 echo 'Building EverybodyEdits2...'
 make pkg -C $game_target
+
+
+#  Finalize
+# ############################## #
+
+cd $origin_dir
 mkdir -p $install_dir
 mv $build_dir/$game_target/build/pkg/* $install_dir
 
@@ -133,9 +139,6 @@ if [[ $remove_build_dir =~ ^[YyOo]$ ]]; then
 	rm -rf $build_dir
 fi
 
-# Completes and returns to the original directory
-# (in case it has been sourced)
 echo ""
 echo "# -- INSTALLATION COMPLETE -- #"
 echo ""
-cd $origin_dir
