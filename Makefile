@@ -5,7 +5,7 @@
 #    '-._.(;;;)._.-'                                                           #
 #    .-'  ,`"`,  '-.                                                           #
 #   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)               #
-#       //\   /         Last Updated: Tuesday, July 18, 2023 8:08 PM           #
+#       //\   /         Last Updated: Wednesday, July 19, 2023 12:26 AM        #
 #      ||  '-'                                                                 #
 # ############################################################################ #
 
@@ -60,7 +60,7 @@ PENDING     = $(BREAK)$(ESCAPE)[33m
 
 # Final compositions
 DEFINES     = VERSION=\"$(VERSION)\" NAME=\"$(NAME)\" #DEBUG_MODE
-FINAL_LINK  = $(foreach dir, $(LIB_FOLDERS), -L$(dir)) $(foreach lib, $(LIBRARIES), -l$(lib)) $(LINKER) $(CFLAGS) #$(foreach dir, $(LIB_FOLDERS), -Wl,-rpath=$(dir))
+FINAL_LINK  = $(foreach dir, $(LIB_FOLDERS), -L$(dir)) $(foreach lib, $(LIBRARIES), -l$(lib)) $(LINKER) $(CFLAGS)
 FINAL_OBJ   = $(foreach dir, $(INCLUDES), -I$(dir)) $(foreach def, $(DEFINES), -D$(def)) $(CFLAGS)
 LD_EXPORT   = export LD_LIBRARY_PATH=$(LD_LIBRARY_PATH)$(foreach dir, $(LIB_FOLDERS),$(dir))
 
@@ -81,6 +81,14 @@ $(OUT_DIR)/%.o: $(SRC_DIR)/%.cpp $(HEADERS)
 
 # Compile the executable
 $(NAME): $(OBJECTS)
+	@echo -n "$(PENDING)Linking $(NAME) v$(VERSION)... $(RESET)"
+	@$(CC) $(FINAL_LINK) -o $(NAME) $(OBJECTS)
+	@echo "$(SUCCESS)$(NAME) v$(VERSION) built successfully!$(RESET)"
+
+# Forces to relink the executable
+# (Useful when only linking options have changed)
+l: relink
+relink: $(OBJECTS)
 	@echo -n "$(PENDING)Linking $(NAME) v$(VERSION)... $(RESET)"
 	@$(CC) $(FINAL_LINK) -o $(NAME) $(OBJECTS)
 	@echo "$(SUCCESS)$(NAME) v$(VERSION) built successfully!$(RESET)"
@@ -160,6 +168,6 @@ debug:
 #################################
 
 .DEFAULT_GOAL = all
-.PHONY: all package \
+.PHONY: all relink package \
 	clean cleanpackage fullclean remake \
 	run run-leak debug

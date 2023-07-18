@@ -5,7 +5,7 @@
 #    '-._.(;;;)._.-'                                                           #
 #    .-'  ,`"`,  '-.                                                           #
 #   (__.-'/   \'-.__)   By: Rosie (https://github.com/BlankRose)               #
-#       //\   /         Last Updated: Tuesday, July 18, 2023 7:18 PM           #
+#       //\   /         Last Updated: Wednesday, July 19, 2023 12:10 AM        #
 #      ||  '-'                                                                 #
 # ############################################################################ #
 
@@ -23,6 +23,6 @@ INCLUDES    = $(shell find -E $(SEARCHDIR) . -type d -iregex '.*/inc(lude)?[s]?'
 POSSIBLELIB = $(foreach lib, $(LIBRARIES), $(shell find -E $(SEARCHDIR) . -iregex '.*/lib$(lib).*' 2>/dev/null))
 LIB_FOLDERS = $(shell echo $(POSSIBLELIB) | tr ' ' '\n' | xargs -n 1 dirname | sort -u)
 
-# OS Specific Packages
+# OS Specific Additions
 PKG_OSFILES = $(foreach lib, $(LIB_FOLDERS), $(shell find -E $(lib)/../extlibs -type d -iregex '.*.framework' 2>/dev/null))
 PKG_OSDIR   = $(PKG_DIR)/Frameworks

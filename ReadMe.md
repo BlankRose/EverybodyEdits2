@@ -2,18 +2,13 @@
 <h1 align='center'><b> 🙃 Everybody Edits 2 🏜 </b></h1>
 
 <p align="center">
-	<img alt="Top Language" src="https://img.shields.io/static/v1?label=Language&message=CPP&color=orange&style=plastic"/>
-	<img alt="Supported" src="https://img.shields.io/static/v1?label=Supported+OS&message=Linux&color=yellow&style=plastic"/>
+	<img alt="Top Language" src="https://img.shields.io/static/v1?label=Language&message=CPP+(STD-17)&color=A83262&style=plastic"/>
+	<img alt="Supported" src="https://img.shields.io/static/v1?label=Supported+OS&message=Linux+/+OSX&color=218C15&style=plastic"/>
 	<img alt="Code Size" src="https://img.shields.io/github/languages/code-size/BlankRose/everybodyedits2?label=Code+Size&color=informational&style=plastic"/>
-	<img alt="Last Commit" src="https://img.shields.io/github/last-commit/BlankRose/everybodyedits2?label=Last+Commit&color=critical&style=plastic"/>
+	<img alt="Last Commit" src="https://img.shields.io/github/last-commit/BlankRose/everybodyedits2?label=Last+Commit&color=BA7829&style=plastic"/>
 </p>
 
-Everybody Edits is originally a Flash multiplayer online game, where the limits
-is only bounds to the players' creativity.
-
-It is original a sandbox game where every users has their own worlds, and they
-could create it with a large panel of available tiles, with some having some special
-effects, while other players could join and played at the same time.
+Everybody Edits is originally a Flash game, where the limits is only bounds to the players' creativity.
 
 This project will be an attempt of its sequel, after it has been shutdown upon the
 [end of Abode's support for Flash](https://www.adobe.com/products/flashplayer/end-of-life.html),
@@ -29,28 +24,10 @@ __Link to Original Game:__ https://everybodyedits.com/
 
 --------------------
 
-# Showcases
-
-Here is a small galery of the progress made throughout the work of this project,
-along with their respective versions:
+# Progress Showcases
 
 |![](docs/Showcase-0.8.png) Version 0.8|![](docs/Showcase-0.6.png) Version 0.6|
 |--------------------------------------|--------------------------------------|
-
---------------------
-
-# Installer
-
-An easy-to-install script is located within the build folder of this repository.
-You can either retrieve it by copy-paste into a script file or you can just simply retrieve it
-and run it, with the following `curl` command:
-
-### UNIX - Linux & OSX (.sh):
-```sh
-bash <(curl https://raw.githubusercontent.com/BlankRose/EverybodyEdits2/dev/build/install_unix.sh)
-```
-
-__NOTICE:__ *You will need the following commands to use it: `curl`, `tar`, `git`, `make`, `c++`*
 
 --------------------
 
@@ -69,7 +46,7 @@ The project is using Makefiles to compile, with the following rules defined to s
  - `run-leak`: Execute with leak-sanitizer, compiling aswell if necessary
  - `debug`: Displays all targetted files and dependacies by the projects
 
-__NOTICE:__ *If your library is located anywhere specific, you should change the variable `SEARCHDIR`*
+__NOTICE:__ If your library is located anywhere specific, you should change the variable `SEARCHDIR`
 
 --------------------
 
