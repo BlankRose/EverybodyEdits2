@@ -31,7 +31,7 @@ LINKER    = -fsanitize=address
 
 # Libraries to link and where to find them
 LIBRARIES = sfml-graphics sfml-window sfml-system
-SEARCHDIR = $(HOME)/sgoinfre/libs $(HOME)/Downloads
+SEARCHDIR = $(HOME)/sgoinfre/libs $(HOME)/Downloads ..
 
 # Elements required for packaging
 PKG_BIN   = $(NAME)
